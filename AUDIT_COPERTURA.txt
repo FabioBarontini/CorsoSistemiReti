@@ -1,0 +1,9 @@
+AUDIT DI COPERTURA — CYBERSECURITY
+
+Fonte: Cybersecurity_attacchi_storie_difese.docx, 27 pagine.
+
+Verifica effettuata confrontando i contenuti della fonte con le 15 pagine sicurezza-*.html del sito.
+
+Prima dell'integrazione erano presenti i nuclei principali, ma non tutti i dettagli della fonte. Mancavano o risultavano troppo compressi, tra gli altri: Common Criteria/ISO 15408; parte della tassonomia RFC 4949; attori secondari e cappelli; dettagli sulle famiglie malware e sull'evoluzione ransomware; caso Podesta; alcuni esempi e contromisure di rete (SPF/DKIM/DMARC, DAI, KRACK); CVE/CVSS e casi Heartland/TalkTalk/Samy; tabella numerica completa delle password; dettagli Pegasus/APT e supply-chain; alcuni dati Stuxnet/Ucraina/Colonial; tattiche ATT&CK e T1566; dettagli normativi e soggetti italiani; attività di indagine storica e tutte le 14 domande di verifica.
+
+Questi contenuti sono stati ora integrati nelle pagine pertinenti, mantenendo il contenuto informativo della fonte e senza riferimenti alla parola "dispensa" nel testo destinato agli studenti.

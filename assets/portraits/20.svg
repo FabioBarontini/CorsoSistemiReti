@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 980">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2a0e17"/><stop offset=".55" stop-color="#511722"/><stop offset="1" stop-color="#0c1010"/></linearGradient><filter id="glow"><feGaussianBlur stdDeviation="7"/></filter></defs>
+<rect width="800" height="980" fill="url(#g)"/><circle cx="620" cy="170" r="150" fill="#a85a48" opacity=".12" filter="url(#glow)"/><path d="M0 760 Q400 620 800 760 V980 H0Z" fill="#0b0c0d" opacity=".72"/>
+<g stroke="#d39b6a" opacity=".28" fill="none"><circle cx="400" cy="430" r="245"/><circle cx="400" cy="430" r="285"/><path d="M80 430H720M400 80V780"/></g>
+<g fill="#d8c1ae"><ellipse cx="400" cy="430" rx="142" ry="185"/><path d="M265 408 Q275 210 405 205 Q550 220 548 405 Q510 335 450 330 Q365 345 265 408Z" fill="#17191a"/><ellipse cx="350" cy="430" rx="14" ry="10" fill="#17191a"/><ellipse cx="450" cy="430" rx="14" ry="10" fill="#17191a"/><path d="M350 505 Q400 535 450 505" stroke="#17191a" stroke-width="9" fill="none"/><path d="M255 655 Q400 555 545 655 L590 900H210Z" fill="#202426"/></g>
+<text x="58" y="78" fill="#e6b07b" font-family="Arial" font-size="22" letter-spacing="5">SECURITY DISTRICT</text><text x="58" y="875" fill="#efe3d5" font-family="Georgia" font-size="34">JARKKO OIKARINEN</text><text x="58" y="918" fill="#d39b6a" font-family="Arial" font-size="18" letter-spacing="4">1988 · IRC</text><text x="690" y="900" fill="#e6b07b" font-family="Arial" font-size="52" text-anchor="end">JO</text>
+</svg>

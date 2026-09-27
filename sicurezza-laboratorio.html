@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Laboratorio di cybersecurity · Lezione 02</title>
+<link href="assets/security-lessons.css" rel="stylesheet"/>
+</head>
+<body>
+<nav class="snav">
+  <a class="brand" href="index.html">ATLANTE DELLA RETE</a>
+  <div class="links">
+    <a href="index.html">HOME</a><a href="storia-internet.html">STORIA</a><a class="active" href="lezioni.html">LEZIONI</a><a href="timeline.html">TIMELINE</a><a href="album.html">ALBUM</a><a href="security.html">SICUREZZA</a><a href="maps-internet.html">MAPPE</a><a href="biblioteca.html">STORIE</a><a href="search.html">CERCA</a>
+  </div>
+</nav>
+<a class="lesson-map-link" href="sicurezza-mappa.html">MAPPA DELLA LEZIONE 02</a>
+
+<header class="hero lab-hero">
+  <div class="kicker">LEZIONE 02 · LABORATORIO</div>
+  <h1>Adesso tocca a <em>te.</em></h1>
+  <p>Qui la sicurezza smette di essere soltanto una parola. Ogni attività ti mette davanti a un problema concreto: osservare, raccogliere indizi, formulare un'ipotesi, verificarla e spiegare che cosa hai scoperto.</p>
+  <div class="thesis"><strong>Regola fondamentale.</strong> Lavora soltanto negli ambienti indicati per l'esercitazione. Non provare queste tecniche su siti, account, reti o computer che non ti appartengono e per i quali non hai un'autorizzazione esplicita.</div>
+  <div class="hero-actions"><a href="#come-funziona">COME FUNZIONA</a><a href="#attivita">INIZIA LE ATTIVITÀ</a><a href="sicurezza-mappa.html">TORNA ALLA MAPPA</a></div>
+</header>
+
+<main>
+<section class="chapter" id="come-funziona">
+  <div class="grid"><div class="num">PRIMA<strong>DI INIZIARE</strong></div><div>
+    <h2>Il tuo banco di lavoro.</h2>
+    <p>Per ogni attività troverai quattro cose: <strong>tempo</strong>, <strong>materiale</strong>, <strong>procedura</strong> e <strong>risultato da consegnare</strong>. Non serve correre. In cybersecurity conta più saper spiegare una traccia che trovare una risposta per caso.</p>
+    <div class="columns">
+      <div class="panel"><h4>TI SERVE</h4><p>Un computer della scuola, il browser e gli strumenti indicati nella singola attività. Quando serve un ambiente vulnerabile, deve essere locale o predisposto per l'esercitazione.</p></div>
+      <div class="panel"><h4>IL TUO METODO</h4><p><strong>Osserva → ipotizza → prova → raccogli una prova → spiega.</strong> Tieni un piccolo diario delle operazioni: sarà parte del lavoro.</p></div>
+    </div>
+    <div class="note"><b>CHECK DI SICUREZZA</b><p>Prima di cominciare chiediti: <strong>so dove sto lavorando?</strong> <strong>So che è un ambiente autorizzato?</strong> <strong>Posso tornare indietro senza danneggiare nulla?</strong> Se una risposta è no, fermati.</p></div>
+  </div></div>
+</section>
+
+<section class="chapter" id="attivita">
+  <div class="grid"><div class="num">01<strong>INDAGINE</strong></div><div>
+    <h2>Ricostruisci un attacco.</h2>
+    <p><strong>Tempo: 45–60 minuti · Gruppi: 3–4 persone.</strong></p>
+    <p>Scegli uno degli incidenti della timeline della lezione: Morris, ILOVEYOU, Mirai, WannaCry, NotPetya, Stuxnet, SolarWinds o XZ Utils. Il tuo compito non è raccontare tutta la storia: devi ricostruire il meccanismo dell'incidente.</p>
+    <h3>1 · Raccogli le tracce</h3><p>Individua chi ha agito, quale bersaglio è stato colpito, quale superficie è stata sfruttata e quale obiettivo della triade <strong>riservatezza · integrità · disponibilità</strong> è stato compromesso.</p>
+    <h3>2 · Segui le fasi</h3><p>Prova a collocare l'attacco nella Cyber Kill Chain: ricognizione, armamento, consegna, sfruttamento, installazione, comando e controllo, azioni sull'obiettivo.</p>
+    <h3>3 · Trova il punto debole</h3><p>Indica almeno una misura che avrebbe potuto interrompere la catena. Non basta scrivere “antivirus”: spiega <em>in quale punto</em> avrebbe agito.</p>
+    <div class="deliver"><b>CONSEGNA</b><span>Una scheda di una pagina con: attore · bersaglio · vulnerabilità · obiettivo RID · fasi della Kill Chain · danni · contromisura. Poi 5 minuti per raccontare il caso alla classe.</span></div>
+  </div></div>
+</section>
+
+<section class="chapter" id="phishing-lab">
+  <div class="grid"><div class="num">02<strong>PHISHING</strong></div><div>
+    <h2>Non fidarti della prima impressione.</h2>
+    <p><strong>Tempo: 30–40 minuti · Lavoro: coppie.</strong></p>
+    <p>Apri i messaggi di prova forniti per l'attività. Alcuni sono legittimi, altri sono costruiti per ingannarti. Prima di votare “vero” o “phishing”, devi raccogliere almeno <strong>tre indizi</strong>.</p>
+    <div class="phish">
+      <div class="mail-head"><strong>DA:</strong> assistenza@esemp10-banca.it &nbsp; · &nbsp; <strong>OGGETTO:</strong> Accesso sospeso: verifica immediata</div>
+      <div class="mail-body">Abbiamo rilevato un accesso insolito. Per evitare la sospensione definitiva del servizio, verifica subito il tuo account utilizzando il pulsante seguente.<br/><br/><strong>VERIFICA ACCOUNT</strong><br/><br/>Grazie, Servizio sicurezza.</div>
+      <div class="phish-actions"><button onclick="phishCheck('domain')">Controlla il dominio</button><button onclick="phishCheck('urgency')">Controlla il tono</button><button onclick="phishCheck('link')">Controlla il link</button><button onclick="phishCheck('context')">Controlla il contesto</button></div>
+      <div class="phish-result" id="phish-result">Clicca un indizio. Costruisci la tua decisione un elemento alla volta.</div>
+    </div>
+    <h3>La prova finale</h3><p>Per ogni messaggio compila quattro campi: <strong>indizio</strong> · <strong>rischio</strong> · <strong>azione sicura</strong> · <strong>cosa controlleresti prima di cliccare</strong>.</p>
+    <div class="deliver"><b>CONSEGNA</b><span>Una tabella con la classificazione dei messaggi e la motivazione. Una decisione senza motivazione vale metà del lavoro.</span></div>
+  </div></div>
+</section>
+
+<section class="chapter" id="sniffing-lab">
+  <div class="grid"><div class="num">03<strong>SNIFFING</strong></div><div>
+    <h2>Guarda i pacchetti passare.</h2>
+    <p><strong>Tempo: 45–60 minuti · Lavoro: coppie · Ambiente: rete di laboratorio autorizzata.</strong></p>
+    <p>Usa <a href="https://www.wireshark.org/">Wireshark</a> per osservare una comunicazione di prova. Non devi cercare password reali e non devi catturare il traffico di una rete esterna. L'obiettivo è imparare a leggere ciò che un pacchetto racconta.</p>
+    <div class="columns">
+      <div class="panel"><h4>FASE A · HTTP</h4><p>Apri la pagina di prova predisposta dal laboratorio. Avvia la cattura sull'interfaccia indicata. Genera una sola richiesta. Ferma la cattura e usa un filtro per isolare il traffico HTTP.</p></div>
+      <div class="panel"><h4>FASE B · HTTPS</h4><p>Ripeti la stessa osservazione con HTTPS. Confronta ciò che puoi leggere direttamente con ciò che resta nascosto dal contenuto cifrato.</p></div>
+    </div>
+    <h3>Che cosa devi osservare?</h3><p>Annota indirizzi IP, protocollo, porta, dimensione dei pacchetti e direzione della comunicazione. Poi rispondi: <strong>quali informazioni restano osservabili anche quando il contenuto è cifrato?</strong></p>
+    <figure class="media"><img alt="Interfaccia di Wireshark" src="https://commons.wikimedia.org/wiki/Special:FilePath/Wireshark_3.6_screenshot.png"/><figcaption>Wireshark · interfaccia di analisi dei pacchetti.</figcaption></figure>
+    <div class="deliver"><b>CONSEGNA</b><span>Due screenshot annotati: uno della cattura HTTP e uno della cattura HTTPS, più una tabella “visibile / non visibile / perché”.</span></div>
+  </div></div>
+</section>
+
+<section class="chapter" id="web-lab">
+  <div class="grid"><div class="num">04<strong>WEB</strong></div><div>
+    <h2>Quando il dato diventa istruzione.</h2>
+    <p><strong>Tempo: 60–90 minuti · Lavoro: coppie · Ambiente: applicazione vulnerabile locale.</strong></p>
+    <p>Usa <a href="https://owasp.org/www-project-juice-shop/">OWASP Juice Shop</a> oppure un'altra applicazione volutamente vulnerabile predisposta dalla scuola. Non utilizzare siti reali. Qui puoi osservare una SQL injection senza mettere a rischio sistemi esterni.</p>
+    <h3>Prima osserva.</h3><p>Apri il form di login e chiediti che cosa dovrebbe accadere: l'utente inserisce un <strong>dato</strong>, il programma costruisce una query e il database restituisce un risultato.</p>
+    <h3>Poi cerca il confine.</h3><p>Nel laboratorio prova l'esempio indicato dalla scheda dell'applicazione. Osserva come un input costruito appositamente può alterare la logica della query. Non memorizzare soltanto la stringa: spiega <strong>perché</strong> cambia il comportamento.</p>
+    <h3>Infine correggi.</h3><p>Confronta una query costruita concatenando testo con una <strong>query parametrizzata</strong>. La domanda fondamentale è: come facciamo a impedire che il database confonda dati e istruzioni?</p>
+    <div class="deliver"><b>CONSEGNA</b><span>Una pagina con: input → query vulnerabile → effetto osservato → correzione parametrizzata → spiegazione in parole tue.</span></div>
+  </div></div>
+</section>
+
+<section class="chapter" id="password-lab">
+  <div class="grid"><div class="num">05<strong>PASSWORD</strong></div><div>
+    <h2>Quanto è grande lo spazio in cui deve cercare un attaccante?</h2>
+    <p><strong>Tempo: 30–45 minuti · Lavoro: individuale o coppie.</strong></p>
+    <p>Usa la formula <strong>N = C<sup>L</sup></strong>, dove <strong>C</strong> è il numero di simboli possibili e <strong>L</strong> la lunghezza. Non devi provare password reali: devi capire come cambia lo spazio di ricerca.</p>
+    <div class="password-lab"><label class="label" for="pwlen">LUNGHEZZA</label><input id="pwlen" type="range" min="4" max="16" value="8" oninput="passwordLab()"/><div class="password-output"><div class="metric"><b id="pw-combinations">—</b><span>combinazioni con 62 simboli</span></div><div class="metric"><b id="pw-bits">—</b><span>bit di entropia teorica</span></div></div></div>
+    <h3>Tre confronti</h3><p>Confronta una password breve e complessa con una passphrase più lunga. Poi considera il comportamento umano: password riutilizzate, parole prevedibili, dati personali e credential stuffing cambiano il problema.</p>
+    <div class="deliver"><b>CONSEGNA</b><span>Un grafico con almeno cinque lunghezze diverse e una breve spiegazione della differenza tra forza teorica e sicurezza reale.</span></div>
+  </div></div>
+</section>
+
+<section class="chapter" id="risk-lab">
+  <div class="grid"><div class="num">06<strong>RISCHIO</strong></div><div>
+    <h2>Disegna la superficie di attacco della scuola.</h2>
+    <p><strong>Tempo: 45–60 minuti · Gruppi: 3–4.</strong></p>
+    <p>Immagina la scuola come un sistema composto da persone, dispositivi, reti, servizi e dati. Scegli cinque risorse: per esempio registro elettronico, Wi‑Fi, laboratorio, sito e dati degli studenti.</p>
+    <div class="matrix"><button onclick="toggleReveal('risk1')">REGISTRO</button><button onclick="toggleReveal('risk2')">WI‑FI</button><button onclick="toggleReveal('risk3')">LABORATORI</button></div>
+    <div class="reveal" id="risk1">Chiediti: cosa succede se i dati vengono divulgati? Se i voti vengono modificati? Se il servizio non è disponibile?</div>
+    <div class="reveal" id="risk2">Chiediti: chi può entrare? Come sono separate le reti? Che cosa cambia quando arrivano dispositivi personali?</div>
+    <div class="reveal" id="risk3">Chiediti: quali PC, account, USB, software e accessi fisici costituiscono la superficie di attacco?</div>
+    <h3>Calcola il rischio</h3><p>Per ogni risorsa assegna <strong>probabilità 1–3</strong> e <strong>impatto 1–3</strong>. Calcola <strong>rischio = probabilità × impatto</strong>. Poi proponi una contromisura tecnica e una organizzativa.</p>
+    <div class="deliver"><b>CONSEGNA</b><span>Una matrice 5 × 4 con risorsa, minaccia, probabilità, impatto, rischio e contromisura.</span></div>
+  </div></div>
+</section>
+
+<section class="chapter" id="debate-lab">
+  <div class="grid"><div class="num">07<strong>DIBATTITO</strong></div><div>
+    <h2>Pagare il riscatto?</h2>
+    <p><strong>Tempo: 30–40 minuti · Gruppi: due squadre.</strong></p>
+    <p>Una società è stata colpita da ransomware. I dati sono cifrati, i backup non sono immediatamente disponibili e l'attività è ferma. Una squadra deve sostenere il pagamento; l'altra deve sostenere il mancato pagamento.</p>
+    <h3>Non cercare una risposta facile.</h3><p>Costruisci gli argomenti distinguendo <strong>fatti, conseguenze, incentivi, responsabilità, costi e rischi</strong>. Inserisci almeno un argomento che metta in difficoltà la tua stessa posizione.</p>
+    <div class="deliver"><b>CONSEGNA</b><span>Tre argomenti, una possibile obiezione per ciascuno e una conclusione finale motivata. Nessun argomento vale se non è sostenuto da una ragione.</span></div>
+  </div></div>
+</section>
+
+<section class="chapter" id="ctf-lab">
+  <div class="grid"><div class="num">08<strong>CTF</strong></div><div>
+    <h2>Risolvi un problema, non attaccare qualcuno.</h2>
+    <p><strong>Tempo: 60–120 minuti · Individuale o squadre.</strong></p>
+    <p>Una <strong>Capture The Flag</strong> didattica presenta piccoli problemi costruiti apposta per essere risolti. Il bersaglio è il laboratorio, non Internet.</p>
+    <div class="columns">
+      <div class="panel"><h4>PRIMO LIVELLO</h4><p>Trova una stringa nascosta in un file, riconosci una codifica, interpreta un log o ricostruisci un'informazione da dati forniti.</p></div>
+      <div class="panel"><h4>SECONDO LIVELLO</h4><p>Passa a esercizi su crittografia, rete, Web o analisi di malware all'interno dell'ambiente predisposto.</p></div>
+    </div>
+    <p>Puoi esplorare le attività di <a href="https://cyberchallenge.it/it/">CyberChallenge.IT</a> e <a href="https://olicyber.it/">OliCyber.IT</a> per vedere come sono organizzate le competizioni formative.</p>
+    <div class="note"><b>REGOLA DEL GIOCO</b><p>Se per risolvere una challenge devi uscire dall'ambiente autorizzato, la challenge è finita. Torna indietro e chiedi il materiale corretto.</p></div>
+    <div class="deliver"><b>CONSEGNA</b><span>Per ogni flag: soluzione, percorso seguito e prova che dimostri perché la soluzione è corretta. Una soluzione senza metodo non basta.</span></div>
+  </div></div>
+</section>
+
+<section class="chapter" id="reality-lab">
+  <div class="grid"><div class="num">09<strong>COMPITO</strong></div><div>
+    <h2>Diventa il team di sicurezza.</h2>
+    <p><strong>Tempo: 2–3 ore · Gruppi: 3–4.</strong></p>
+    <p>Scegli un'azienda del territorio: chimica, meccanica, elettronica o biomedicale. Immagina di dover consegnare alla direzione una prima politica di sicurezza.</p>
+    <div class="columns">
+      <div class="panel"><h4>PARTE 01 · CAPIRE</h4><p>Elenca le risorse critiche e scegli tre minacce realistiche. Per ciascuna calcola il rischio.</p></div>
+      <div class="panel"><h4>PARTE 02 · PROTEGGERE</h4><p>Proponi contromisure tecniche e organizzative: MFA, segmentazione, backup, formazione, monitoraggio, aggiornamenti, gestione degli accessi.</p></div>
+    </div>
+    <h3>Quando arriva il ransomware</h3><p>Scrivi una procedura di emergenza: chi viene avvisato, quali sistemi vengono isolati, come si preservano le evidenze, come si valuta il ripristino e come si comunica l'incidente.</p>
+    <div class="deliver"><b>CONSEGNA FINALE</b><span>Due pagine: risorse critiche · tre minacce · analisi del rischio · contromisure tecniche e organizzative · procedura in caso di ransomware. Presentazione orale di 5 minuti.</span></div>
+  </div></div>
+</section>
+
+<section class="chapter" id="verifica">
+  <div class="grid"><div class="num">10<strong>VERIFICA</strong></div><div>
+    <h2>Fermati. Che cosa hai capito davvero?</h2>
+    <p>Rispondi senza consultare il testo. Se non ricordi qualcosa, torna alla mappa della lezione e cerca il capitolo giusto.</p>
+    <ol class="student-questions">
+      <li>Definisci riservatezza, integrità e disponibilità e fai un esempio di attacco che violi ciascuna.</li>
+      <li>Qual è la differenza tra vulnerabilità, minaccia, exploit e rischio?</li>
+      <li>Perché la superficie di attacco umana è così sfruttata?</li>
+      <li>Che differenza c'è tra virus, worm e trojan? Cita un caso storico per ciascuno.</li>
+      <li>Come si è evoluto il ransomware fino al modello RaaS e alla doppia estorsione?</li>
+      <li>Perché un DDoS è più difficile da bloccare di un DoS? Che cosa sono le botnet?</li>
+      <li>Spiega con un esempio un attacco passivo e uno attivo e indica le contromisure.</li>
+      <li>Mostra come funziona una SQL injection in un ambiente di laboratorio e come si previene.</li>
+      <li>Calcola le combinazioni possibili di una password di 10 caratteri scelti tra 62 simboli.</li>
+      <li>Che cosa rende un attacco APT? Perché la supply chain è così pericolosa?</li>
+      <li>Che cosa ha dimostrato Stuxnet? Perché i sistemi OT sono più delicati dei sistemi IT?</li>
+      <li>Descrivi le fasi della Cyber Kill Chain e indica tre contromisure.</li>
+      <li>Confronta difesa perimetrale e Zero Trust.</li>
+      <li>Che cosa prevedono GDPR e Cyber Resilience Act rispetto a data breach e sicurezza dei prodotti digitali?</li>
+    </ol>
+    <div class="footer-links"><a href="sicurezza-mappa.html">MAPPA DELLA LEZIONE</a><a href="sicurezza-glossario.html">GLOSSARIO</a><a href="sicurezza-timeline.html">TIMELINE</a><a href="search.html">CERCA NELL'ATLANTE</a></div>
+  </div></div>
+</section>
+</main>
+<script src="assets/security-lessons.js"></script>
+<script>
+function phishCheck(kind){
+ const r=document.getElementById('phish-result');
+ const t={domain:'Il dominio contiene una sostituzione sospetta: “esemp10” usa il numero 10 al posto di una grafia attesa.',urgency:'La richiesta crea urgenza e minaccia una conseguenza immediata: è una leva frequente nel phishing.',link:'Prima di aprire un link, passa sopra il collegamento e controlla la destinazione reale. In un esercizio puoi confrontarla con il dominio ufficiale.',context:'Chiediti: aspettavo davvero questo messaggio? La richiesta è coerente con il servizio? Posso verificare usando un canale indipendente?'};
+ r.textContent=t[kind];
+}
+function passwordLab(){
+ const L=Number(document.getElementById('pwlen').value), N=Math.pow(62,L), bits=L*Math.log2(62);
+ document.getElementById('pw-combinations').textContent=N.toLocaleString('it-IT',{maximumFractionDigits:0});
+ document.getElementById('pw-bits').textContent=bits.toFixed(1);
+}
+passwordLab();
+</script>
+</body>
+</html>

@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+
+<html lang="it">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Storia di Internet — Prima che esistesse il Web</title>
+<meta content="La storia di Internet, dalla Guerra Fredda al Web." name="description"/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;700&family=Libre+Baskerville:wght@400;700&display=swap');
+:root{--bg:#050709;--paper:#0d1114;--paper2:#12181d;--ink:#e9e5db;--muted:#a7adb0;--dim:#687177;--green:#a9cdb8;--amber:#c9a36b;--red:#b56b63;--line:#ffffff18;--max:1120px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.8;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");z-index:100}
+a{color:var(--green)} .mono{font-family:"DM Mono",monospace}
+.nav{position:fixed;z-index:50;top:0;left:0;right:0;height:62px;padding:0 4vw;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(#050709ee,#050709aa);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{font:11px "DM Mono";letter-spacing:.18em;color:#b9c7bf}.navlinks{display:flex;gap:20px}.navlinks a{text-decoration:none;color:#737c81;font:10px "DM Mono";letter-spacing:.12em}.navlinks a:hover{color:white}
+.hero{min-height:100vh;position:relative;display:grid;place-items:center;overflow:hidden;background:radial-gradient(ellipse at 50% 45%,#17221f 0,#080b0d 35%,#030405 72%)}
+.hero-photo{position:absolute;inset:0;background:linear-gradient(90deg,#000 0%,#0004 45%,#000b 100%),url('https://commons.wikimedia.org/wiki/Special:FilePath/Bagdad-sat.JPG') center/cover;filter:grayscale(1) contrast(1.15);opacity:.24;transform:scale(1.05)}
+.hero:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 45%,transparent 0 12%,#000b 70%),linear-gradient(180deg,#0007,transparent 35%,#000 100%)}
+.network{position:absolute;inset:0;opacity:.65}.node{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 20px var(--green);animation:pulse 3s infinite}.node:after{content:"";position:absolute;width:180px;height:1px;background:linear-gradient(90deg,#a9cdb844,transparent);transform-origin:left;transform:rotate(var(--r));opacity:.5}.n1{left:18%;top:35%;--r:18deg}.n2{left:35%;top:24%;--r:145deg}.n3{left:53%;top:51%;--r:-25deg}.n4{left:73%;top:31%;--r:160deg}.n5{left:83%;top:67%;--r:205deg}.n6{left:28%;top:73%;--r:-40deg}@keyframes pulse{50%{opacity:.35;transform:scale(.7)}}
+.hero-inner{position:relative;z-index:3;max-width:980px;padding:110px 30px 80px;text-align:center}.eyebrow{font:11px "DM Mono";letter-spacing:.28em;color:var(--green);text-transform:uppercase}.hero h1{font:400 clamp(54px,9vw,118px)/.94 "Libre Baskerville";margin:24px 0 28px;letter-spacing:-.04em}.hero h1 em{color:#c4b28e;font-style:normal}.hero-sub{max-width:760px;margin:auto;color:#c2c6c7;font-size:19px}.scroll{margin-top:55px;color:#777f83;font:10px "DM Mono";letter-spacing:.2em}.scroll i{display:block;height:58px;width:1px;background:#9ab6a6;margin:14px auto 0;animation:drop 1.8s infinite}@keyframes drop{50%{transform:scaleY(.35);transform-origin:top;opacity:.35}}
+.progress{position:fixed;z-index:60;left:0;top:62px;height:2px;background:var(--green);width:0}
+.chapter{position:relative;max-width:var(--max);margin:auto;padding:150px 34px 130px}.chapter:before{content:attr(data-num);position:absolute;right:30px;top:110px;color:#ffffff09;font:140px "DM Mono";pointer-events:none}
+.kicker{font:11px "DM Mono";letter-spacing:.22em;color:var(--amber);text-transform:uppercase}.chapter h2{font:400 clamp(38px,6vw,72px)/1.08 "Libre Baskerville";margin:14px 0 34px;max-width:900px}.intro{font-size:22px;line-height:1.65;color:#d0d4d2;max-width:820px}.prose{max-width:790px;font-size:17px;color:#b9bec0}.prose p{margin:0 0 1.25em}.prose strong{color:#e7e2d7}.prose em{color:#c9b990}
+.scene{margin:65px 0;min-height:390px;position:relative;border:1px solid var(--line);overflow:hidden;background:#080b0d;box-shadow:0 30px 100px #0008}.scene img{width:100%;height:100%;min-height:390px;object-fit:cover;display:block;filter:grayscale(.35) contrast(1.1);opacity:.55}.scene .veil{position:absolute;inset:0;background:linear-gradient(90deg,#030506ee,#03050655 55%,#030506dd),linear-gradient(0deg,#030506,#03050600 50%)}.scene-caption{position:absolute;left:34px;bottom:28px;max-width:620px}.scene-caption .tag{font:10px "DM Mono";color:var(--green);letter-spacing:.16em}.scene-caption h3{font:400 34px "Libre Baskerville";margin:8px 0}.scene-caption p{color:#b7bdbe;margin:0}
+.quote{margin:60px 0;max-width:820px;border-left:2px solid var(--green);padding:10px 0 10px 32px;font:400 26px/1.55 "Libre Baskerville";color:#ece8dd}.quote small{display:block;margin-top:15px;font:10px "DM Mono";color:#778084;letter-spacing:.12em}
+.fullbleed{margin:100px calc(50% - 50vw);padding:90px max(34px,calc((100vw - var(--max))/2 + 34px));background:linear-gradient(90deg,#0a0f0d,#101615,#07090a);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.terminal{background:#030605;border:1px solid #294136;box-shadow:inset 0 0 70px #6a9d7a0b,0 20px 80px #000;max-width:850px;margin:45px auto;padding:30px;font:15px/2 "DM Mono";color:#a9d5b7;min-height:270px}.terminal .dim{color:#56645c}.cursor{display:inline-block;width:9px;height:17px;background:#a9d5b7;animation:blink 1s steps(1) infinite}@keyframes blink{50%{opacity:0}}
+.packetlab{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:50px 0}.packetbox{padding:26px;border:1px solid var(--line);background:linear-gradient(145deg,#121a18,#080b0c)}.packetbox h4{font:12px "DM Mono";letter-spacing:.14em;color:var(--green);margin:0 0 12px}.packets{display:flex;gap:6px;flex-wrap:wrap}.pkt{height:26px;width:44px;border:1px solid #a9cdb855;background:#a9cdb711;animation:route 3s infinite}.pkt:nth-child(2){animation-delay:.3s}.pkt:nth-child(3){animation-delay:.6s}.pkt:nth-child(4){animation-delay:.9s}.pkt:nth-child(5){animation-delay:1.2s}@keyframes route{50%{transform:translateX(35px);background:#a9cdb833}}
+.timeline{margin:65px 0;border-left:1px solid #48534e;padding-left:30px}.event{position:relative;padding:0 0 44px}.event:before{content:"";position:absolute;left:-36px;top:8px;width:10px;height:10px;border-radius:50%;background:var(--green);box-shadow:0 0 18px #a9cdb877}.event time{font:11px "DM Mono";color:var(--amber)}.event h3{font:400 25px "Libre Baskerville";margin:5px 0 8px}.event p{max-width:760px;color:#aab1b2;margin:0}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:55px 0}.fact{padding:25px;border:1px solid var(--line);background:linear-gradient(145deg,#101618,#080a0b);min-height:155px}.fact .year{font:10px "DM Mono";color:var(--amber);letter-spacing:.16em}.fact h3{font-size:25px;margin:10px 0 5px}.fact p{color:#929a9d;margin:0;font-size:14px}
+.image-row{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:55px 0}.image-card{border:1px solid var(--line);background:#090c0e;overflow:hidden}.image-card img{width:100%;height:290px;object-fit:cover;display:block;filter:grayscale(.3) contrast(1.05)}.image-card figcaption{padding:17px;color:#858e91;font-size:12px}.image-card figcaption strong{color:#c8ceca;display:block;margin-bottom:5px}
+.source-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:35px}.source-links a{padding:9px 13px;border:1px solid #ffffff18;text-decoration:none;font:10px "DM Mono";color:#aeb9b3;letter-spacing:.08em}.source-links a:hover{border-color:#a9cdb855;color:white}
+.navmap{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;margin:45px 0}.navmap a{min-height:70px;padding:10px;border:1px solid #ffffff12;text-decoration:none;color:#81898c;font:9px "DM Mono";display:flex;align-items:end}.navmap a:hover{background:#a9cdb70b;color:#dfe7e1;border-color:#a9cdb744}
+.end{padding:150px 30px 170px;text-align:center;background:radial-gradient(circle at 50% 40%,#17231e,#050708 55%)}.end h2{font:400 clamp(38px,7vw,78px)/1.1 "Libre Baskerville";max-width:850px;margin:0 auto 35px}.end p{max-width:680px;margin:auto;color:#aeb5b6;font-size:18px}
+.reveal{opacity:0;transform:translateY(34px);transition:1s ease}.reveal.visible{opacity:1;transform:none}
+@media(max-width:750px){.navlinks{display:none}.chapter{padding:105px 22px 90px}.chapter:before{font-size:80px;top:80px}.packetlab,.image-row{grid-template-columns:1fr}.scene-caption{left:20px;right:20px}.scene-caption h3{font-size:26px}.navmap{grid-template-columns:repeat(4,1fr)}.hero h1{font-size:54px}.hero-sub{font-size:16px}}
+</style>
+<style id="gamebook-wow">
+/* GAMEBOOK — cinematic archival layer */
+:root{
+  --ink:#e9e3d6; --muted:#a8a093; --gold:#c7a96b; --cyan:#76b7c7;
+}
+body{background:#050608!important;color:var(--ink);}
+body::before{
+ content:""; position:fixed; inset:0; z-index:-5; pointer-events:none;
+ background:
+   radial-gradient(circle at 18% 20%, rgba(118,183,199,.10), transparent 28%),
+   radial-gradient(circle at 82% 70%, rgba(199,169,107,.09), transparent 30%),
+   linear-gradient(115deg,rgba(255,255,255,.025) 1px,transparent 1px),
+   linear-gradient(25deg,rgba(255,255,255,.018) 1px,transparent 1px),
+   #050608;
+ background-size:auto,auto,90px 90px,130px 130px;
+}
+body::after{
+ content:""; position:fixed; inset:0; z-index:-4; pointer-events:none; opacity:.14;
+ background-image:
+  radial-gradient(circle,rgba(255,255,255,.8) 0 1px,transparent 1.5px);
+ background-size:47px 53px;
+ animation:drift 28s linear infinite;
+}
+@keyframes drift{to{background-position:94px 106px}}
+.gamebook-rail{
+ position:fixed; right:18px; top:50%; transform:translateY(-50%);
+ z-index:1000; width:48px; padding:10px 7px;
+ border:1px solid rgba(199,169,107,.28); border-radius:30px;
+ background:rgba(7,8,10,.72); backdrop-filter:blur(14px);
+ box-shadow:0 10px 40px #000;
+}
+.gamebook-rail a{
+ display:block; width:34px;height:34px; margin:5px auto;
+ border-radius:50%; text-decoration:none;
+ color:#bdb5a8; text-align:center; line-height:34px;
+ font:600 11px/34px system-ui; border:1px solid rgba(255,255,255,.08);
+ transition:.25s;
+}
+.gamebook-rail a:hover,.gamebook-rail a.active{
+ color:#fff; border-color:var(--gold); box-shadow:0 0 18px rgba(199,169,107,.25);
+ transform:scale(1.08);
+}
+.chapter-link{
+ display:inline-flex!important; align-items:center; gap:8px;
+ color:var(--gold)!important; text-decoration:none!important;
+ border-bottom:1px solid rgba(199,169,107,.35);
+ transition:.25s;
+}
+.chapter-link:hover{letter-spacing:.02em;color:#fff!important;}
+.wow-divider{
+ height:180px; margin:60px 0; position:relative; overflow:hidden;
+ border-top:1px solid rgba(199,169,107,.16);
+ border-bottom:1px solid rgba(118,183,199,.10);
+ background:
+ radial-gradient(ellipse at center,rgba(118,183,199,.12),transparent 55%),
+ repeating-linear-gradient(90deg,transparent 0 70px,rgba(255,255,255,.025) 71px);
+}
+.wow-divider::before{
+ content:"";position:absolute;left:0;right:0;top:50%;
+ height:1px;background:linear-gradient(90deg,transparent,#76b7c7,transparent);
+ box-shadow:0 0 24px #76b7c7;
+ animation:scan 4s ease-in-out infinite;
+}
+@keyframes scan{0%,100%{transform:scaleX(.2);opacity:.2}50%{transform:scaleX(1);opacity:1}}
+.wow-divider::after{
+ content:"NETWORK / MEMORY / PEOPLE";
+ position:absolute; inset:0; display:grid;place-items:center;
+ font:600 11px/1 system-ui; letter-spacing:.35em;color:rgba(233,227,214,.35);
+}
+.choice-card{
+ margin:28px 0; padding:24px 26px; border-radius:18px;
+ background:linear-gradient(135deg,rgba(255,255,255,.055),rgba(255,255,255,.015));
+ border:1px solid rgba(199,169,107,.18);
+ box-shadow:inset 0 1px rgba(255,255,255,.05),0 20px 60px rgba(0,0,0,.25);
+}
+.choice-card .choice-title{color:var(--gold);font:600 12px/1.2 system-ui;letter-spacing:.16em;text-transform:uppercase}
+.choice-card a{display:inline-block;margin:12px 12px 0 0;padding:9px 13px;border:1px solid rgba(118,183,199,.25);border-radius:999px;color:#d8e7ea;text-decoration:none}
+.choice-card a:hover{background:rgba(118,183,199,.1);border-color:var(--cyan)}
+@media(max-width:800px){.gamebook-rail{right:7px}.gamebook-rail a{width:30px;height:30px;line-height:30px}.gamebook-rail{width:42px}}
+</style>
+<div aria-label="Indice rapido" class="gamebook-rail">
+<a href="#baghdad" title="Baghdad">00</a>
+<a href="#origini" title="Origini">01</a>
+<a href="#arpanet" title="ARPANET">02</a>
+<a href="#persone" title="Persone">03</a>
+<a href="#web" title="Web">04</a>
+<a href="#oggi" title="Oggi">05</a>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded',()=>{
+  const targets=[
+    ['baghdad','BAGHDAD'],['origini','ORIGINI'],['arpanet','ARPANET'],
+    ['persone','PERSONE'],['web','WEB'],['oggi','OGGI']
+  ];
+  // Build anchors at the nearest major headings when possible, without changing source prose.
+  const hs=[...document.querySelectorAll('h1,h2,h3')];
+  const match=(rx)=>hs.find(h=>rx.test(h.textContent));
+  const map={
+   baghdad:match(/Baghdad/i), origini:match(/rete che non doveva morire|Baran|origini/i),
+   arpanet:match(/ARPANET|1969|IMP/i), persone:match(/email|BBS|IRC|persone/i),
+   web:match(/Berners|Mosaic|World Wide Web|Web/i), oggi:hs[hs.length-1]
+  };
+  Object.entries(map).forEach(([id,h])=>{if(h) h.id=id;});
+  const rail=[...document.querySelectorAll('.gamebook-rail a')];
+  const obs=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        rail.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+e.target.id));
+      }
+    })
+  },{rootMargin:'-35% 0px -55% 0px'});
+  Object.values(map).filter(Boolean).forEach(h=>obs.observe(h));
+});
+</script>
+<style id="archive-materials">
+.archive-zone{margin:90px 0;padding:50px 0;position:relative}
+.archive-zone:before{content:"";position:absolute;inset:0 -8vw;background:
+radial-gradient(circle at 20% 20%,rgba(118,183,199,.08),transparent 32%),
+radial-gradient(circle at 80% 70%,rgba(199,169,107,.07),transparent 32%);
+z-index:-1}
+.archive-zone h2{font-size:clamp(30px,5vw,58px);letter-spacing:-.03em}
+.archive-intro{max-width:760px;color:#b9b1a5;font-size:1.08rem;line-height:1.8}
+.archive-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px;margin-top:36px}
+.archive-card{overflow:hidden;border:1px solid rgba(199,169,107,.18);background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.012));border-radius:18px;box-shadow:0 25px 70px rgba(0,0,0,.28)}
+.archive-img{height:190px;position:relative;background:
+linear-gradient(135deg,rgba(118,183,199,.12),transparent 50%),
+repeating-linear-gradient(0deg,transparent 0 7px,rgba(255,255,255,.025) 8px),
+radial-gradient(circle at 50% 50%,rgba(199,169,107,.15),transparent 55%),#0a0d10}
+.archive-img:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent 48%,rgba(118,183,199,.25) 49%,transparent 50%),linear-gradient(0deg,transparent 48%,rgba(118,183,199,.16) 49%,transparent 50%);background-size:100% 100%,100% 100%}
+.archive-img span{position:absolute;bottom:15px;left:18px;z-index:2;font:700 11px/1 system-ui;letter-spacing:.22em;color:#d7d0c4}
+.archive-body{padding:22px}
+.archive-year{font:600 10px/1.3 system-ui;letter-spacing:.15em;text-transform:uppercase;color:#c7a96b}
+.archive-body h3{margin:8px 0 12px;color:#f0eadf}
+.archive-body p{color:#aaa297;line-height:1.65}
+.archive-body a{display:inline-block;margin-top:10px;color:#8dc8d5;text-decoration:none}
+.archive-body a:hover{text-decoration:underline}
+.source-strip{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.source-chip{padding:9px 12px;border:1px solid rgba(118,183,199,.2);border-radius:999px;color:#bcdde2;text-decoration:none;font:600 11px/1 system-ui;letter-spacing:.04em;background:rgba(118,183,199,.04)}
+</style>
+<style id="album-figurine-css">
+.album{margin:100px 0;padding:65px 0;border-top:1px solid rgba(199,169,107,.18)}
+.album .album-kicker{font:10px "DM Mono";letter-spacing:.18em;color:#c9a36b}
+.album h2{font:400 clamp(38px,5vw,68px)/1.05 "Libre Baskerville";margin:12px 0 14px}
+.album-intro{max-width:780px;color:#aeb5b6;line-height:1.85;font-size:17px}
+.sticker-book{margin-top:45px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.sticker{position:relative;min-height:405px;padding:12px;background:
+ linear-gradient(135deg,#d7c7a2 0 2%,#121618 2% 98%,#d7c7a2 98%);
+ box-shadow:0 20px 60px rgba(0,0,0,.4);transform:rotate(var(--r));
+ transition:transform .35s,filter .35s;overflow:hidden}
+.sticker:hover{transform:translateY(-8px) rotate(0deg);filter:brightness(1.08)}
+.sticker:before{content:"";position:absolute;inset:5px;border:1px solid rgba(220,202,160,.45);pointer-events:none}
+.sticker-photo{height:255px;position:relative;overflow:hidden;background:#07090a}
+.sticker-photo img{width:100%;height:100%;object-fit:cover;filter:grayscale(.65) contrast(1.1);transition:filter .4s,transform .5s}
+.sticker:hover .sticker-photo img{filter:grayscale(.1) contrast(1.03);transform:scale(1.035)}
+.sticker-num{position:absolute;left:12px;top:12px;background:#080a0a;color:#e0d1ac;border:1px solid #9e875a;padding:6px 8px;font:11px "DM Mono";z-index:2}
+.sticker-role{font:9px "DM Mono";letter-spacing:.15em;color:#9d8a62;margin:16px 5px 5px}
+.sticker-name{font:400 25px "Libre Baskerville";color:#f0eadb;margin:0 5px}
+.sticker-bio{font-size:12px;line-height:1.55;color:#9ba3a4;margin:7px 5px}
+.sticker-tag{display:inline-block;margin:5px 5px 0;padding:5px 7px;border:1px solid rgba(118,183,199,.25);color:#9ec7cf;font:9px "DM Mono"}
+.album-note{margin-top:35px;padding:24px;border-left:2px solid #c9a36b;background:rgba(199,169,107,.035);color:#aeb5b6;line-height:1.8}
+@media(max-width:900px){.sticker-book{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.sticker-book{grid-template-columns:1fr}.sticker{transform:none}}
+</style>
+<style id="special-album-css">
+.special-album{margin:110px 0 70px;padding:70px 0;border-top:1px solid rgba(199,169,107,.2)}
+.special-album .k{font:10px "DM Mono";letter-spacing:.18em;color:#c9a36b}
+.special-album h2{font:400 clamp(40px,5vw,70px)/1.03 "Libre Baskerville";margin:12px 0 15px}
+.special-intro{max-width:780px;color:#aeb5b6;font-size:17px;line-height:1.85}
+.special-grid{margin-top:48px;display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+.special-card{position:relative;min-height:360px;padding:10px;background:#101314;box-shadow:0 18px 55px rgba(0,0,0,.42);overflow:hidden;transition:.35s}
+.special-card:hover{transform:translateY(-8px) rotate(0)!important}
+.special-card:nth-child(odd){transform:rotate(-.8deg)}
+.special-card:nth-child(even){transform:rotate(.9deg)}
+.special-card:before{content:"";position:absolute;inset:5px;border:1px solid rgba(201,163,107,.42);pointer-events:none;z-index:3}
+.special-image{height:210px;position:relative;overflow:hidden;background:radial-gradient(circle,#203238,#050708)}
+.special-image img{width:100%;height:100%;object-fit:cover;opacity:.78;filter:grayscale(.55) contrast(1.12);transition:.5s}
+.special-card:hover img{opacity:1;filter:grayscale(0) contrast(1.04);transform:scale(1.04)}
+.special-num{position:absolute;top:13px;left:13px;z-index:4;font:10px "DM Mono";padding:5px 7px;background:#080909;color:#ddc99e;border:1px solid #a58a58}
+.special-type{margin:14px 4px 5px;font:9px "DM Mono";letter-spacing:.14em;color:#9f8b62}
+.special-title{margin:0 4px;color:#eee7d5;font:400 25px "Libre Baskerville"}
+.special-text{margin:7px 4px;color:#9da6a7;font-size:12px;line-height:1.55}
+.special-button{display:inline-block;margin:6px 4px 0;padding:7px 9px;border:1px solid rgba(118,183,199,.3);color:#a7cbd2;text-decoration:none;font:9px "DM Mono"}
+.special-quote{margin-top:52px;padding:28px 30px;background:rgba(118,183,199,.035);border:1px solid rgba(118,183,199,.13);font:italic 20px/1.65 "Libre Baskerville";color:#c6d2d2}
+@media(max-width:1000px){.special-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.special-grid{grid-template-columns:1fr}}
+</style>
+<style id="album-fix-css">
+.album-jump{position:sticky;top:12px;z-index:50;display:flex;gap:10px;flex-wrap:wrap;margin:18px 0 35px;padding:12px 14px;background:rgba(7,10,11,.9);backdrop-filter:blur(12px);border:1px solid rgba(201,163,107,.3);box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.album-jump a{color:#d8c69e;text-decoration:none;font:10px "DM Mono";letter-spacing:.08em;padding:8px 10px;border:1px solid rgba(201,163,107,.25)}
+.album-jump a:hover{background:rgba(201,163,107,.1)}
+.album-divider{margin:30px 0 10px;color:#c9a36b;font:10px "DM Mono";letter-spacing:.18em}
+</style>
+<style>
+#timeline-page{margin:110px 0 90px;padding:75px 0;border-top:1px solid rgba(201,163,107,.2);position:relative}
+#timeline-page:before{content:"";position:absolute;left:50%;top:180px;bottom:40px;width:1px;background:linear-gradient(transparent,#c9a36b,#6e8f98,#c9a36b,transparent);opacity:.7}
+.tl-head{text-align:center}.tl-kicker{font:10px "DM Mono";letter-spacing:.2em;color:#c9a36b}
+.tl-head h2{font:400 clamp(42px,6vw,82px)/1 "Libre Baskerville";margin:15px 0;color:#eee8d9}
+.tl-head p{max-width:700px;margin:auto;color:#aeb5b6;line-height:1.8}
+.tl-controls{display:flex;justify-content:center;gap:10px;margin:30px 0 55px;flex-wrap:wrap}
+.tl-controls button{font:10px "DM Mono";color:#d6c39a;background:#0d1112;border:1px solid rgba(201,163,107,.35);padding:10px 13px;cursor:pointer}
+.tl-controls button.active{background:#1a2020;border-color:#c9a36b}
+.tl-item{width:50%;padding:0 55px 65px;box-sizing:border-box;position:relative}.tl-item:nth-child(even){margin-left:50%}.tl-item:nth-child(odd){text-align:right}
+.tl-dot{position:absolute;top:8px;width:13px;height:13px;border-radius:50%;background:#c9a36b;box-shadow:0 0 0 5px rgba(201,163,107,.08),0 0 22px rgba(201,163,107,.25)}
+.tl-item:nth-child(odd) .tl-dot{right:-7px}.tl-item:nth-child(even) .tl-dot{left:-7px}
+.tl-year{font:12px "DM Mono";letter-spacing:.16em;color:#c9a36b}.tl-title{font:400 27px "Libre Baskerville";color:#e9e2d2;margin:8px 0}.tl-desc{font-size:13px;line-height:1.7;color:#9fa8a9;max-width:500px}.tl-item:nth-child(odd) .tl-desc{margin-left:auto}.tl-relic{display:inline-block;margin-top:12px;padding:5px 8px;border:1px solid rgba(118,183,199,.24);color:#9fc7cf;font:9px "DM Mono"}.tl-item.hidden{display:none}
+#album-hub{margin:100px 0;padding:75px 0;border-top:1px solid rgba(201,163,107,.2)}.album-hub-head{text-align:center}.album-hub-head .k{font:10px "DM Mono";letter-spacing:.2em;color:#c9a36b}.album-hub-head h2{font:400 clamp(42px,6vw,76px)/1.05 "Libre Baskerville";margin:14px 0;color:#eee8d9}.album-hub-head p{max-width:680px;margin:auto;color:#aeb5b6;line-height:1.8}.album-hub-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:25px;margin-top:45px}.album-door{min-height:300px;padding:35px;display:flex;flex-direction:column;justify-content:end;position:relative;background:radial-gradient(circle at 70% 25%,rgba(201,163,107,.15),transparent 35%),linear-gradient(145deg,#171c1d,#070909);border:1px solid rgba(201,163,107,.25);box-shadow:0 25px 70px rgba(0,0,0,.35)}.album-door .big{font:80px "Libre Baskerville";color:rgba(201,163,107,.12);position:absolute;right:25px;top:10px}.album-door h3{font:400 31px "Libre Baskerville";margin:0;color:#eee8d9}.album-door p{color:#9fa8a9;line-height:1.7;font-size:13px}.album-door a{width:max-content;color:#d2bf92;border:1px solid rgba(201,163,107,.35);padding:9px 12px;text-decoration:none;font:10px "DM Mono"}
+@media(max-width:700px){#timeline-page:before{left:14px}.tl-item,.tl-item:nth-child(even),.tl-item:nth-child(odd){width:100%;margin-left:0;text-align:left;padding:0 15px 55px 45px}.tl-item:nth-child(odd) .tl-desc{margin-left:0}.tl-item .tl-dot,.tl-item:nth-child(odd) .tl-dot,.tl-item:nth-child(even) .tl-dot{left:8px;right:auto}.album-hub-grid{grid-template-columns:1fr}}
+</style>
+<link href="./assets/atlas.css" rel="stylesheet"/><link href="./assets/interactive.css" rel="stylesheet"/><link href="./assets/immersive.css" rel="stylesheet"/><link href="./assets/book-mode.css" rel="stylesheet"/>
+<style id="history-page-css">
+.history-intro{max-width:1120px;margin:105px auto 0;padding:90px 34px 55px;position:relative;overflow:hidden;background:radial-gradient(circle at 85% 20%,rgba(118,183,199,.10),transparent 35%),linear-gradient(145deg,#101718,#060809);border:1px solid rgba(201,163,107,.2);box-shadow:0 30px 100px rgba(0,0,0,.35)}
+.history-intro:after{content:"01";position:absolute;right:20px;bottom:-45px;font:180px "DM Mono";color:rgba(255,255,255,.025)}
+.history-intro h1{font:400 clamp(50px,8vw,100px)/.98 "Libre Baskerville";max-width:900px;margin:14px 0 24px;color:#eee8d9}.history-intro h1 em{color:#c9a36b;font-style:normal}.history-intro p{max-width:760px;font:18px/1.85 Inter,Arial;color:#b9c0c0}.history-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.history-links a{padding:11px 15px;border:1px solid rgba(118,183,199,.25);color:#c8dadd;text-decoration:none;font:10px "DM Mono";letter-spacing:.1em}.history-links a:hover{background:rgba(118,183,199,.08);border-color:#8dc8d5}
+.history-end{max-width:1120px;margin:0 auto;padding:110px 34px 140px}.history-end h2{font:400 clamp(40px,6vw,76px)/1.05 "Libre Baskerville";margin:12px 0 35px;color:#eee8d9}.history-next{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.history-next a{display:block;padding:28px;text-decoration:none;border:1px solid rgba(201,163,107,.2);background:linear-gradient(145deg,#111718,#080a0b);transition:.3s}.history-next a:hover{transform:translateY(-5px);border-color:rgba(118,183,199,.4)}.history-next span{display:block;font:10px "DM Mono";letter-spacing:.18em;color:#c9a36b}.history-next strong{display:block;margin-top:10px;color:#e6e2d8;font:400 20px/1.4 "Libre Baskerville"}@media(max-width:800px){.history-next{grid-template-columns:1fr}.history-intro{margin-top:80px}}
+</style>
+<style id="history-rail-css">.history-rail{position:sticky;top:62px;z-index:40;max-width:1120px;margin:0 auto;height:52px;padding:0 34px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,7,9,.82);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}.history-rail .brand{font:10px "DM Mono";letter-spacing:.18em;color:#7e8b8e}.history-rail .navlinks{display:flex;gap:16px}.history-rail .navlinks a{font:10px "DM Mono";color:#6f797c;text-decoration:none}.history-rail .navlinks a:hover{color:#d9e1df}</style></head><body><nav class="nav atlas-global-nav"><a class="brand" href="index.html">ATLANTE DELLA RETE</a><div class="navlinks"><a href="index.html">HOME</a><a class="active" href="storia-internet.html">STORIA</a><a href="lezioni.html">LEZIONI</a><a href="timeline.html">TIMELINE</a><a href="album.html">ALBUM</a><a href="security.html">SICUREZZA</a><a href="maps-internet.html">MAPPE</a><a href="biblioteca.html">STORIE</a><a href="search.html">CERCA</a></div></nav><section class="history-intro"><div class="kicker">SEZIONE · STORIA DI INTERNET</div><h1>Prima che esistesse <em>il Web</em></h1><p>Un storia attraverso le idee, le macchine e le persone che hanno trasformato la comunicazione a distanza in una rete mondiale.</p><div class="history-links"><a href="timeline.html">TIMELINE →</a><a href="album.html">PERSONAGGI →</a><a href="maps-internet.html">MAPPE →</a></div></section><div class="progress" id="progress"></div>
+<header class="history-rail"><div class="brand">STORIA / INTERNET</div><div class="navlinks">
+<a href="#lezione0">00</a><a href="#baran">01</a><a href="#arpanet">02</a><a href="#mail">03</a><a href="#case">04</a><a href="#irc">05</a><a href="#web">06</a><a href="#1995">07</a>
+</div></header>
+<section class="hero">
+<div class="hero-photo"></div><div class="network"><i class="node n1"></i><i class="node n2"></i><i class="node n3"></i><i class="node n4"></i><i class="node n5"></i><i class="node n6"></i></div>
+<div class="hero-inner reveal"><div class="eyebrow"> · STORIA</div>
+<h1>Prima che esistesse<br/><em>il Web</em></h1>
+<p class="hero-sub">La storia di Internet non comincia con un browser. Comincia molto prima: con una guerra, una domanda, computer isolati, linee telefoniche, modem, comunità, messaggi nel buio e una lunga serie di persone che provano a costruire ponti.</p>
+<div class="scroll">INIZIA IL VIAGGIO<i></i></div></div>
+</section>
+<section class="chapter" data-num="∞" style="padding-top:95px;padding-bottom:95px">
+<div class="choice-card" style="max-width:900px;margin:0 auto">
+<div class="choice-title">PORTA D'INGRESSO · PRIMA DELLA RETE</div>
+<h2 style="margin:12px 0 18px;font:400 clamp(34px,5vw,58px)/1.08 'Libre Baskerville'">La storia comincia molto prima di Internet.</h2>
+<p class="intro" style="margin-bottom:24px">Prima di ARPANET, prima dei computer collegati, prima del telefono e perfino prima dell'elettricità, c'era una domanda: come far arrivare un'informazione a qualcuno che si trova lontano?</p>
+<a class="chapter-link" href="lezione-origini-comunicazione.html">↳ ENTRA NELLA STORIA DELLA COMUNICAZIONE</a>
+</div>
+</section>
+<section class="chapter" data-num="00" id="lezione0">
+<div class="kicker">Lezione 0 · Baghdad, 1991</div>
+<h2>Baghdad, la notte</h2>
+<p class="intro">Prima di tornare indietro, fermiamoci nel punto in cui la storia ci ha portati: una città al buio, una connessione ancora fragile, qualcuno che scrive e qualcuno che, dall'altra parte del mondo, legge.</p>
+<div class="scene reveal"><img alt="Baghdad vista dall'alto" src="https://commons.wikimedia.org/wiki/Special:FilePath/Bagdad-sat.JPG"/><div class="veil"></div><div class="scene-caption"><div class="tag">BAGHDAD · 1991</div><h3>Una città senza luce.</h3><p>Un monitor continua a brillare.</p></div></div>
+<div class="prose">
+<p>Prima viene il lampo.</p><p>Non il rumore.</p><p>Il lampo.</p><p>Un bianco improvviso dietro le tende.</p><p>Per un istante la stanza esiste di nuovo.</p><p>Il tavolo. La sedia. Il bicchiere lasciato a metà. Le mani sulla tastiera. Il volto riflesso nel vetro del monitor.</p><p>Poi tutto scompare.</p><p>Buio.</p><p>E un secondo dopo arriva il rumore.</p>
+</div>
+<div class="big-quote quote">BOOM.</div>
+<div class="prose"><p>Le finestre tremano. Qualcosa cade in cucina. Da una stanza accanto una voce chiama qualcuno. Nessuno risponde.</p><p>Poi un altro lampo. Questa volta più lontano. Il soffitto diventa bianco. Il vetro della finestra vibra.</p></div>
+<div class="terminal reveal"><span class="dim">[linea attiva]</span><br/><br/><span>bombs are dropping in Baghdad</span><br/><span>jeesh</span><br/><span>am I getting through?</span><br/><span>who's in baghdad here?</span><br/><br/><span>phones are going down</span><br/><span>2 major explosions</span><br/><span>1 near major comm center</span><br/><span>CNN HAS THE SCOOP!</span><br/><br/><span class="cursor"></span></div>
+<div class="prose">
+<p>La stanza rimane buia. Il monitor no.</p><p>Fuori, Baghdad è diventata una città senza elettricità. Le insegne sono morte. I semafori sono morti. I negozi sono morti. I telefoni stanno morendo.</p><p>Non la notte che conosciamo, quella che lascia sempre qualche luce sul fondo. Non ci sono fari. Non ci sono vetrine. Non ci sono finestre illuminate. Soltanto il cielo. E ogni tanto il cielo si apre.</p><p>Un lampo. Un'esplosione. Un'altra.</p><p>Qualcuno, dall'altra parte del mondo, legge. Non sa chi sia. Non sa dove sia. Non sa se quella persona abbia paura. Non sa nemmeno se tra un minuto sarà ancora connessa.</p><p>Scrive: <strong>where are you?</strong></p><p>Attende. Il cursore lampeggia.</p><p>Nessuna risposta.</p><p>In una casa, qualcuno porta i bambini lontano dalle finestre. In un ospedale qualcuno corre in un corridoio buio. In una strada un'automobile è ferma con i fari spenti. In un appartamento qualcuno stringe una radio.</p><p>E intanto, su uno schermo grande quanto un foglio di quaderno, compare:</p></div>
+<div class="quote">phones are going down<small>I telefoni stanno smettendo di funzionare.</small></div>
+<div class="prose"><p>Questa frase viaggia. Non sappiamo quanto ci metta. Non sappiamo attraverso quali fili passi. Non sappiamo quante macchine attraversi. Sappiamo soltanto che parte da lì. Da una stanza buia. E arriva da qualche altra parte.</p><p>A migliaia di chilometri. Forse dall'altra parte dell'oceano. Forse in una stanza dove qualcuno sta guardando la televisione. Forse davanti a un altro computer.</p><p>Quella notte Baghdad non era collegata al mondo come lo intendiamo oggi. Non c'erano feed. Non c'erano notifiche. Non c'era un pulsante da premere per essere ascoltati da tutti.</p><p>C'era una rete. Una rete ancora giovane, imperfetta, quasi invisibile.</p><p>E dentro quella rete, per qualche ora, passò qualcosa che non era soltanto informazione.</p></div>
+<div class="quote">Passò una presenza.<br/><br/><strong>Sono qui.</strong></div>
+<div class="prose"><p>Forse è da qui che dobbiamo cominciare. Non da un laboratorio. Non da un computer. Non da una data. Non da ARPANET.</p><p>Da una notte. Da una città rimasta senza luce. Da uno schermo che continuava a brillare.</p><p>E da una domanda che, in fondo, contiene tutta la storia di Internet:</p></div>
+<div class="big-quote quote"><strong>c'è qualcuno dall'altra parte?</strong></div>
+<div class="prose"><p>Per rispondere bisogna tornare indietro. Molto indietro. A quando non c'era ancora nessuno dall'altra parte. A quando i computer erano isole. Silenziose. Sole.</p><p>E qualcuno, un giorno, cominciò a chiedersi se fosse possibile costruire un ponte.</p></div>
+</section>
+<section class="chapter" data-num="01" id="baran">
+<div class="kicker">Lezione 1 · Guerra Fredda</div><h2>Una rete che non doveva morire</h2>
+<p class="intro">Per capire da dove arriva quel ponte bisogna tornare agli anni Sessanta, quando la prima domanda non riguarda Internet ma la sopravvivenza delle comunicazioni.</p>
+<div class="prose">
+<p>All'inizio degli anni Sessanta gli Stati Uniti si interrogano sulla vulnerabilità delle proprie comunicazioni militari. Gran parte dei collegamenti a lunga distanza dipende dalla rete telefonica, organizzata attorno a un numero relativamente ridotto di grandi centri di commutazione.</p>
+<p>Pochi punti tengono in piedi tutto.</p><p>Paul Baran lavora alla RAND Corporation e si pone una domanda semplice e terribile: <strong>come creare una rete che, anche se viene distrutta in parte, possa continuare a funzionare?</strong></p>
+<p>La risposta non è rendere quei punti principali semplicemente più resistenti. È eliminarne la centralità.</p>
+</div>
+<div class="quote">Molti nodi. Molti collegamenti. Molte possibilità.<br/><small>Una rete capace di perdere un pezzo senza perdere tutto.</small></div>
+<div class="packetlab reveal"><div class="packetbox"><h4>RETE CENTRATA</h4><div class="packets"><i class="pkt"></i><i class="pkt"></i><i class="pkt"></i><i class="pkt"></i><i class="pkt"></i></div><p>Se cade il punto centrale, la comunicazione può crollare.</p></div><div class="packetbox"><h4>RETE DISTRIBUITA</h4><div class="packets"><i class="pkt"></i><i class="pkt"></i><i class="pkt"></i><i class="pkt"></i><i class="pkt"></i></div><p>Se un percorso scompare, i pacchetti possono cercarne un altro.</p></div></div>
+<div class="prose"><p>Ma c'è un'altra intuizione: perché il messaggio dovrebbe viaggiare tutto insieme? Baran immagina di dividerlo in piccoli blocchi indipendenti. Un pezzo può passare da una parte, un altro da un'altra. Alla destinazione vengono ricomposti.</p><p>Baran prova a trasformare l'idea in realtà. AT&amp;T, allora la grande azienda delle telecomunicazioni, considera l'idea impraticabile.</p><p>Dall'altra parte dell'Atlantico Donald Davies arriva a conclusioni simili partendo da un problema differente: far comunicare computer e centri di ricerca in modo più efficiente. Nel 1965 concepisce la divisione dei dati in piccole unità e conia il termine <strong>packet</strong>.</p></div>
+<div class="quote">Due problemi diversi.<br/>Una soluzione sorprendentemente simile.</div>
+<div class="prose"><p>È il concetto di <strong>packet switching</strong>: invece di riservare un'intera linea a una singola comunicazione, molti computer possono condividere la rete inviando piccoli pacchetti che vengono instradati verso la destinazione.</p></div>
+<div class="source-links"><a href="https://www.rand.org/" target="_blank">RAND CORPORATION</a><a href="https://commons.wikimedia.org/wiki/Category:ARPANET" target="_blank">ARCHIVIO ARPANET</a></div>
+</section>
+<section class="chapter" data-num="02" id="arpanet">
+<div class="kicker">Lezione 2 · ARPA / IPTO / ARPANET</div><h2>Quando i computer erano isole</h2>
+<div class="prose"><p>Serve qualcuno che abbia i mezzi, i soldi e il potere di dire: adesso questa idea va realizzata.</p><p>Nel 1958 il governo americano crea <strong>ARPA — Advanced Research Projects Agency</strong>, con lo scopo di finanziare ricerca tecnologica avanzata. Al suo interno nasce l'<strong>IPTO — Information Processing Techniques Office</strong>.</p><p>Il primo direttore, <strong>J.C.R. Licklider</strong>, immagina una rete attraverso cui persone e computer lontani possano comunicare e accedere a programmi e informazioni presenti su altre macchine.</p><p>Ma i computer sono enormi, costosi, costruiti da aziende differenti, spesso incompatibili, con linguaggi e sistemi differenti.</p></div>
+<div class="quote">Sono isole.</div>
+<div class="scene reveal"><img alt="IMP ARPANET del 1969" src="https://commons.wikimedia.org/wiki/Special:FilePath/1969_ARPANET_BBN_IMP.jpg"/><div class="veil"></div><div class="scene-caption"><div class="tag">1969 · BBN IMP</div><h3>Una macchina in mezzo.</h3><p>L'IMP permette a computer diversi di entrare nello stesso mondo.</p></div></div>
+<div class="prose"><p>Nel 1966 arriva <strong>Bob Taylor</strong>. Nel suo ufficio ci sono tre terminali collegati a tre computer diversi, in tre centri di ricerca. Tre utenti, tre password, tre procedure.</p><p>La domanda è quasi inevitabile: <strong>perché questi tre diavoli di computer non possono parlare tra loro?</strong></p><p>Taylor presenta l'idea ad ARPA e riceve un finanziamento di un milione di dollari. Per la responsabilità tecnica sceglie <strong>Larry Roberts</strong>, del MIT. Tra il 1966 e il 1967 Roberts incontra i lavori di Davies e Baran: i pezzi cominciano a combaciare.</p><p>Rimane il problema dell'incompatibilità. Non è possibile modificare ogni computer. La soluzione è mettere in mezzo una macchina dedicata alla comunicazione: l'<strong>IMP, Interface Message Processor</strong>.</p><p>Il computer consegna i dati all'IMP. L'IMP li porta nella rete. Dall'altra parte, un altro IMP li riceve e li presenta al computer destinatario. È l'antenato del moderno router.</p><p>Nel 1968 ARPA pubblica le specifiche e affida a <strong>BBN</strong> la costruzione degli IMP.</p></div>
+<div class="timeline"><div class="event"><time>SETTEMBRE 1969</time><h3>UCLA</h3><p>Il primo IMP viene installato alla University of California, Los Angeles.</p></div><div class="event"><time>POCO DOPO</time><h3>Stanford Research Institute</h3><p>Arriva il secondo IMP. I due sono collegati da una linea dedicata a 50 kbit/s.</p></div><div class="event"><time>29 OTTOBRE 1969</time><h3>LO</h3><p>Charlie Klein invia LOGIN a Bill Duvall. L arriva. O arriva. G manda in crash il computer di Stanford. Il primo messaggio è «LO».</p></div><div class="event"><time>FINE 1969</time><h3>Quattro nodi</h3><p>ARPANET è una rete minuscola e sperimentale, non ancora Internet, ma contiene già elementi fondamentali.</p></div></div>
+<div class="terminal reveal">21:00   LOADED OP. PROGRAM<br/>22:30   Talked to SRI<br/><br/><span class="dim">HOST TO HOST</span><br/><br/><strong>LO</strong> <span class="cursor"></span></div>
+<div class="image-row"><figure class="image-card"><img alt="Mappa dei quattro nodi ARPANET" src="https://commons.wikimedia.org/wiki/Special:FilePath/Map_of_the_4_node_arpanet,_of_1969,_drawn_on_a_napkin.jpg"/><figcaption><strong>La prima ARPANET</strong>Una mappa dei quattro nodi del 1969.</figcaption></figure><figure class="image-card"><img alt="Log del primo collegamento ARPANET" src="https://commons.wikimedia.org/wiki/Special:FilePath/First-arpanet-imp-log.jpg"/><figcaption><strong>Il log del 29 ottobre</strong>La traccia documentale della prima connessione.</figcaption></figure></div>
+</section>
+<section class="chapter" data-num="03" id="mail">
+<div class="kicker">Lezione 3 · Email / TCP-IP</div><h2>La @ e la rete di reti</h2>
+<div class="prose"><p>Nel 1971 ARPANET ha circa quindici nodi. Si scambiano file e usano computer remoti. Ma manca un modo rapido per parlare alle persone.</p><p><strong>Ray Tomlinson</strong> usa due programmi: uno per i messaggi tra utenti della stessa macchina, l'altro — Copy Network — per trasferire file attraverso ARPANET. Si chiede: perché non unirli?</p><p>Nasce però un problema: come distinguere la persona dal computer? Tomlinson guarda la tastiera. Vede la <strong>@</strong>.</p></div>
+<div class="big-quote quote">utente <span style="color:var(--amber)">@</span> computer</div>
+<div class="prose"><p>La chiocciola esiste già sulle tastiere, ma viene usata per indicare un prezzo unitario. Una scelta quasi casuale diventa lo standard che ancora oggi usiamo.</p><p>In meno di due anni la posta elettronica diventa il servizio più utilizzato di ARPANET.</p><p>Ma ARPANET non è Internet. Negli anni Settanta nascono altre reti: <strong>ALOHA NET</strong> alle Hawaii, <strong>CICLAD</strong> in Francia, <strong>SATNET</strong> via satellite. Hanno basi simili, ma parlano in modo differente.</p><p>Il problema cambia: non più soltanto «come far parlare computer sulla stessa rete?», ma <strong>come far parlare reti differenti?</strong></p><p>La soluzione è un traduttore universale: <strong>TCP/IP</strong>. Non occorre modificare la rete interna; bisogna adottare il protocollo nei punti di ingresso. Il <strong>1° gennaio 1983</strong> ARPANET abbandona il vecchio protocollo e passa a TCP/IP.</p></div>
+<div class="diagram reveal" style="padding:35px;border:1px solid var(--line);background:#090d0e"><div class="packets"><span class="pkt">A</span><span class="pkt">L</span><span class="pkt">O</span><span class="pkt">H</span><span class="pkt">A</span></div><p style="color:#8e9898">RETE A → TCP/IP → RETE B → destinatario</p></div>
+</section>
+<section class="chapter" data-num="04" id="case">
+<div class="kicker">Lezione 4 · Case, modem, BBS, Usenet</div><h2>La rete scende nelle case</h2>
+<div class="prose"><p>Nel 1977 debuttano il <strong>Commodore PET</strong>, il <strong>TRS-80</strong> e l'<strong>Apple II</strong>. Nel 1981 arriva l'IBM Personal Computer. Nel 1982 il Commodore 64 diventa il personal computer più venduto dell'epoca.</p><p>A metà degli anni Ottanta il computer non è più un oggetto misterioso. Ma è ancora isolato.</p><p>Nel 1981 arriva un modem economico da circa 300 dollari: computer, linea telefonica, numero da chiamare. Ma chi chiamare?</p></div>
+<div class="scene reveal"><img alt="Computer con modem acustico" src="https://commons.wikimedia.org/wiki/Special:FilePath/Atari_800XL_with_Modem.jpg"/><div class="veil"></div><div class="scene-caption"><div class="tag">ANNI 80 · MODEM</div><h3>Il telefono diventa una porta.</h3><p>Il computer compone un numero e prova a raggiungere un altro computer.</p></div></div>
+<div class="prose"><p>Fine anni Settanta, Chicago. Una bufera di neve blocca la città. <strong>Ward Christensen</strong>, appassionato di computer, pensa a un modo per organizzare gli incontri del suo club. Un computer sempre acceso potrebbe essere raggiunto da chiunque abbia un modem.</p><p><strong>Randy Suess</strong> lo aiuta con l'hardware. Un computer, un modem, una linea telefonica e un software da bacheca. In un mese nasce <strong>CBBS — Computerized Bulletin Board System</strong>, il primo BBS.</p><p>Negli anni successivi nascono migliaia di BBS. Ognuno è un piccolo regno: proprie regole, sysop, argomenti, file. L'utente chiama, legge, risponde, scarica. Ma occupa la linea e paga il telefono.</p></div>
+<div class="quote">E i genitori scoprono bollette salatissime.</div>
+<div class="prose"><p><strong>Tom Jennings</strong> trova una soluzione: far chiamare i BBS tra loro di notte, quando le tariffe sono più basse. I messaggi rimbalzano da nodo a nodo. L'utente paga la chiamata locale; il resto avviene automaticamente.</p><p>Nel giugno 1984 nasce <strong>Fidonet</strong>. A fine 1984 ci sono 100 nodi; a metà anni Novanta saranno quasi 40.000 in oltre 80 paesi. In Italia il primo BBS, <strong>Fido Pordenone</strong>, apre nel 1986; Fidonet Italia arriva a circa 300 nodi nel suo periodo di picco.</p></div>
+<div class="facts"><div class="fact"><div class="year">1986</div><h3>Fido Pordenone</h3><p>Il primo BBS italiano indicato nella trascrizione.</p></div><div class="fact"><div class="year">ROMA · 1986</div><h3>MC Link</h3><p>Uno dei primi BBS commerciali italiani, legato a MC Microcomputer.</p></div><div class="fact"><div class="year">MILANO · 1989</div><h3>Galattica</h3><p>Uno dei BBS italiani ricordati nel percorso.</p></div><div class="fact"><div class="year">ITALIA</div><h3>Il libro dei BBS</h3><p>Una guida cartacea per capire dove collegarsi e quali discussioni trovare.</p></div></div>
+<div class="prose"><p>Nel maggio 1994 arriva l'<strong>Italian Crackdown / Fido Bust</strong>: 130 abitazioni vengono perquisite, computer, modem e dischi sequestrati; molti BBS chiudono per paura. Le accuse, nella maggior parte dei casi, non porteranno a condanne, ma il colpo alla scena digitale italiana è duro.</p><p>Parallelamente nasce <strong>Usenet</strong>. Nel 1979 Tom Truscott e Jim Ellis affrontano un problema dopo un aggiornamento Unix. Scoprono UUCP — Unix to Unix Copy Protocol — che permette di copiare file tra computer via linea telefonica. Se si possono trasferire file, perché non messaggi?</p><p>Nascono i primi nodi di Users Network. Diversamente dalla mail, il messaggio è pubblico e appartiene a un <strong>Newsgroup</strong>. Ogni nodo conserva una copia e la trasmette ai nodi vicini. Non c'è un server centrale.</p></div>
+<div class="image-row"><figure class="image-card"><img alt="Ward Christensen e il primo BBS" src="https://commons.wikimedia.org/wiki/Special:FilePath/Ward_Christensen_and_the_First_BBS.jpg"/><figcaption><strong>Ward Christensen</strong>Con il primo BBS.</figcaption></figure><figure class="image-card"><img alt="Hayes Smartmodem 1982" src="https://commons.wikimedia.org/wiki/Special:FilePath/Hayes_Smartmodem_1982_(1).jpg"/><figcaption><strong>Hayes Smartmodem</strong>Un modem della prima era delle connessioni domestiche.</figcaption></figure></div>
+</section>
+<section class="chapter" data-num="05" id="irc">
+<div class="kicker">Lezione 5 · Chat / comunità</div><h2>La stanza che attraversava il mondo</h2>
+<div class="prose"><p>Nel 1987 Usenet viene riorganizzata: comp, sci, rec, soc, news, misc e humanities diventano categorie principali. Nasce anche <strong>alt</strong>, una gerarchia senza le stesse regole formali. In questo ambiente si consolidano netiquette, FAQ, off-topic, trolling, spam e i primi flame.</p><p>Nel settembre 1979 CompuServe lancia <strong>Micronet</strong>, un servizio per rendere i servizi online più accessibili: mail, forum, file, banche dati. Ma è un recinto chiuso controllato da una sola azienda.</p><p>Più avanti arriva <strong>Prodigy</strong>: tariffa fissa, interfaccia grafica, banner pubblicitari, notizie, meteo, sport, oroscopi, posta, prenotazioni e acquisti. Poi <strong>AOL</strong> rende l'accesso ancora più facile e distribuisce CD-ROM gratuiti ovunque: giornali, riviste, aeroporti, perfino confezioni di prodotti.</p><p>Ma anche AOL è un giardino recintato. La rete vera deve ancora diventare un luogo unico e attraversabile.</p></div>
+<div class="scene reveal"><img alt="Modem US Robotics" src="https://commons.wikimedia.org/wiki/Special:FilePath/US_Robotics_Courier_2400_Modem_powered_on_(cropped).jpg"/><div class="veil"></div><div class="scene-caption"><div class="tag">1988 · OULU</div><h3>Una chat diventa una rete.</h3><p>Jarkko Oikarinen modifica un sistema di chat e nasce IRC.</p></div></div>
+<div class="prose"><p>Nel 1988, all'Università di Oulu, <strong>Jarkko Oikarinen</strong>, 23 anni, amministra un server Unix con il BBS pubblico OuluBox. La chat esiste, ma ha pochi utenti, una sola stanza e molti limiti.</p><p>Nell'agosto 1988 nasce <strong>IRC — Internet Relay Chat</strong>. Non più un solo computer: una rete di server collegati. Non più una sola stanza: canali contraddistinti dal <strong>#</strong>. Ogni canale ha il proprio moderatore.</p><p>A metà 1989 ci sono circa quaranta server nel mondo. Nascono EFnet, IRCnet, Undernet, Dalnet. E nasce un lessico che riconosciamo ancora: nick, bot, OP, kick, ban.</p></div>
+<div class="quote">#Linux    #Italia    #Music</div>
+<div class="prose"><p>Poi arriva il 2 agosto 1990: l'Iraq invade il Kuwait. Il 17 gennaio 1991 inizia Desert Storm. I bombardamenti colpiscono Baghdad. Le emittenti internazionali vengono espulse o costrette al silenzio. Le linee telefoniche civili vengono tagliate.</p><p>Resta una linea Internet che per alcuni giorni continua a funzionare. Un piccolo numero di utenti si collega ai server IRC. Sul canale <strong>#Report</strong> uno studente scrive in tempo reale ciò che vede e sente dalla finestra: bombardamenti, allarmi, rumore.</p><p>Per chi è connesso è una novità radicale: seguire una guerra attraverso testo scritto in tempo reale da un testimone.</p><p>La copertura viene seguita da migliaia di persone. IRC diventa di dominio pubblico.</p></div>
+<div class="source-links"><a href="https://commons.wikimedia.org/wiki/Category:BBS" target="_blank">ARCHIVIO BBS</a><a href="https://commons.wikimedia.org/wiki/Category:Internet_Relay_Chat" target="_blank">ARCHIVIO IRC</a></div>
+</section>
+<section class="chapter" data-num="06" id="gopher">
+<div class="kicker">Lezione 6 · Gopher</div><h2>La prima vera sensazione di navigare</h2>
+<div class="prose"><p>Tra metà degli anni Ottanta e inizio anni Novanta basta un computer, un modem e una presa telefonica per entrare in un universo di BBS, IRC, FTP, Usenet, Telnet e servizi chiusi.</p><p>Ma non esiste un modo unico di navigare. Non ci sono pagine Web, link, immagini insieme al testo o motori di ricerca. Per trovare qualcosa bisogna sapere prima dove cercare, oppure chiedere a qualcuno o leggere una rivista.</p><p>La domanda diventa: <strong>come rendere la rete accessibile anche a chi non è un nerd?</strong></p><p>Nel 1991, all'Università del Minnesota, nasce <strong>Gopher</strong>. L'utente vede un menu testuale numerato. Sceglie una voce, entra in un altro menu, apre un documento, scarica un file o raggiunge un altro server senza quasi accorgersi di aver cambiato macchina.</p></div>
+<div class="quote">Per la prima volta esiste qualcosa che assomiglia davvero alla navigazione.</div>
+<div class="prose"><p>Nasce il <strong>Gopher Space</strong>, composto da migliaia di server collegati. E nasce <strong>Veronica</strong>, sviluppata dall'Università del Nevada, che cerca in quello spazio e restituisce risultati.</p><p>Università, biblioteche e governi adottano Gopher. Per molti utenti diventa il modo più semplice di accedere a risorse senza conoscere tecnicamente il server.</p></div>
+<div class="source-links"><a href="https://en.wikipedia.org/wiki/Gopher_(protocol)" target="_blank">APPROFONDISCI GOPHER</a></div>
+</section>
+<section class="chapter" data-num="07" id="web">
+<div class="kicker">Lezione 7 · CERN / World Wide Web</div><h2>Quando le parole diventano porte</h2>
+<div class="prose"><p>Al CERN di Ginevra <strong>Tim Berners-Lee</strong> cerca un modo ancora più intuitivo di navigare rispetto a Gopher.</p><p>Non vuole costringere l'utente a scegliere numeri nei menu. Vuole che siano le parole stesse dentro un documento a poter puntare ad altri documenti, ovunque si trovino nel mondo.</p><p>L'idea diventa tre tecnologie:</p></div>
+<div class="facts"><div class="fact"><div class="year">LINGUAGGIO</div><h3>HTML</h3><p>Scrivere documenti con collegamenti incorporati.</p></div><div class="fact"><div class="year">PROTOCOLLO</div><h3>HTTP</h3><p>Trasmettere i documenti tra computer.</p></div><div class="fact"><div class="year">INDIRIZZO</div><h3>URL</h3><p>Indicare una risorsa precisa.</p></div></div>
+<div class="scene reveal"><img alt="Il primo Web server al CERN" src="https://commons.wikimedia.org/wiki/Special:FilePath/First_Web_Server.jpg"/><div class="veil"></div><div class="scene-caption"><div class="tag">CERN · 1990</div><h3>“This machine is a server.”</h3><p>Il NeXTcube usato da Tim Berners-Lee per il primo Web server.</p></div></div>
+<div class="prose"><p>Berners-Lee mette insieme queste tecnologie, crea il primo server Web e lo programma per leggere documenti. Il <strong>20 dicembre 1990</strong> il primo server Web va online al CERN su un computer NeXT.</p><p>Il <strong>6 agosto 1991</strong>, su un newsgroup Usenet, annuncia che il software è disponibile. Il <strong>30 aprile 1993</strong> il CERN stabilisce che ciò che è stato inventato sia gratuito e disponibile per tutti: nessun brevetto, nessuna royalty.</p><p>Questo favorisce la crescita del Web. Gopher rallenta e in circa due anni viene superato.</p></div>
+<div class="image-row"><figure class="image-card"><img alt="Prima pagina Web" src="https://commons.wikimedia.org/wiki/Special:FilePath/W3_First_Website.png"/><figcaption><strong>Il primo sito Web</strong>Una ricostruzione della prima pagina del World Wide Web.</figcaption></figure><figure class="image-card"><img alt="NeXTcube primo server web" src="https://commons.wikimedia.org/wiki/Special:FilePath/NeXTcube_first_webserver.JPG"/><figcaption><strong>Il computer</strong>Il NeXTcube utilizzato da Berners-Lee come primo Web server.</figcaption></figure></div>
+<div class="source-links"><a href="https://info.cern.ch/" target="_blank">INFO.CERN.CH · PRIMO SITO</a><a href="https://home.cern/science/computing/birth-web" target="_blank">CERN · LA NASCITA DEL WEB</a></div>
+</section>
+<section class="chapter" data-num="08" id="1995">
+<div class="kicker">Lezione 8 · Mosaic / Yahoo / AltaVista</div><h2>Il mondo diventa cliccabile</h2>
+<div class="prose"><p>I primi browser sono ancora limitati: mostrano testo e funzionano soprattutto su Unix. Per un utente comune il Web è difficile da capire.</p><p>Nel gennaio 1993 due ragazzi dell'Università dell'Illinois rilasciano <strong>Mosaic</strong>. Due caratteristiche fanno la differenza: gira su <strong>Windows e Macintosh</strong> e mostra <strong>immagini insieme al testo</strong>. Inoltre è gratuito.</p><p>La navigazione diventa visiva.</p></div>
+<div class="scene reveal"><img alt="Screenshot NCSA Mosaic" src="https://commons.wikimedia.org/wiki/Special:FilePath/NCSA_Mosaic_Browser_Screenshot.png"/><div class="veil"></div><div class="scene-caption"><div class="tag">MOSAIC · 1993</div><h3>La rete entra negli occhi.</h3><p>Testo e immagini nella stessa finestra.</p></div></div>
+<div class="prose"><p>Nel dicembre 1993 il New York Times pubblica un articolo sul Web e Mosaic e usa «Internet» con la I maiuscola come qualcosa di reale e popolare.</p><p>I siti esplodono: da qualche decina all'inizio del 1993 a oltre 10.000 dopo un anno, oltre 100.000 nel 1995 e svariati milioni nel 1996.</p><p>Il <strong>1995</strong> diventa un anno decisivo. Arriva Netscape Navigator. Windows 95 include Internet Explorer. AOL, CompuServe, Xmicronet e Prodigy aprono i loro giardini chiusi al resto delle risorse Internet. Cadono le restrizioni commerciali sull'uso delle dorsali. Le aziende possono creare reti, siti e server.</p><p>In Italia Internet arriva un anno dopo, nel <strong>1996</strong>, quando i primi grandi quotidiani inaugurano le edizioni online. Le aziende registrano domini e i provider cominciano a pubblicizzare accessi a tariffa flat.</p></div>
+<div class="facts"><div class="fact"><div class="year">1994</div><h3>Yahoo</h3><p>Jerry Yang e David Filo costruiscono una lista di siti divisa per categorie.</p></div><div class="fact"><div class="year">15 DICEMBRE 1995</div><h3>AltaVista</h3><p>Il primo moderno motore di ricerca della storia raccontata nel video.</p></div><div class="fact"><div class="year">DOPO</div><h3>Google</h3><p>Arriverà qualche anno dopo e renderà la ricerca ancora più fruibile.</p></div></div>
+<div class="image-row"><figure class="image-card"><img alt="Yahoo 1994" src="https://commons.wikimedia.org/wiki/Special:FilePath/Yahoo_screenshot_1994.png"/><figcaption><strong>Yahoo, 1994</strong>Una lista di siti divisa in categorie.</figcaption></figure><figure class="image-card"><img alt="World Wide Web" src="https://commons.wikimedia.org/wiki/Special:FilePath/W3_First_Website.png"/><figcaption><strong>Dal documento alla navigazione</strong>Il Web mette in relazione le risorse attraverso i link.</figcaption></figure></div>
+<div class="quote">Prima del 1993, essere su Internet significava fare cose precise e separate.<br/><br/>Dopo il 1995, significa aprire un browser, cercare qualcosa e iniziare a navigare.</div>
+<div class="source-links"><a href="https://commons.wikimedia.org/wiki/File:NCSA_Mosaic_Browser_Screenshot.png" target="_blank">MOSAIC · ARCHIVIO</a><a href="https://commons.wikimedia.org/wiki/File:Yahoo_screenshot_1994.png" target="_blank">YAHOO 1994 · ARCHIVIO</a></div>
+</section>
+<section class="chapter security-home-card" data-num="S" style="padding-top:95px;padding-bottom:95px"><div class="kicker">SEZIONE AUTONOMA · CRITTOGRAFIA E SICUREZZA</div><h2>La storia dei segreti.</h2><p class="intro">Dai primi messaggi cifrati alla crittografia delle reti: una lunga storia di codici, crittoanalisti, macchine, chiavi e protocolli che conduce fino alla protezione delle comunicazioni moderne.</p><div style="margin-top:28px"><a class="chapter-link" href="security.html">ENTRA NELLA STORIA DELLA CRITTOGRAFIA →</a></div><div style="margin-top:22px"><a class="chapter-link" href="album.html#security-district">PERSONAGGI DELLA SEZIONE →</a></div></section><section class="end">
+<div class="kicker">EPILOGO</div>
+<h2>Non è nata in un giorno.</h2>
+<p>Una rete che non doveva morire. Pacchetti. Computer che parlano. Reti che parlano tra loro. Email. BBS. Usenet. IRC. Gopher. Web. Ricerca.</p>
+<p>Ogni volta un problema. Ogni volta un ponte.</p>
+<p style="margin-top:45px;color:#d7d4ca;font:400 27px/1.5 'Libre Baskerville'">E oggi, soprattutto domani, il modo in cui usiamo Internet è destinato ancora a cambiare.</p>
+</section>
+<script>
+const progress=document.getElementById('progress');
+window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;progress.style.width=(scrollY/h*100)+'%'});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
+</script>
+<section class="history-end"><div class="kicker">CONTINUA L'ESPLORAZIONE</div><h2>La storia non finisce qui.</h2><div class="history-next"><a href="timeline.html"><span>TIMELINE</span><strong>Rivedi la storia in movimento →</strong></a><a href="album.html"><span>ALBUM</span><strong>Incontra le persone della rete →</strong></a><a href="security.html"><span>SICUREZZA</span><strong>Segui la storia dei segreti →</strong></a></div></section><script src="./assets/atlas.js"></script><script src="./assets/interactive.js"></script><script src="./assets/immersive.js"></script></body></html>

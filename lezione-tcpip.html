@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+
+<html lang="it"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<title>Vint Cerf &amp; Bob Kahn · Atlante della Rete</title>
+<link href="./assets/atlas.css" rel="stylesheet"/>
+<link href="./assets/interactive.css" rel="stylesheet"/><link href="./assets/immersive.css" rel="stylesheet"/><link href="./assets/book-mode.css" rel="stylesheet"/><link href="./assets/chapter-expansion.css" rel="stylesheet"/></head><body class="story-page book-mode"><nav class="nav atlas-global-nav"><a class="brand" href="index.html">ATLANTE DELLA RETE</a><a href="index.html">HOME</a><a href="storia-internet.html">STORIA</a><a href="lezioni.html">LEZIONI</a><a href="timeline.html">TIMELINE</a><a href="album.html">ALBUM</a><a href="security.html">SICUREZZA</a><a href="maps-internet.html">MAPPE</a><a href="biblioteca.html">STORIE</a><a href="search.html">CERCA</a></nav>
+
+<header class="story-hero">
+<div class="story-art">
+<img alt="Vint Cerf &amp; Bob Kahn" src="https://commons.wikimedia.org/wiki/Special:Redirect/file/Vint_Cerf,_Bangalore_2007_1.jpg"/>
+<div class="art-glow"></div>
+</div>
+<div class="story-heading">
+<div class="kicker">1973–1983 · ARCHIVIO</div>
+<h1>La rete delle reti</h1>
+<p class="story-person">Vint Cerf &amp; Bob Kahn</p>
+<div class="story-rule"></div>
+<a class="back-link" href="album.html">← torna all'album</a>
+</div>
+</header>
+<main class="story-content">
+<div class="story-label">APPROFONDIMENTO</div>
+<article class="novel">
+<p>ARPANET funziona.</p>
+<p>Ma il mondo non è fatto di una sola rete.</p>
+<p>Esistono reti differenti, costruite con tecnologie differenti, appartenenti a organizzazioni differenti.</p>
+<p>La domanda cambia ancora:</p>
+<p><strong>come facciamo a far parlare reti diverse?</strong></p>
+<p>Vint Cerf e Bob Kahn lavorano a un'architettura che permetta di collegare reti eterogenee. L'idea è trattare le reti come reti, senza pretendere che diventino tutte uguali.</p>
+<p>TCP/IP diventa il linguaggio comune.</p>
+<p>IP si occupa dell'indirizzamento e dell'inoltro dei datagrammi attraverso reti interconnesse. TCP fornisce un meccanismo affidabile per il trasporto di dati, gestendo aspetti come ordine e ritrasmissione.</p>
+<p>Il passaggio decisivo è concettuale: non stiamo più costruendo <em>una</em> rete.</p>
+<p>Stiamo costruendo una <strong>rete di reti</strong>.</p>
+<p>Il 1º gennaio 1983, il passaggio di ARPANET a TCP/IP diventa uno degli snodi fondamentali della storia della rete.</p>
+</article>
+<aside class="source-note"><strong>Immagine:</strong> Vint Cerf, fotografia di Charles Haynes, CC BY-SA 2.0.<br/>Le immagini esterne sono richiamate da Wikimedia/Wikipedia; per una pubblicazione definitiva conviene mantenere anche la relativa attribuzione/licenza.</aside>
+<section class="book-chapter narrative-expansion"><div class="book-kicker">CAPITOLO · TCP/IP</div><h2>Il giorno in cui reti diverse impararono a vivere nello stesso mondo</h2><div class="book-text"><p>ARPANET non è ancora Internet. Per arrivare a Internet serve un'idea più difficile: non basta costruire una rete funzionante; bisogna permettere a reti differenti di comunicare tra loro. È il problema dell'interconnessione. Una rete può usare una tecnologia, un'altra una tecnologia diversa. Come possono parlarsi senza costringere entrambe a diventare identiche?</p><p>Vint Cerf e Bob Kahn lavorano su questa domanda e arrivano a una separazione di responsabilità che oggi sembra naturale. IP si occupa dell'inoltro dei pacchetti tra reti. TCP si occupa di una parte del lavoro necessario a ottenere una comunicazione affidabile tra estremità, organizzando i dati e gestendo problemi come perdita e riordinamento. Non è una singola macchina a sapere tutto: sono i protocolli a stabilire le regole della conversazione.</p><p>Il concetto di internetworking è il vero salto. Non una rete enorme, ma reti di reti. È una differenza enorme perché permette alla struttura di crescere senza un unico proprietario tecnico di ogni collegamento. Le reti possono essere diverse, purché rispettino le regole comuni necessarie per comunicare.</p><p>Quando nel 1983 ARPANET adotta TCP/IP, la scelta diventa un passaggio storico nella convergenza verso Internet. La parola 'protocollo' può sembrare fredda, ma in fondo significa questo: un accordo su come iniziare una conversazione, come indicare chi parla, come trasportare ciò che viene detto e come capire se qualcosa è andato storto.</p></div><div class="margin-note"><span>NOTA A MARGINE</span>CURIOSITÀ · La vera innovazione di TCP/IP non è soltanto la velocità: è la possibilità di interconnettere reti eterogenee. È per questo che l'Internet moderno non coincide con una singola infrastruttura fisica.</div><div class="book-lab"><span>TRACCIA / ESPERIENZA</span><p>INTERAZIONE · Premi 'INCAPSULA → INVIA'. Guarda i livelli parlare. Ogni livello aggiunge una responsabilità senza dover conoscere tutto ciò che fanno gli altri.</p></div></section>
+<section class="chapter-expansion" id="approfondimento">
+<div class="chapter-expansion-head"><span>ARCHITETTURA DELLA RETE</span><b>LEGGI / OSSERVA / PROVA</b></div>
+<div class="expansion-intro">
+<p class="dropcap">Reti diverse devono poter parlare senza diventare identiche.</p>
+<p>Quello che vediamo oggi come un dettaglio quasi normale era allora un problema aperto. <strong>TCP/IP</strong> non aveva davanti una risposta già scritta nei manuali: aveva un sistema, una difficoltà e la necessità di capire quale regola mancasse. È questo il punto da tenere a mente mentre si attraversa questa pagina.</p>
+</div>
+<div class="expansion-columns">
+<article><span class="section-mark">01 · DENTRO LA SCENA</span><h2>Il problema prima della soluzione</h2>
+<p>La scena che abbiamo appena attraversato può sembrare piccola se la guardiamo con gli occhi di oggi. Ma bisogna togliere per un momento il futuro dalla stanza. Non esistono ancora le reti che conosciamo, non esistono i gesti automatici con cui apriamo un browser o inviamo un messaggio. Esiste soltanto un problema concreto, e qualcuno che decide di prenderlo sul serio. È così che cominciano molte rivoluzioni tecnologiche: non con una macchina spettacolare, ma con una domanda che continua a tornare.</p><p>Il punto interessante è che la soluzione non viene mai tutta insieme. Una rete nasce quando più idee imparano a convivere: un modo per rappresentare i dati, un modo per trasportarli, un modo per scegliere una strada, un modo per riconoscere il destinatario. Ogni pezzo risolve una difficoltà e contemporaneamente prepara quella successiva. Per questo la storia non procede in linea retta: assomiglia più a una costruzione in cui ogni stanza viene aggiunta perché la stanza precedente ha rivelato un nuovo problema.</p>
+<blockquote>«Internet è una federazione di reti che condividono regole.»</blockquote>
+</article>
+<aside class="side-note"><span>PAROLA-CHIAVE</span><strong>protocollo</strong><p>Livelli, incapsulamento, ip, tcp, porte e affidabilità.</p></aside>
+</div>
+<figure class="archive-figure">
+<div class="figure-art"><svg aria-label="Schema concettuale di protocollo" role="img" viewbox="0 0 720 260"><g fill="none" opacity=".7" stroke="currentColor" stroke-width="2"><path d="M90 130 L250 65 L400 130 L560 65"></path><path d="M90 130 L250 195 L400 130 L560 195"></path><path d="M250 65 L250 195 M400 130 L400 40 M400 130 L400 220"></path></g><g fill="currentColor"><circle cx="90" cy="130" r="9"></circle><circle cx="250" cy="65" r="9"></circle><circle cx="250" cy="195" r="9"></circle><circle cx="400" cy="130" r="11"></circle><circle cx="560" cy="65" r="9"></circle><circle cx="560" cy="195" r="9"></circle></g><text fill="currentColor" font-size="14" x="90" y="108">A</text><text fill="currentColor" font-size="14" x="542" y="42">B</text><text fill="currentColor" font-size="12" x="420" y="35">nodo</text></svg></div>
+<figcaption><span>FIGURA · ARCHITETTURA DELLA RETE</span><b>protocollo</b><p>Una rappresentazione concettuale per leggere il meccanismo prima di memorizzarne la definizione.</p></figcaption>
+</figure>
+<div class="expansion-columns reverse">
+<article><span class="section-mark">02 · COME FUNZIONA</span><h2>La macchina invisibile dietro l'idea</h2>
+<p>Guardando da vicino, si scopre anche un principio ricorrente: separare i compiti. Un dispositivo non deve necessariamente conoscere tutto. Un protocollo non deve occuparsi di ciò che appartiene a un altro livello. Una rete fisica può cambiare senza costringere tutte le applicazioni a cambiare. Questa separazione è una delle ragioni per cui Internet riesce a crescere senza essere progettata come una macchina unica.</p><p>E qui entra la parte più concreta. Un pacchetto non è un piccolo messaggio magico: porta informazioni di controllo, attraversa apparati, può attendere, essere ritardato, seguire un percorso differente. Quando parliamo di 'rete', quindi, stiamo parlando di un ambiente dinamico. Le informazioni non attraversano uno spazio vuoto. Attraversano decisioni.</p>
+<div class="mechanism"><div><b>INGRESSO</b><span>informazione / richiesta / segnale</span></div><i>→</i><div><b>TRASFORMAZIONE</b><span>protocollo</span></div><i>→</i><div><b>USCITA</b><span>risultato osservabile</span></div></div>
+</article>
+<aside class="side-note dark"><span>ATTENZIONE</span><p>Non confondere il nome della tecnologia con ciò che risolve. Una tecnologia può risolvere un problema e lasciarne aperto un altro.</p></aside>
+</div>
+<section class="deep-reading"><span class="section-mark">03 · UN DETTAGLIO CHE CAMBIA LA STORIA</span><h2>La cosa che spesso si perde nei riassunti</h2>
+<p>Nei racconti scolastici la storia tende a diventare una sequenza di date: prima questo, poi quello, infine l'innovazione. Ma nella realtà le persone non lavorano così. Provano, falliscono, cambiano linguaggio, discutono con colleghi, riutilizzano idee nate per un altro scopo. La parte interessante è spesso proprio quella zona grigia in cui una soluzione non è ancora diventata inevitabile.</p>
+<p>Per questo vale la pena osservare <strong>TCP/IP</strong> non come un nome da ricordare, ma come una persona immersa in un problema. <strong>Livelli, incapsulamento, ip, tcp, porte e affidabilità</strong>. Quando questa idea incontra altre idee, cambia scala: ciò che prima era un esperimento diventa una tecnica, poi uno standard, poi un gesto quotidiano che quasi nessuno nota più.</p>
+<p>La tecnologia diventa veramente storica quando scompare dalla nostra attenzione. Un protocollo che funziona bene non chiede di essere applaudito; una rete che regge non produce notizie; un browser che riceve una risposta HTTP in pochi millisecondi sembra non aver fatto nulla. Eppure dietro quel silenzio ci sono decenni di tentativi.</p>
+</section>
+<section class="curiosity-strip">
+<div><span>CURIOSITÀ</span><h3>Guarda il dettaglio, non solo il risultato</h3><p>Prova a chiederti quale componente potrebbe essere eliminato senza distruggere l'intero sistema e quale, invece, rappresenterebbe un punto critico. È una domanda utile perché costringe a distinguere tra ciò che è importante e ciò che è semplicemente visibile.</p></div>
+<div><span>DOMANDA DA LABORATORIO</span><h3>Se cambiassi una sola regola?</h3><p>Immagina di modificare una regola del sistema. Che cosa smetterebbe di funzionare? Che cosa, invece, continuerebbe a funzionare? Scrivi una previsione prima di aprire l'interazione.</p></div>
+</section>
+<section class="interactive-relic" data-relic="">
+<div class="relic-head"><span>REPERTO INTERATTIVO</span><b>Apri la traccia nascosta</b></div>
+<div class="relic-body"><p>Premi i tre passaggi nell'ordine che ritieni corretto. Non c'è un voto: l'obiettivo è rendere visibile il ragionamento.</p>
+<div class="relic-steps"><button data-step="1">01 · PROBLEMA</button><button data-step="2">02 · IDEA</button><button data-step="3">03 · CONSEGUENZA</button></div>
+<p aria-live="polite" class="relic-output">La traccia aspetta il primo gesto.</p>
+</div>
+</section>
+<section class="media-dossier">
+<div><span class="section-mark">04 · ARCHIVIO AUDIOVISIVO</span><h2>Adesso guarda la storia</h2><p>Materiali audiovisivi e documenti di approfondimento.</p></div>
+<div class="media-card archive-only"><div class="archive-visual"><span>ARCHIVIO</span><b>INTERNET HISTORY PACKET SWITCHING</b><i>↗</i></div><div class="media-caption"><b>Un dossier esterno da esplorare</b><span>Fonte / archivio</span><p>Il collegamento apre una fonte esterna selezionata per continuare la ricerca oltre il capitolo.</p><a href="https://www.npl.co.uk/about/history-of-npl/packet-switching" rel="noopener" target="_blank">Apri l'archivio →</a></div></div>
+</section>
+<section class="crossroads"><span class="section-mark">05 · DOVE PORTA QUESTA STORIA?</span><h2>La pagina non finisce qui</h2><p>Ogni idea dell'Atlante prepara una domanda successiva. Se questa pagina ti ha mostrato <strong>protocollo</strong>, il passo successivo è capire come quella stessa idea cambia quando entra in un sistema più grande.</p><div class="cross-links"><a href="timeline.html">TIMELINE · vedere la traiettoria</a><a href="album.html">ALBUM · incontrare le persone</a><a href="mappa.html">MAPPA · seguire le connessioni</a></div></section>
+</section><div class="story-nav"><a href="timeline.html">TIMELINE</a><a href="album.html">ALBUM</a><a href="security.html">SICUREZZA</a><a href="index.html">LEZIONI</a></div>
+<div class="archive-strip"><div class="archive-panel"><div class="label">IL PROBLEMA</div><h3>Non una rete. Molte reti.</h3><p>Una rete militare, una rete universitaria, una rete radio, una rete satellitare: il futuro richiede che possano comunicare senza diventare identiche.</p><span class="archive-code">NETWORK A ↔ NETWORK B</span></div><div class="archive-panel"><div class="label">L’IDEA</div><h3>Un linguaggio comune.</h3><p>TCP/IP separa il problema dell’inoltro dei datagrammi da quello del trasporto affidabile e rende possibile pensare a un’Internet come rete di reti.</p><span class="archive-code">IP · TCP · INTERNETWORK</span></div></div></main>
+<section class="book-chapter deep-specific"><div class="book-kicker">APPROFONDIMENTO · TCPIP</div><h2>UNA RETE DI RETI</h2><div class="book-text"><p>Il punto di TCP/IP non è costruire una rete perfetta. È permettere a reti differenti di comunicare senza diventare la stessa rete. È una scelta architetturale potente perché separa l'infrastruttura locale dalle regole comuni dell'interconnessione.</p><p>Quando un pacchetto attraversa Internet, può passare attraverso mezzi completamente diversi: fibra, rame, radio, reti aziendali, reti domestiche, collegamenti internazionali. Nessuno di questi deve conoscere l'intero viaggio. Gli strati e gli indirizzi permettono di mantenere una certa continuità logica sopra una realtà fisica molto diversa.</p><p>Questa separazione è uno dei motivi per cui Internet può crescere. Se ogni nuova tecnologia di collegamento richiedesse di riscrivere tutte le applicazioni, la rete sarebbe fragile. Se invece il nuovo collegamento può entrare nel sistema rispettando le regole necessarie, l'insieme continua ad espandersi.</p></div></section><script src="./assets/atlas.js"></script><script src="./assets/interactive.js"></script><script src="./assets/immersive.js"></script><script src="./assets/chapter-expansion.js"></script></body></html>
