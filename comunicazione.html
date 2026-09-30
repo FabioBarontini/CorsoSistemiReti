@@ -8,95 +8,290 @@
 <div class="atlas-nav-sub"><div class="atlas-nav-sub-inner"><span class="label">STORIA</span><a class="" href="storia-internet.html">STORIA</a><a class="active" href="comunicazione.html">COMUNICAZIONE</a><a class="" href="web-architettura.html">WEB</a><a class="" href="percorsi.html">PERCORSI</a></div></div>
 </nav><div class="atlas-orientation"><span>SEI QUI</span><span class="arrow">›</span><a href="storia-internet.html">STORIA</a><span class="arrow">›</span><span class="here">COMUNICAZIONE</span></div><header class="comm-hero"><div class="wire"></div><div class="comm-hero-inner"><div class="comm-kicker">CAPITOLO · COMUNICAZIONE ELETTRICA</div><h1>Il filo diventa il nuovo spazio</h1><p class="lead">Prima dei pacchetti, dei router e dei browser, qualcuno dovette risolvere un problema più antico: far arrivare un'informazione a una persona che non potevamo vedere, né sentire.</p></div></header>
 <main class="comm-main"><article class="comm-story">
-<section class="story-opening">
-<p>Per capire Internet bisogna tornare indietro, molto prima dei computer. Il problema iniziale non era ancora quello di collegare delle macchine: era molto più semplice e, proprio per questo, più radicale. <strong>Come posso far arrivare un'informazione a qualcuno che non posso vedere e che non posso raggiungere con la voce?</strong></p>
-<p>Per gran parte della storia umana la risposta era stata: bisogna mandare qualcosa. Un messaggero, una lettera, un segnale visibile. Il telegrafo ottico aveva cambiato le proporzioni del problema: un messaggio poteva essere trasformato in un segnale e ripetuto da una stazione all'altra. Ma quel sistema aveva ancora bisogno di occhi, luce e visibilità.</p>
-<p>La svolta successiva nasce quando qualcuno comincia a chiedersi se il segnale possa viaggiare anche <em>senza essere visto</em>. Per arrivarci, però, dobbiamo capire una cosa molto semplice: che cosa significa usare l'elettricità per produrre un effetto a distanza?</p>
+<p>Il telegrafo ottico aveva già dimostrato che l'informazione poteva essere trasformata in segnali. Ma ogni stazione dipendeva da occhi umani, dalla luce e dalla possibilità di vedere la torre successiva.</p>
+<p>L'elettricità cambia la natura del problema. Ma prima di arrivare al telegrafo elettrico bisogna fermarsi un momento: <strong>che cosa significa davvero usare l'elettricità per far accadere qualcosa a distanza?</strong></p>
+<h2>Prima di mandare un messaggio: imparare a comandare a distanza</h2>
+<p>Immaginiamo di avere una batteria, una lampadina, due fili e un interruttore. La batteria possiede energia, ma la lampadina si trova dall'altra parte della stanza. Non dobbiamo spostare la batteria. Dobbiamo creare un <strong>percorso elettrico continuo</strong>.</p>
+<p>Quando il circuito è chiuso, la corrente può attraversarlo e la lampadina si accende. Quando apriamo l'interruttore, il percorso si interrompe e la lampadina si spegne.</p>
+<div class="mechanism">
+<div class="node"><strong>SORGENTE</strong><span>La batteria fornisce energia al circuito.</span></div><div class="arrow">→</div>
+<div class="node"><strong>CONTROLLO</strong><span>L'interruttore apre o chiude il percorso.</span></div><div class="arrow">→</div>
+<div class="node"><strong>EFFETTO</strong><span>La lampadina reagisce alla corrente.</span></div>
+</div>
+<p>Ora allunghiamo i fili. La lampadina si trova a cento metri di distanza. Il principio non cambia: chiudendo il circuito qui, possiamo produrre un effetto là. <strong>Non abbiamo trasportato la lampadina e non abbiamo trasportato una persona: abbiamo trasmesso un effetto.</strong></p>
+<div class="comm-lab">
+<div class="lab-title">ESPERIMENTO · ACCENDERE A DISTANZA</div>
+<div class="switchboard" id="electricDemo">
+<div class="switch-node"><strong>STAZIONE A</strong><span>INTERRUTTORE</span></div>
+<div class="route circuit"><span class="pulse"></span></div>
+<div class="switch-node"><strong>STAZIONE B</strong><span id="lampStatus">LAMPADA · SPENTA</span></div>
+</div>
+<div class="lab-controls"><button id="electricToggle">CHIUDI IL CIRCUITO</button></div>
+<p id="electricText">Il circuito è aperto. Nessun effetto arriva dall'altra parte.</p>
+</div>
+<h2>Quando l'effetto diventa un linguaggio</h2>
+<p>La lampadina ci offre due stati molto semplici: <strong>accesa</strong> e <strong>spenta</strong>. Possiamo usarli per rappresentare qualcosa? Possiamo decidere che un impulso breve significhi una cosa e una pausa un'altra?</p>
+<p>Qui nasce un'intuizione decisiva. Il filo non deve trasportare direttamente il significato. Può trasportare una <strong>sequenza di stati</strong> che qualcuno, dall'altra parte, sa interpretare.</p>
+<div class="mechanism">
+<div class="node"><strong>INFORMAZIONE</strong><span>Una lettera, una parola, un messaggio.</span></div><div class="arrow">→</div>
+<div class="node"><strong>CODIFICA</strong><span>Il messaggio viene trasformato in simboli.</span></div><div class="arrow">→</div>
+<div class="node"><strong>IMPULSI</strong><span>I simboli diventano variazioni elettriche.</span></div><div class="arrow">→</div>
+<div class="node"><strong>DECODIFICA</strong><span>Dall'altra parte gli impulsi tornano informazione.</span></div>
+</div>
+<p>Questo è il cuore del telegrafo. La lettera <strong>A</strong> non viaggia dentro il filo. Nel filo viaggia una sequenza di impulsi che, secondo una convenzione condivisa, significa A.</p>
+<div class="comm-lab">
+<div class="lab-title">DALLE LETTERE AGLI IMPULSI</div>
+<p><strong>A</strong> → <code>· −</code> → impulso breve · pausa · impulso lungo</p>
+<p><strong>S</strong> → <code>· · ·</code> → impulso · impulso · impulso</p>
+<p><strong>O</strong> → <code>− − −</code> → impulso lungo · impulso lungo · impulso lungo</p>
+<p>La macchina non deve capire il significato della parola. Deve soltanto distinguere durate e pause.</p>
+</div>
+<h2>Il telegrafo elettrico</h2>
+<p>Ora il passaggio è molto più comprensibile. Abbiamo una sorgente elettrica, un circuito, un interruttore e un dispositivo capace di reagire al passaggio della corrente. Possiamo quindi trasformare un codice in una successione di impulsi e farli arrivare molto lontano.</p>
+<div class="comm-grid">
+<div class="comm-card"><h3>Il telegrafo</h3><p>Trasforma il linguaggio in una sequenza di segnali elettrici codificati. La macchina non deve capire il significato: deve distinguere gli impulsi.</p><a href="comunicazione-telegrafo.html">Entra nel telegrafo →</a></div>
+<div class="comm-card"><h3>Il principio</h3><p>Il messaggio diventa una rappresentazione trasportabile. È una delle idee che, molti decenni dopo, ritroveremo nella comunicazione digitale.</p></div>
+</div>
+<div class="comm-lab">
+<div class="lab-title">ESPERIMENTO · COSTRUISCI UN MESSAGGIO</div>
+<p>Scrivi una parola. Il sistema la trasforma nel codice Morse e puoi ascoltarne il ritmo.</p>
+<input id="morseInput" style="width:100%;background:#07090a;border:1px solid #ffffff18;color:#eee;padding:14px;font:18px 'DM Mono';margin:10px 0" value="CIAO"/>
+<div class="morse-display" id="morseDisplay"></div><div class="morse-output" id="morseOutput"></div>
+<div class="lab-controls"><button id="morsePlay">ASCOLTA IL CODICE</button></div>
+</div>
+<h2>Ma la voce non è una sequenza di lettere</h2>
+<p>Il telegrafo ha risolto un problema straordinario, ma ha imposto una trasformazione: la frase deve diventare un codice. Per il telefono la sfida è diversa.</p>
+<p>Quando parliamo, le corde vocali producono vibrazioni che modificano la pressione dell'aria. L'orecchio riceve queste variazioni e il timpano vibra. La voce, quindi, non è soltanto «un suono»: è una <strong>variazione fisica nel tempo</strong>.</p>
+<div class="mechanism">
+<div class="node"><strong>VOCE</strong><span>Le corde vocali e il tratto vocale producono vibrazioni.</span></div><div class="arrow">→</div>
+<div class="node"><strong>ARIA</strong><span>La vibrazione produce variazioni di pressione.</span></div><div class="arrow">→</div>
+<div class="node"><strong>ORECCHIO</strong><span>Il timpano segue quelle variazioni.</span></div>
+</div>
+<p>La domanda diventa allora: <strong>possiamo trasformare quella vibrazione in un segnale elettrico, trasportarlo lungo un filo e ricostruire la vibrazione dall'altra parte?</strong></p>
+
+<section class="comm-interactive-panel">
+  <div class="interactive-kicker">LABORATORIO · LA VOCE DIVENTA SEGNALE</div>
+  <h2>Guarda la voce trasformarsi in elettricità</h2>
+  <p>Non possiamo mettere la voce dentro il filo. Possiamo però rappresentarne le variazioni con un segnale elettrico. Muovi i controlli e osserva come cambia la forma d'onda.</p>
+  <div class="signal-lab">
+    <div class="signal-controls">
+      <label>Intensità della voce <input id="voiceAmp" type="range" min="0.2" max="1" step="0.05" value="0.65"></label>
+      <label>Altezza del suono <input id="voiceFreq" type="range" min="1" max="8" step="0.1" value="3"></label>
+      <button id="voicePlay" type="button">ASCOLTA LA VOCE-SIMULAZIONE</button>
+    </div>
+    <canvas id="voiceSignalCanvas" height="180"></canvas>
+    <div class="signal-legend"><span>ONDA SONORA</span><span>→</span><span>SEGNALE ELETTRICO RAPPRESENTATIVO</span></div>
+  </div>
 </section>
 
-<h2>1 · Prima del messaggio: imparare a comandare qualcosa a distanza</h2>
-<p>Immaginiamo una batteria, due fili, un interruttore e una lampadina. La batteria fornisce l'energia; i fili costruiscono un percorso; l'interruttore decide se quel percorso è continuo oppure interrotto. Quando il circuito è chiuso, la corrente può attraversarlo e la lampadina si accende. Quando apriamo l'interruttore, il percorso si interrompe e la lampadina si spegne.</p>
-<p>La cosa interessante non è la lampadina. È la <strong>distanza</strong>. Se allunghiamo i fili, possiamo mettere l'interruttore qui e la lampadina dall'altra parte della stanza. Chiudiamo il circuito in un punto e osserviamo un cambiamento in un altro.</p>
-<div class="mechanism"><div class="node"><strong>SORGENTE</strong><span>La batteria fornisce energia al circuito.</span></div><div class="arrow">→</div><div class="node"><strong>CONTROLLO</strong><span>L'interruttore apre o chiude il percorso.</span></div><div class="arrow">→</div><div class="node"><strong>EFFETTO</strong><span>La lampadina reagisce alla corrente.</span></div></div>
-<div class="comm-lab"><div class="lab-title">ESPERIMENTO · ACCENDERE A DISTANZA</div><div class="switchboard" id="electricDemo"><div class="switch-node"><strong>STAZIONE A</strong><span>INTERRUTTORE</span></div><div class="route circuit"><span class="pulse"></span></div><div class="switch-node"><strong>STAZIONE B</strong><span id="lampStatus">LAMPADA · SPENTA</span></div></div><div class="lab-controls"><button id="electricToggle">CHIUDI IL CIRCUITO</button></div><p id="electricText">Il circuito è aperto. Nessun effetto arriva dall'altra parte.</p></div>
-<p>Qui compare una delle idee che accompagneranno tutta la storia delle comunicazioni: <strong>non è necessario trasportare l'oggetto che produce l'effetto</strong>. Possiamo trasmettere un cambiamento e lasciare che sia qualcosa dall'altra parte a produrre la conseguenza.</p>
+<h2>Il telefono: trasformare il movimento in elettricità</h2>
+<p>Immaginiamo una membrana sottile. Quando parliamo davanti ad essa, la pressione dell'aria la fa vibrare. Una voce forte produce movimenti più ampi; suoni diversi producono oscillazioni diverse. La membrana diventa quindi un piccolo <strong>traduttore</strong> del movimento della voce.</p>
+<p>In fisica e in tecnologia questo dispositivo viene chiamato <strong>trasduttore</strong>: è qualcosa che trasforma una forma di energia o un fenomeno fisico in un'altra forma che possiamo misurare o utilizzare. Nel telefono il microfono compie proprio questa operazione: riceve un movimento meccanico prodotto dal suono e lo trasforma in una variazione elettrica.</p>
+<p>Non stiamo mettendo la voce dentro il filo. <strong>Stiamo creando nel filo un segnale che segue, nel tempo, l'andamento della voce.</strong> Se davanti al microfono la pressione dell'aria aumenta e diminuisce secondo un certo ritmo, anche il segnale elettrico cambia seguendo quel ritmo.</p>
+<p>Dall'altra parte avviene il processo inverso. Il ricevitore usa il segnale elettrico per far muovere una membrana: quella membrana rimette in movimento l'aria e produce variazioni di pressione che il nostro orecchio riconosce come suono. È questa la grande intuizione del telefono: <strong>trasformare il suono in un segnale trasportabile e poi ricostruire il suono.</strong></p>
+<div class="mechanism">
+<div class="node"><strong>MEMBRANA</strong><span>Segue le vibrazioni prodotte dalla voce.</span></div><div class="arrow">→</div>
+<div class="node"><strong>SEGNALE ELETTRICO</strong><span>Rappresenta quelle variazioni nel tempo.</span></div><div class="arrow">→</div>
+<div class="node"><strong>RICEVITORE</strong><span>Trasforma di nuovo il segnale in movimento.</span></div>
+</div>
+<div class="comm-grid">
+<div class="comm-card"><h3>Il telefono di Bell</h3><p>Un documento storico permette di vedere come il dispositivo fosse pensato come un sistema di trasmissione e ricezione, non come una «scatola magica» che manda la voce.</p><img alt="Schema storico del telefono di Bell" src="./assets/communication/bell-telephone.svg" style="width:100%;margin-top:12px"/></div>
+<div class="comm-card"><h3>Il principio fisico</h3><p>Il ricevitore deve produrre una vibrazione coerente con il segnale ricevuto. In questo modo l'aria dall'altra parte viene nuovamente messa in movimento.</p></div>
+</div>
+<h2>Il viaggio della voce</h2>
+<div class="comm-lab">
+<div class="lab-title">ANIMAZIONE · DALLA VOCE AL FILO E RITORNO</div>
+<div class="mechanism">
+<div class="node"><strong>PARLO</strong><span>Pressione dell'aria</span></div><div class="arrow">→</div>
+<div class="node"><strong>TRASDUTTORE</strong><span>Movimento → elettricità</span></div><div class="arrow">→</div>
+<div class="node"><strong>FILO</strong><span>Segnale variabile</span></div><div class="arrow">→</div>
+<div class="node"><strong>RICEVITORE</strong><span>Elettricità → movimento</span></div><div class="arrow">→</div>
+<div class="node"><strong>ASCOLTO</strong><span>Nuova vibrazione dell'aria</span></div>
+</div>
+</div>
+<div class="comm-lab">
+<div class="lab-title">ESPERIMENTO · GUARDARE LA VOCE</div>
+<div class="wave-wrap"><canvas class="wave" id="waveCanvas"></canvas><div class="wave-label">RAPPRESENTAZIONE SCHEMATICA DI UNA FORMA D'ONDA</div></div>
+<div class="wave-caption"><span>PRESSIONE / AMPIEZZA</span><span>TEMPO →</span></div>
+<p style="margin-top:16px">La curva non è la voce stessa. È una rappresentazione della variazione che un sistema può trasformare e trasportare.</p>
+</div>
+<h2>Una differenza fondamentale: codice o forma d'onda?</h2>
+<p>Il telegrafo e il telefono ci mostrano due modi diversi di rappresentare l'informazione. Nel telegrafo possiamo ragionare in termini di stati distinti: impulso, pausa, impulso. Nel telefono il segnale varia continuamente seguendo l'andamento della voce.</p>
+<p>Questa differenza prepara una delle grandi idee dell'informatica: <strong>l'informazione non coincide con il mezzo che la trasporta</strong>. Una stessa informazione può essere rappresentata in modi diversi, purché mittente e destinatario condividano il modo di interpretarla.</p>
+<h2>Quando due telefoni diventano una rete</h2>
+<p>Un telefono collegato direttamente a un altro è semplice. Ma se i telefoni diventano dieci? E cento? E milioni?</p>
+<p>Se ogni telefono dovesse avere un filo diretto verso ogni altro telefono, i collegamenti crescerebbero in modo vertiginoso. Serve quindi un elemento intermedio: una <strong>centrale</strong> capace di stabilire quale collegamento creare.</p>
+<div class="comm-lab">
+<div class="lab-title">SIMULAZIONE · DUE TELEFONI O UNA RETE?</div>
+<div class="switchboard"><div class="switch-node"><strong>A</strong><span>telefono</span></div><div class="route circuit"><span class="pulse"></span></div><div class="switch-node"><strong>CENTRALE</strong><span>sceglie il collegamento</span></div><div class="route circuit"><span class="pulse"></span></div><div class="switch-node"><strong>B</strong><span>telefono</span></div></div>
+<p>La centrale non deve conoscere il contenuto della conversazione: deve soprattutto creare e mantenere il collegamento necessario.</p>
+</div>
+<h2>La commutazione di circuito</h2>
+<p>La telefonia tradizionale introduce una scelta importante: durante una telefonata viene stabilito un percorso e quel percorso rimane impegnato per la conversazione.</p>
+<div class="comm-lab">
+<div class="lab-title">SIMULAZIONE · CIRCUITO O PACCHETTI?</div>
+<div class="switchboard"><div class="switch-node"><strong>A · TELEFONO</strong></div><div><div class="route circuit"><span class="pulse"></span></div><div style="height:18px"></div><div class="route packet r2"><span class="pulse"></span></div></div><div class="switch-node"><strong>B · DESTINATARIO</strong></div></div>
+<div class="lab-controls"><button id="circuitBtn">COMMUTAZIONE DI CIRCUITO</button><button id="packetBtn">COMMUTAZIONE DI PACCHETTO</button></div>
+<p id="routeText">Scegli un modello per vedere la differenza.</p>
+</div>
+<p>È una soluzione efficace per una conversazione continua. Ma quando arriveranno i computer emergerà un'altra possibilità: dividere i dati in piccoli pacchetti e lasciare alla rete una maggiore libertà nel loro percorso.</p>
+<h2>Quando la rete comincia ad ascoltare se stessa</h2>
+<p>Per capire il <strong>phone phreaking</strong> bisogna fermarsi qui, prima del computer. Perché una rete telefonica non è soltanto un insieme di fili attraverso cui passa la voce. È anche una gigantesca macchina che deve continuamente <strong>capire che cosa sta succedendo alla linea</strong>.</p>
+<p>Quando alziamo la cornetta, la rete deve accorgersi che qualcuno vuole effettuare una chiamata. Quando componiamo un numero, la rete deve ricevere quelle cifre. Quando la chiamata raggiunge un'altra centrale, gli apparati devono scambiarsi informazioni per sapere quale collegamento costruire. Quando la telefonata termina, il sistema deve sapere che il circuito può essere liberato.</p>
+<p>Per gli esseri umani questi passaggi sono quasi invisibili. Noi sentiamo un tono, componiamo un numero, aspettiamo che l'altra persona risponda. <strong>All'interno della rete, però, stanno succedendo molte cose.</strong> E per molti anni una parte di queste informazioni di controllo viaggiava proprio nella stessa banda di frequenze utilizzata per la voce.</p>
 
-<h2>2 · Quando un effetto diventa un linguaggio</h2>
-<p>Una lampadina ci permette di distinguere due stati: accesa e spenta. Se decidiamo che uno stato breve e uno stato lungo abbiano significati convenzionali, possiamo trasformare quella semplice possibilità fisica in un linguaggio.</p>
-<p>Il filo non deve «sapere» che cosa significa il messaggio. Deve soltanto trasportare una sequenza di variazioni che qualcuno, dall'altra parte, sappia interpretare. Nasce così una catena che ritroveremo continuamente nella storia dell'informatica:</p>
-<div class="mechanism"><div class="node"><strong>INFORMAZIONE</strong><span>Una lettera, una parola, un messaggio.</span></div><div class="arrow">→</div><div class="node"><strong>CODIFICA</strong><span>Il messaggio viene trasformato in simboli.</span></div><div class="arrow">→</div><div class="node"><strong>SEGNALE</strong><span>I simboli diventano variazioni trasmissibili.</span></div><div class="arrow">→</div><div class="node"><strong>DECODIFICA</strong><span>Dall'altra parte il segnale torna informazione.</span></div></div>
-<p>Questo è il salto concettuale che rende possibile il telegrafo elettrico. La lettera <strong>A</strong> non viaggia dentro il filo. Nel filo viaggia una sequenza di impulsi che, grazie a una convenzione condivisa, significa A.</p>
+<div class="comm-interactive-panel">
+  <div class="interactive-kicker">LABORATORIO · UNA TELEFONATA VISTA DALLA RETE</div>
+  <h2>La telefonata non comincia quando senti «pronto»</h2>
+  <p>Prova a seguire una chiamata dal punto di vista della rete. Non stiamo simulando una centrale reale: stiamo rendendo visibili, in forma semplificata, i passaggi che devono avvenire prima che due persone possano parlare.</p>
+  <div class="call-flow" id="callFlow">
+    <div class="flow-step"><b>1</b><span>LINEA A</span><small>la cornetta viene sollevata</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><b>2</b><span>CENTRALE</span><small>riconosce la richiesta</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><b>3</b><span>NUMERO</span><small>le cifre indicano la destinazione</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><b>4</b><span>RETE</span><small>viene scelto un percorso</small></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><b>5</b><span>CONNESSIONE</span><small>il circuito viene mantenuto</small></div>
+  </div>
+  <div class="lab-controls"><button id="callFlowStart" type="button">AVVIA LA TELEFONATA</button></div>
+  <p id="callFlowStatus">Premi il pulsante e osserva la sequenza.</p>
+</div>
 
-<h2>3 · Il telegrafo elettrico: la distanza smette di essere il problema principale</h2>
-<p>Ora possiamo capire perché il telegrafo elettrico fu così importante. Abbiamo una sorgente, un circuito, un dispositivo che può aprire e chiudere il percorso e un ricevitore capace di registrare gli impulsi. Il messaggio viene trasformato in una forma che l'elettricità può trasportare.</p>
-<p>Samuel Morse e i suoi collaboratori contribuiscono a trasformare questa possibilità in un sistema pratico: il codice associa alle lettere combinazioni di punti, linee e pause. L'operatore invia una sequenza; dall'altra parte qualcuno la riconosce e la ricostruisce.</p>
-<div class="comm-grid"><div class="comm-card"><h3>La cosa nuova</h3><p>Il messaggero non deve più attraversare fisicamente la distanza. Il segnale elettrico percorre il filo e l'informazione può essere ricostruita dall'altra parte.</p><a href="comunicazione-telegrafo.html">APPROFONDISCI IL TELEGRAFO →</a></div><div class="comm-card"><h3>Il limite</h3><p>Il sistema è potentissimo, ma impone una traduzione: ciò che vogliamo dire deve diventare un codice che il telegrafo sappia trasmettere.</p></div></div>
-<div class="comm-lab"><div class="lab-title">ESPERIMENTO · DALLE LETTERE AGLI IMPULSI</div><p><strong>A</strong> → <code>· −</code> &nbsp; <strong>S</strong> → <code>· · ·</code> &nbsp; <strong>O</strong> → <code>− − −</code></p><p>Scrivi una parola e osserva come il linguaggio viene trasformato in una sequenza di segnali.</p><input id="morseInput" style="width:100%;background:#07090a;border:1px solid #ffffff18;color:#eee;padding:14px;font:18px 'DM Mono';margin:10px 0" value="CIAO"/><div class="morse-display" id="morseDisplay"></div><div class="morse-output" id="morseOutput"></div><div class="lab-controls"><button id="morsePlay">ASCOLTA IL CODICE</button></div></div>
-<p>Il 24 maggio 1844 Morse invia il celebre messaggio <strong>“What hath God wrought?”</strong>, cioè <strong>“Che cosa ha fatto Dio?”</strong>. La frase viene dal <strong>Libro dei Numeri</strong>, il quarto libro dell'Antico Testamento della Bibbia, e fu suggerita ad Annie Ellsworth, figlia del commissario dei brevetti Henry Leavitt Ellsworth, come testo per il messaggio inaugurale.</p>
+<h3>La rete americana: un sistema enorme, ma organizzato</h3>
+<p>Negli Stati Uniti, nel Novecento, il sistema telefonico era dominato dalla grande organizzazione costruita intorno al <strong>Bell System</strong>, con AT&amp;T e le società locali collegate al sistema. Non esisteva un unico «telefono nazionale» come una scatola centrale: c'erano moltissime centrali locali e collegamenti a lunga distanza che dovevano collaborare.</p>
+<p>Una telefonata locale poteva essere gestita dalla centrale della zona. Per una chiamata più lontana, invece, il collegamento passava attraverso apparati e circuiti che univano centrali diverse. In questo modo una chiamata poteva attraversare una catena di nodi senza che le due persone dovessero possedere un filo diretto fra le loro case.</p>
+<p>La cosa importante per la nostra storia è che queste centrali non potevano «indovinare» ciò che volevamo fare. Avevano bisogno di <strong>segnali standardizzati</strong>: suoni, impulsi e combinazioni che gli apparati riconoscevano come comandi.</p>
 
-<h2>4 · Ma il telegrafo ha creato un nuovo desiderio</h2>
-<p>Il telegrafo risolve il problema della distanza in un modo straordinario. Ma se osserviamo attentamente ciò che succede, vediamo anche il suo limite: per comunicare dobbiamo trasformare la lingua in un codice, trasmetterlo e poi ricostruirlo.</p>
-<p>La domanda successiva nasce quasi naturalmente: <strong>possiamo fare a meno del codice lettera per lettera?</strong> Possiamo far arrivare non soltanto un messaggio tradotto in punti e linee, ma qualcosa di più vicino all'esperienza originale?</p>
-<p>Il candidato più evidente è la voce. Se una persona parla, dall'altra parte vorremmo che l'altra persona potesse semplicemente ascoltare.</p>
+<h3>La voce e i segnali di controllo viaggiano sullo stesso filo</h3>
+<p>Qui nasce una situazione particolarmente interessante. Immaginiamo il filo telefonico come una strada. Su quella strada viaggia la conversazione, ma in determinati momenti possono viaggiare anche segnali che servono alla rete per coordinare il collegamento.</p>
+<p>Uno dei segnali storicamente più famosi è il <strong>tono a 2600 Hz</strong>. In alcuni sistemi telefonici a lunga distanza dell'epoca veniva utilizzato come segnale di supervisione per indicare una condizione della linea. Gli apparati potevano riconoscere la presenza di quel tono e usarla come informazione di controllo.</p>
+<p>Questo dettaglio tecnico produce una conseguenza storicamente importante: <strong>un suono che per una persona è semplicemente un suono può essere, per una macchina, un comando.</strong></p>
 
-<h2>5 · Prima del telefono: capire che cos'è una voce</h2>
-<p>La voce non è un oggetto che possiamo mettere in una scatola e spedire. È un fenomeno fisico che cambia nel tempo. Le corde vocali e il tratto vocale producono vibrazioni; queste modificano la pressione dell'aria; il timpano riceve quelle variazioni e vibra.</p>
-<div class="mechanism"><div class="node"><strong>VOCE</strong><span>Il corpo produce una vibrazione.</span></div><div class="arrow">→</div><div class="node"><strong>ARIA</strong><span>La vibrazione diventa una variazione di pressione.</span></div><div class="arrow">→</div><div class="node"><strong>ORECCHIO</strong><span>Il timpano segue quelle variazioni.</span></div></div>
-<p>Questa osservazione suggerisce una nuova strada. Se il suono è una variazione fisica nel tempo, possiamo cercare di <strong>trasformare quella variazione in un altro fenomeno fisico</strong>, trasportarlo e poi trasformarlo di nuovo.</p>
-<section class="comm-interactive-panel"><div class="interactive-kicker">LABORATORIO · LA VOCE DIVENTA SEGNALE</div><h2>Guarda la forma d'onda cambiare</h2><p>La simulazione rappresenta una vibrazione sonora e mostra come una variazione possa essere rappresentata da un segnale. Non stiamo mettendo la voce dentro il filo: stiamo costruendo una rappresentazione fisica delle sue variazioni.</p><div class="signal-lab"><div class="signal-controls"><label>Intensità <input id="voiceAmp" type="range" min="0.2" max="1" step="0.05" value="0.65"/></label><label>Altezza <input id="voiceFreq" type="range" min="1" max="8" step="0.1" value="3"/></label><button id="voicePlay" type="button">ASCOLTA LA SIMULAZIONE</button></div><canvas id="voiceSignalCanvas" height="180"></canvas><div class="signal-legend"><span>VARIAZIONE</span><span>→</span><span>SEGNALE RAPPRESENTATIVO</span></div></div></section>
+<div class="comm-lab">
+<div class="lab-title">VEDERE LA DIFFERENZA · VOCE E SEGNALAZIONE</div>
+<div class="signal-compare">
+  <div><strong>VOCE</strong><span>informazione destinata alla persona</span><div class="mini-wave voice"></div></div>
+  <div><strong>SEGNALAZIONE</strong><span>informazione destinata agli apparati</span><div class="mini-wave control"></div></div>
+</div>
+<p>La distinzione non è assoluta né identica in ogni epoca e in ogni parte della rete, ma è fondamentale per capire il phreaking: alcuni appassionati si misero a studiare proprio il linguaggio dei segnali telefonici.</p>
+</div>
 
-<h2>6 · Il telefono: dal movimento al segnale elettrico</h2>
-<p>Immaginiamo ora una membrana molto sottile. Quando la voce arriva, la pressione dell'aria la fa vibrare. Una voce più intensa produce movimenti più ampi; suoni differenti producono oscillazioni differenti. La membrana sta quindi seguendo, istante dopo istante, il comportamento della voce.</p>
-<p>Con un trasduttore elettromagnetico possiamo trasformare quei movimenti in variazioni elettriche. Il filo non trasporta la voce come se fosse una cosa materiale: trasporta un segnale che <strong>segue le variazioni della voce</strong>.</p>
-<div class="mechanism"><div class="node"><strong>MEMBRANA</strong><span>Segue il movimento prodotto dalla voce.</span></div><div class="arrow">→</div><div class="node"><strong>SEGNALE ELETTRICO</strong><span>Rappresenta quelle variazioni nel tempo.</span></div><div class="arrow">→</div><div class="node"><strong>FILO</strong><span>Trasporta il segnale.</span></div><div class="arrow">→</div><div class="node"><strong>RICEVITORE</strong><span>Ricostruisce il movimento.</span></div></div>
-<p>Dall'altra parte avviene il percorso inverso: il segnale elettrico produce un movimento nella membrana del ricevitore; la membrana mette in movimento l'aria; l'aria raggiunge l'orecchio. <strong>Il telefono ha trasformato una vibrazione in un segnale, ha trasportato il segnale e ha ricostruito la vibrazione.</strong></p>
-<p>Ed è qui che la differenza con il telegrafo diventa evidente. Il telegrafo rappresentava la lingua con un codice discreto. Il telefono cercava invece di conservare l'andamento continuo del fenomeno sonoro.</p>
-<div class="comm-grid"><div class="comm-card"><h3>Telegrafo</h3><p>Informazione → codice → impulsi → decodifica.</p></div><div class="comm-card"><h3>Telefono</h3><p>Suono → variazioni fisiche → segnale elettrico → ricostruzione del suono.</p></div></div>
+<h3>Ed ecco il fischietto di Captain Crunch</h3>
+<p>Negli anni Sessanta e Settanta questa storia diventa quasi leggendaria. Un ragazzo di nome <strong>John Draper</strong>, conosciuto con il soprannome <strong>Captain Crunch</strong>, venne a sapere che un piccolo fischietto distribuito nelle confezioni dei cereali Cap'n Crunch produceva, in determinate condizioni, un tono vicino alla frequenza di 2600 Hz.</p>
+<p>Il dettaglio curioso è che quel fischietto non era stato progettato come strumento telefonico. Era un giocattolo promozionale. Ma il suo suono assomigliava abbastanza a un segnale utilizzato dai sistemi telefonici da diventare, nella cultura dei phreaker, un oggetto emblematico.</p>
+<p>Il punto didatticamente interessante non è «il fischietto che faceva telefonare gratis». È qualcosa di più profondo: <strong>qualcuno aveva capito che la rete possedeva un linguaggio e aveva iniziato ad ascoltarlo.</strong></p>
 
-<h2>7 · Due telefoni sono sufficienti solo finché sono due</h2>
-<p>Una volta che possiamo trasmettere la voce, nasce un problema completamente nuovo. Un telefono può collegare due persone. Ma cosa succede quando diventano cento, mille, un milione?</p>
-<p>Se ogni telefono dovesse avere un filo diretto verso ogni altro telefono, la rete diventerebbe rapidamente ingestibile. Serve un punto nel quale i collegamenti possano essere organizzati.</p>
-<div class="comm-grid"><div class="comm-card"><h3>Collegamento diretto</h3><p>Ogni coppia di utenti richiede un collegamento proprio. Funziona per pochissimi telefoni, ma non scala.</p></div><div class="comm-card"><h3>Centrale</h3><p>Ogni telefono si collega alla rete e un sistema di commutazione crea il collegamento necessario tra chiamante e destinatario.</p></div></div>
-<p>Nasce così la rete telefonica: non più due apparecchi isolati, ma una grande infrastruttura fatta di linee, centrali, apparati e regole per stabilire quale percorso deve essere creato.</p>
+<div class="comm-interactive-panel">
+  <div class="interactive-kicker">ESPERIMENTO STORICO · IL LINGUAGGIO DELLA RETE</div>
+  <h2>Quando un suono diventa un'informazione</h2>
+  <p>Muovi il cursore per passare da una frequenza bassa a una frequenza più alta. A 2600 Hz ascolti un tono dimostrativo. L'esperimento non interagisce con reti telefoniche reali.</p>
+  <input id="phreakFreq" type="range" min="300" max="4000" step="10" value="2600" style="width:100%">
+  <div class="tone-readout" id="phreakReadout">2600 Hz · tono dimostrativo</div>
+  <div class="lab-controls"><button id="phreakPlay" type="button">ASCOLTA IL TONO</button></div>
+  <div class="safe-box"><strong>Importante.</strong> Il valore di 2600 Hz viene mostrato qui come fatto storico e fenomeno acustico. Non è una procedura per effettuare chiamate o manipolare reti reali.</div>
+</div>
 
-<h2>8 · La telefonata non è solo voce: è una rete che deve prendere decisioni</h2>
-<p>Quando componiamo un numero, la rete deve fare qualcosa prima ancora che l'altra persona possa parlare. Deve interpretare la destinazione, trovare un percorso, verificare che la linea sia disponibile e stabilire la connessione. La telefonia introduce quindi un'idea importantissima: <strong>una rete non trasporta soltanto informazioni; deve anche controllare il modo in cui quelle informazioni vengono trasportate.</strong></p>
-<p>Nella telefonia tradizionale questo porta alla <strong>commutazione di circuito</strong>. Per la durata della conversazione viene costruito e mantenuto un percorso attraverso la rete. La voce attraversa quel percorso finché la chiamata termina.</p>
-<div class="comm-lab"><div class="lab-title">CONFRONTO · CIRCUITO E PACCHETTI</div><div class="mechanism"><div class="node"><strong>TELEFONO</strong><span>Un percorso viene mantenuto per la conversazione.</span></div><div class="arrow">↔</div><div class="node"><strong>RETI A PACCHETTI</strong><span>I dati possono essere divisi e inoltrati attraverso percorsi diversi.</span></div></div><div class="lab-controls"><button id="circuitBtn">MOSTRA CIRCUITO</button><button id="packetBtn">MOSTRA PACCHETTI</button></div><p id="routeText">Scegli un modello per vedere la differenza.</p></div>
+<h3>Ma i phreaker scoprirono che il telefono aveva molti altri «suoni»</h3>
+<p>Il tono a 2600 Hz non era l'unico elemento. I sistemi telefonici impiegavano diversi schemi di segnalazione. In particolare, nelle reti a lunga distanza venivano utilizzate combinazioni di frequenze <strong>MF, multifrequency</strong>, per rappresentare cifre e comandi tra apparati della rete.</p>
+<p>Detto in modo semplice: la centrale non «sentiva» soltanto la voce come farebbe un essere umano. Alcuni apparati erano in grado di distinguere determinate combinazioni di frequenze e interpretarle come simboli. Era una forma di comunicazione tra macchine che avveniva dentro una rete pensata soprattutto per la voce.</p>
+<p>È qui che la storia del phreaking diventa interessante anche per chi studia informatica. I phreaker cercavano di capire quali segnali la rete riconosceva, quando li riconosceva e che cosa accadeva dopo. <strong>Osservavano il comportamento del sistema e cercavano di ricostruirne le regole.</strong></p>
+<p>Questa mentalità anticipa qualcosa che incontreremo molte volte nella storia dell'informatica: guardare un sistema dall'esterno, osservare le sue risposte e cercare di capire il protocollo che usa per comunicare.</p>
 
-<h2>9 · Quando qualcuno impara a parlare con la rete</h2>
-<p>Se una rete usa segnali per controllare le proprie funzioni, quei segnali diventano interessanti anche per chi vuole capire come la rete «pensa». È qui che la storia del telefono conduce al phreaking.</p>
-<p>Alcuni appassionati studiarono i toni e i segnali utilizzati dai sistemi telefonici. Il famoso tono a <strong>2600 Hz</strong> diventa uno dei simboli di questa cultura: mostra che un suono, oltre a essere ascoltato da una persona, può essere interpretato da un sistema come un'informazione di controllo.</p>
-<div class="comm-lab"><div class="lab-title">ASCOLTA IL CONCETTO · 2600 Hz</div><div class="freq-meter" id="freqMeter"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="lab-controls"><button id="freqStart">AVVIA ANALISI</button><button id="tone2600">ASCOLTA 2600 Hz</button></div><p id="toneReadout">Il tono viene riprodotto a volume didattico ridotto.</p><div class="safe-box"><strong>Nota didattica.</strong> Qui ascoltiamo il fenomeno acustico e storico. La simulazione non effettua chiamate e non contiene procedure per manipolare reti telefoniche reali.</div></div>
-<p>Il collegamento con la storia dei computer è importante: chi studia una rete deve capire non solo <em>che cosa</em> trasporta, ma anche <em>quali segnali e regole</em> fanno funzionare il sistema. Questa idea tornerà continuamente nella sicurezza informatica.</p>
+<h3>Dal telefono al computer: il salto concettuale è ormai vicino</h3>
+<p>A questo punto abbiamo una rete che possiede già un'infrastruttura, apparati di commutazione e un vero e proprio linguaggio di segnali. È proprio questa infrastruttura che, qualche anno più tardi, diventerà interessante anche per i computer.</p>
+<h2>Il computer davanti al telefono</h2>
+<p>Ora compare un nuovo protagonista. Il computer produce dati, non voce. Può rappresentare un'informazione con bit, ma la rete telefonica è stata progettata per trasportare segnali adatti alla conversazione.</p>
+<p>La domanda è quindi sorprendentemente concreta: <strong>possiamo adattare i dati del computer al linguaggio che la rete telefonica sa trasportare?</strong></p>
+<div class="comm-lab">
+<div class="lab-title">ANIMAZIONE · DAL BIT AL SEGNALE</div>
+<div class="mechanism">
+<div class="node"><strong>COMPUTER</strong><span>01001000 01101001</span></div><div class="arrow">→</div>
+<div class="node"><strong>MODEM</strong><span>Modula il segnale</span></div><div class="arrow">→</div>
+<div class="node"><strong>LINEA TELEFONICA</strong><span>Trasporta una forma d'onda</span></div><div class="arrow">→</div>
+<div class="node"><strong>MODEM</strong><span>Demodula</span></div><div class="arrow">→</div>
+<div class="node"><strong>COMPUTER</strong><span>Ricostruisce i dati</span></div>
+</div>
+<div class="lab-controls"><button id="modemStart">AVVIA TRASMISSIONE</button></div>
+<p id="modemStatus">Pronto. Il computer sta aspettando il modem.</p>
+</div>
+<h2>Perché usare proprio la rete telefonica?</h2>
+<p>Perché era già lì. La rete telefonica aveva richiesto decenni di investimenti e possedeva qualcosa di preziosissimo: <strong>una presenza capillare</strong>. Fili, centrali, linee internazionali e apparati collegavano già case, uffici e città.</p>
+<p>Costruire da zero una rete nazionale e internazionale per i computer sarebbe stato enormemente costoso. Era quindi naturale provare a utilizzare l'infrastruttura esistente, anche se era stata progettata per un altro scopo.</p>
+<p>È come cercare di far passare un nuovo tipo di veicolo su un'autostrada costruita per veicoli diversi. L'autostrada esiste già. Il problema è capire <strong>come adattare il nuovo traffico alle sue regole e ai suoi limiti</strong>.</p>
+<h2>Le forzature necessarie</h2>
+<p>La soluzione funzionava, ma non era perfetta. I computer dovevano adattarsi alla rete telefonica, e la rete telefonica non era disposta a cambiare natura per loro.</p>
+<div class="comm-grid">
+<div class="comm-card"><h3>1 · Dati trasformati in segnali</h3><p>Il modem traduce le sequenze digitali in variazioni del segnale che il canale telefonico può trasportare e, dall'altra parte, compie il percorso inverso.</p></div>
+<div class="comm-card"><h3>2 · Velocità limitata</h3><p>Il canale telefonico imponeva limiti molto lontani dalle velocità delle reti dati moderne. I modem evolsero progressivamente, rendendo possibile trasferire sempre più bit nello stesso intervallo di tempo.</p></div>
+<div class="comm-card"><h3>3 · La linea occupata</h3><p>La linea telefonica era pensata per una conversazione. Una connessione dial-up occupava la linea: se il modem era collegato, normalmente non si poteva usare contemporaneamente il telefono per una normale chiamata.</p></div>
+<div class="comm-card"><h3>4 · Rumore e qualità del canale</h3><p>Disturbi, attenuazione e caratteristiche della linea rendevano necessario progettare sistemi capaci di adattarsi al canale e di controllare la correttezza della comunicazione.</p></div>
+</div>
 
-<h2>10 · E poi arrivano i computer: un nuovo problema dentro una vecchia rete</h2>
-<p>Ora immaginiamo un computer davanti a un telefono. Il computer non produce voce. Produce dati: sequenze di bit. La rete telefonica, invece, è stata costruita per un canale adatto alla conversazione e per la commutazione di circuiti.</p>
-<p>Non sarebbe stato realistico aspettare che ogni linea telefonica del pianeta venisse smontata e ricostruita appositamente per i computer. La rete esisteva già, era capillare e collegava luoghi che le nuove reti di dati avrebbero avuto bisogno di raggiungere.</p>
-<p>La domanda diventa quindi una delle più fertili della storia delle tecnologie: <strong>possiamo costringere una rete progettata per la voce a trasportare dati?</strong></p>
+<section class="comm-interactive-panel">
+  <div class="interactive-kicker">ESPERIMENTO · QUANTO CI METTE UN MODEM?</div>
+  <h2>La velocità cambia la storia</h2>
+  <p>Un file da 1 MB sembra minuscolo oggi. Con un modem dial-up, invece, poteva richiedere una quantità di tempo sorprendente. Scegli una velocità e prova a immaginare l'attesa.</p>
+  <div class="speed-lab">
+    <div class="speed-options" id="speedOptions">
+      <button data-speed="300">300 bps</button><button data-speed="1200">1.2 kbps</button><button data-speed="9600">9.6 kbps</button><button data-speed="14400">14.4 kbps</button><button data-speed="28800">28.8 kbps</button><button data-speed="56000">56 kbps</button>
+    </div>
+    <div class="speed-readout"><strong id="speedValue">56 kbps</strong><span id="speedTime">circa 2 min 26 s per 1 MB</span></div>
+    <div class="transfer-track"><i id="transferFill"></i></div>
+    <button id="startTransfer" type="button">SIMULA 1 MB</button>
+  </div>
+</section>
 
-<h2>11 · Il modem: il traduttore tra due mondi</h2>
-<p>La soluzione è il modem, cioè un dispositivo che modula e demodula il segnale. Dal lato del computer ci sono bit. Dal lato della linea c'è un segnale compatibile con il canale telefonico. Il modem costruisce il ponte tra i due.</p>
-<div class="comm-lab"><div class="lab-title">ANIMAZIONE · DAL BIT AL SEGNALE</div><div class="mechanism"><div class="node"><strong>COMPUTER</strong><span>01001000 01101001</span></div><div class="arrow">→</div><div class="node"><strong>MODEM</strong><span>Modula</span></div><div class="arrow">→</div><div class="node"><strong>LINEA TELEFONICA</strong><span>Segnale</span></div><div class="arrow">→</div><div class="node"><strong>MODEM</strong><span>Demodula</span></div><div class="arrow">→</div><div class="node"><strong>COMPUTER</strong><span>Dati</span></div></div><div class="lab-controls"><button id="modemStart">AVVIA TRASMISSIONE</button></div><p id="modemStatus">Pronto. Il computer sta aspettando il modem.</p></div>
-<p>Questa è una soluzione di adattamento. Non abbiamo trasformato la rete telefonica in una rete di computer. Abbiamo insegnato al computer a <strong>rappresentare i propri dati in una forma che la vecchia infrastruttura possa trasportare</strong>.</p>
+<h2>Il suono che annunciava Internet</h2>
+<p>Per chi lo ha vissuto, il modem dial-up aveva una firma sonora inconfondibile. Ma quel rumore non era casuale: era il risultato di due dispositivi che cercavano un linguaggio comune attraverso una rete pensata per la voce.</p>
+<div class="comm-lab">
+<div class="lab-title">SIMULAZIONE · DIAL-UP</div>
+<div class="modem-screen" id="modemScreen"><span>DIALING...</span><span>CONNECTING...</span><span id="modemSpeed">56.0 kbps</span></div>
+<div class="lab-controls"><button id="modemSound">ASCOLTA IL MODEM</button></div>
+<p>Il suono accompagna la fase di connessione. Non è una «voce»: è il sistema che cerca di stabilire una comunicazione dati sul canale telefonico.</p>
+</div>
+<h2>Due storie che finalmente si incontrano</h2>
+<p>Da una parte abbiamo la storia della telefonia: <strong>voce → segnale → centrale → circuito → rete</strong>. Dall'altra abbiamo la storia delle reti di computer: <strong>dati → pacchetti → nodi → percorsi → protocolli</strong>.</p>
+<p>Il modem crea un ponte tra i due mondi, ma non li rende identici. È una soluzione di adattamento: permette ai computer di utilizzare un'infrastruttura nata per un'altra forma di comunicazione.</p>
+<div class="mechanism">
+<div class="node"><strong>TELEFONO</strong><span>Una rete progettata per conversazioni e circuiti.</span></div><div class="arrow">↔</div>
+<div class="node"><strong>MODEM</strong><span>Adatta una forma di segnale all'altra.</span></div><div class="arrow">↔</div>
+<div class="node"><strong>COMPUTER</strong><span>Una macchina che produce dati.</span></div>
+</div>
+<p>Ma la storia di Internet non finisce qui. Anzi, qui comincia una distinzione decisiva: <strong>una rete telefonica e una rete a commutazione di pacchetto risolvono problemi diversi</strong>. Per capire perché Internet prenderà la seconda strada dobbiamo tornare agli anni Sessanta, a Baran, Davies, ARPA e alla domanda che aveva aperto tutto: come costruire una rete capace di continuare a comunicare anche quando una parte del sistema non funziona?</p>
+<div class="comm-links"><a href="storia-internet.html">TORNA ALLA STORIA DI INTERNET</a><a href="comunicazione-telegrafo.html">01 · IL TELEGRAFO</a><a href="comunicazione-telefono.html">02 · IL TELEFONO</a><a href="comunicazione-phreaking.html">03 · IL PHREAKING</a><a href="lezione-captain-crunch.html">CAPTAIN CRUNCH · STORIA</a><a href="lezione-wozniak-bluebox.html">WOZNIAK &amp; BLUE BOX</a></div>
 
-<h2>12 · Le forzature: far entrare il futuro dentro una rete del passato</h2>
-<p>Il risultato funziona, ma porta con sé i limiti della rete originale. È come cercare di far passare un nuovo tipo di traffico su un'autostrada costruita per un altro scopo: l'autostrada è preziosa perché esiste già, ma bisogna rispettarne le regole.</p>
-<div class="comm-grid"><div class="comm-card"><h3>Dati trasformati in segnali</h3><p>I bit devono essere rappresentati da variazioni del segnale che il canale telefonico riesce a trasportare. Il modem fa da traduttore nei due sensi.</p></div><div class="comm-card"><h3>Velocità limitata</h3><p>Il canale telefonico non offre le velocità delle reti moderne. I modem evolvono cercando di sfruttare sempre meglio la banda disponibile.</p></div><div class="comm-card"><h3>La linea è occupata</h3><p>Una connessione dial-up utilizza il circuito telefonico: mentre il modem è connesso, normalmente la linea non può essere usata per una normale telefonata.</p></div><div class="comm-card"><h3>Rumore e qualità</h3><p>Disturbi e caratteristiche della linea rendono necessario adattarsi al canale e controllare l'affidabilità della trasmissione.</p></div></div>
-<section class="comm-interactive-panel"><div class="interactive-kicker">ESPERIMENTO · QUANTO CI METTE UN MODEM?</div><h2>La velocità cambia la percezione della rete</h2><p>Un file da 1 MB oggi sembra quasi insignificante. Su un collegamento dial-up poteva invece diventare un'attesa concreta.</p><div class="speed-lab"><div class="speed-options" id="speedOptions"><button data-speed="300">300 bps</button><button data-speed="1200">1.2 kbps</button><button data-speed="9600">9.6 kbps</button><button data-speed="14400">14.4 kbps</button><button data-speed="28800">28.8 kbps</button><button data-speed="56000">56 kbps</button></div><div class="speed-readout"><strong id="speedValue">56 kbps</strong><span id="speedTime"></span></div><div class="transfer-track"><i id="transferFill"></i></div><button id="startTransfer" type="button">SIMULA 1 MB</button></div></section>
+<section class="comm-media">
+  <div class="interactive-kicker">MEDIA · ASCOLTA E GUARDA</div>
+  <h2>La storia, fuori dalla pagina</h2>
+  <div class="media-grid">
+    <article class="media-card">
+      <div class="media-label">AUDIO / VIDEO · MODEM</div>
+      <h3>Il suono del dial-up, da 300 bps a 56K</h3>
+      <p>Ascolta come cambia il «dialogo» tra i modem lungo l'evoluzione delle velocità.</p>
+      <div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/eYmg_FqUjzQ" title="Dial-up modem handshake sounds" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div>
+    </article>
+    <article class="media-card">
+      <div class="media-label">FILMATO STORICO · TELEFONO</div>
+      <h3>Behind Your Telephone</h3>
+      <p>Il National Museum of American History conserva un filmato del 1955 che mostra il funzionamento del sistema telefonico con animazioni.</p>
+      <a class="media-link" href="https://americanhistory.si.edu/de/collections/archival-item/sova-nmah-ac-0684-ref514" target="_blank" rel="noopener">VEDI LA SCHEDA DELLO SMITHSONIAN →</a>
+    </article>
+    <article class="media-card">
+      <div class="media-label">DOCUMENTO · MORSE</div>
+      <h3>Il primo messaggio telegrafico</h3>
+      <p>La Library of Congress conserva i materiali relativi all'invenzione del telegrafo e al messaggio del 24 maggio 1844.</p>
+      <a class="media-link" href="https://www.loc.gov/collections/samuel-morse-papers/articles-and-essays/invention-of-the-telegraph/" target="_blank" rel="noopener">ESPLORA LA LIBRARY OF CONGRESS →</a>
+    </article>
+    <article class="media-card">
+      <div class="media-label">OGGETTO · TELEFONO</div>
+      <h3>Il telefono di Bell</h3>
+      <p>Una scheda Smithsonian permette di osservare il dispositivo del 1876 e capire come diaframma, magneti e corrente collaborassero.</p>
+      <a class="media-link" href="https://americanhistory.si.edu/collections/object/nmah_704159" target="_blank" rel="noopener">VEDI L'OGGETTO →</a>
+    </article>
+  </div>
+</section>
 
-<h2>13 · Il rumore che raccontava una connessione</h2>
-<p>Il famoso suono del modem non era una decorazione. Era il momento in cui due dispositivi cercavano un linguaggio comune attraverso un canale progettato per la voce. Dietro quei toni c'erano negoziazione, adattamento e verifica del collegamento.</p>
-<div class="comm-lab"><div class="lab-title">SIMULAZIONE · DIAL-UP</div><div class="modem-screen" id="modemScreen"><span>DIALING...</span><span>CONNECTING...</span><span id="modemSpeed">56.0 kbps</span></div><div class="lab-controls"><button id="modemSound">ASCOLTA IL MODEM</button></div><p>Ascolta il suono e osserva il passaggio da chiamata a connessione dati.</p></div>
-
-<h2>14 · Ma usare il telefono non significa aver creato Internet</h2>
-<p>A questo punto le due storie si sono avvicinate, ma non sono ancora la stessa storia.</p>
-<p>La rete telefonica era stata costruita attorno a una domanda: <strong>come collegare una conversazione tra due punti?</strong> Le reti di computer stavano affrontando un'altra domanda: <strong>come far comunicare macchine e reti differenti facendo viaggiare dati in modo efficiente e resistente ai guasti?</strong></p>
-<p>Il modem è quindi un ponte, non la destinazione. Grazie a quel ponte, milioni di computer possono utilizzare infrastrutture telefoniche già esistenti. Ma parallelamente, la ricerca sulle reti di computer sta sviluppando un'idea diversa: dividere i dati in pacchetti e lasciare che la rete li inoltri.</p>
-<div class="mechanism"><div class="node"><strong>TELEFONO</strong><span>Voce, circuiti e commutazione.</span></div><div class="arrow">→</div><div class="node"><strong>MODEM</strong><span>Adatta i dati al canale telefonico.</span></div><div class="arrow">→</div><div class="node"><strong>RETI DI COMPUTER</strong><span>Dati, pacchetti e protocolli.</span></div><div class="arrow">→</div><div class="node"><strong>INTERNET</strong><span>Reti differenti che comunicano tra loro.</span></div></div>
-<p>Ed è qui che la storia torna a Baran, Davies e ARPANET. Il problema non è più soltanto portare un segnale da A a B. Diventa: <strong>come costruire una rete nella quale l'informazione possa continuare a viaggiare anche se alcuni collegamenti o nodi non funzionano?</strong></p>
-<p>La risposta porterà verso il <strong>packet switching</strong>, poi verso <strong>TCP/IP</strong> e infine verso Internet. Il filo che abbiamo seguito dall'elettricità non si è spezzato: si è trasformato. Prima trasportava un impulso. Poi un codice. Poi la rappresentazione della voce. Infine avrebbe trasportato pacchetti di dati.</p>
-
-<section class="comm-media"><div class="interactive-kicker">MEDIA · ASCOLTA E GUARDA</div><h2>La storia, fuori dalla pagina</h2><div class="media-grid"><article class="media-card"><div class="media-label">AUDIO / VIDEO · MODEM</div><h3>Il suono del dial-up, da 300 bps a 56K</h3><p>Ascolta come cambia il «dialogo» tra i modem lungo l'evoluzione delle velocità.</p><div class="video-frame"><iframe src="https://www.youtube-nocookie.com/embed/eYmg_FqUjzQ" title="Dial-up modem handshake sounds" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe></div></article><article class="media-card"><div class="media-label">FILMATO STORICO · TELEFONO</div><h3>Behind Your Telephone</h3><p>Un filmato storico del sistema telefonico mostra con immagini e animazioni come la rete organizza le chiamate.</p><a class="media-link" href="https://americanhistory.si.edu/de/collections/archival-item/sova-nmah-ac-0684-ref514" target="_blank" rel="noopener">VEDI LA SCHEDA DELLO SMITHSONIAN →</a></article><article class="media-card"><div class="media-label">DOCUMENTO · MORSE</div><h3>Il primo messaggio telegrafico</h3><p>Materiali storici sul telegrafo e sul messaggio del 24 maggio 1844.</p><a class="media-link" href="https://www.loc.gov/collections/samuel-morse-papers/articles-and-essays/invention-of-the-telegraph/" target="_blank" rel="noopener">ESPLORA LA LIBRARY OF CONGRESS →</a></article><article class="media-card"><div class="media-label">OGGETTO · TELEFONO</div><h3>Il telefono di Bell</h3><p>Una scheda storica permette di osservare il dispositivo e i suoi principi di funzionamento.</p><a class="media-link" href="https://americanhistory.si.edu/collections/object/nmah_704159" target="_blank" rel="noopener">VEDI L'OGGETTO →</a></article></div></section>
-<section class="comm-sources"><h3>Fonti e materiali</h3><p>Documenti e materiali di approfondimento: <a href="https://www.loc.gov/collections/samuel-morse-papers/articles-and-essays/invention-of-the-telegraph/" rel="noopener" target="_blank">Library of Congress · Invention of the Telegraph</a>; <a href="https://www.loc.gov/item/mcc.019/" rel="noopener" target="_blank">il primo messaggio telegrafico di Morse</a>; <a href="https://www.loc.gov/item/mcc.004/" rel="noopener" target="_blank">il disegno del telefono di Bell</a>; <a href="https://www.projectmf.org/intro.html" rel="noopener" target="_blank">Project MF · phreaking</a>.</p></section>
+<section class="comm-sources"><h3>Fonti e materiali</h3><p>Documenti storici e materiali di approfondimento: <a href="https://www.loc.gov/collections/samuel-morse-papers/articles-and-essays/invention-of-the-telegraph/" rel="noopener" target="_blank">Library of Congress · Invention of the Telegraph</a>; <a href="https://www.loc.gov/item/mcc.019/" rel="noopener" target="_blank">il primo messaggio telegrafico di Morse</a>; <a href="https://www.loc.gov/item/mcc.004/" rel="noopener" target="_blank">il disegno del telefono di Bell</a>; <a href="https://www.projectmf.org/intro.html" rel="noopener" target="_blank">Project MF · phreaking</a>.</p></section>
 </article></main><script src="./assets/atlas.js"></script><script src="./assets/comunicazione.js"></script></body></html>
