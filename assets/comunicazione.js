@@ -14,14 +14,24 @@ function route(mode){document.querySelectorAll('.route').forEach(x=>x.classList.
 circuitBtn?.addEventListener('click',()=>route('circuit'));packetBtn?.addEventListener('click',()=>route('packet'));
 // Esperimento: circuito elettrico didattico
 const electricToggle=document.querySelector('#electricToggle');
-electricToggle?.addEventListener('click',()=>{
+if(electricToggle){
   const box=document.querySelector('#electricDemo');
   const lamp=document.querySelector('#lampStatus');
   const text=document.querySelector('#electricText');
-  const on=box?.classList.toggle('electric-on');
-  if(on){ electricToggle.textContent='APRI IL CIRCUITO'; if(lamp)lamp.textContent='LAMPADA · ACCESA'; if(text)text.textContent='Il circuito è chiuso: la corrente può attraversare il percorso e produrre un effetto a distanza.'; }
-  else { electricToggle.textContent='CHIUDI IL CIRCUITO'; if(lamp)lamp.textContent='LAMPADA · SPENTA'; if(text)text.textContent='Il circuito è aperto. Il percorso è interrotto.'; }
-});
+  electricToggle.addEventListener('click',function(){
+    if(!box)return;
+    const on=box.classList.toggle('electric-on');
+    if(on){
+      electricToggle.textContent='APRI IL CIRCUITO';
+      if(lamp)lamp.textContent='LAMPADA · ACCESA';
+      if(text)text.textContent='Il circuito è chiuso: la corrente può attraversare il percorso e produrre un effetto a distanza.';
+    }else{
+      electricToggle.textContent='CHIUDI IL CIRCUITO';
+      if(lamp)lamp.textContent='LAMPADA · SPENTA';
+      if(text)text.textContent='Il circuito è aperto. Il percorso è interrotto.';
+    }
+  });
+}
 
 // Simulazione modem: trasferimento concettuale, senza connessioni reali
 const modemStart=document.querySelector('#modemStart');
@@ -86,5 +96,28 @@ modemSound?.addEventListener('click',()=>{
     function setSpeed(v){speed=Number(v);options.forEach(b=>b.classList.toggle('active',Number(b.dataset.speed)===speed));speedValue.textContent=(speed>=1000?(speed/1000)+' kbps':speed+' bps');speedTime.textContent=fmt((1024*1024*8)/speed)+' per 1 MB'}
     options.forEach(b=>b.addEventListener('click',()=>setSpeed(b.dataset.speed)));setSpeed(speed);
     start?.addEventListener('click',()=>{let t=0;const total=(1024*1024*8)/speed, startTime=performance.now();function tick(now){t=Math.min(1,(now-startTime)/(Math.max(700,total*12)));fill.style.width=(t*100)+'%';if(t<1)requestAnimationFrame(tick);else setTimeout(()=>fill.style.width='0%',500)}requestAnimationFrame(tick)});
+  }
+})();
+
+/* Interazioni: telefonata vista dalla rete e tono storico del phreaking */
+(function(){
+  const flow=document.getElementById('callFlow'), btn=document.getElementById('callFlowStart'), status=document.getElementById('callFlowStatus');
+  if(flow && btn){
+    const steps=[...flow.querySelectorAll('.flow-step')];
+    btn.addEventListener('click',()=>{
+      steps.forEach(s=>s.classList.remove('active'));
+      let i=0; status.textContent='La rete sta preparando la connessione...';
+      const run=()=>{ if(i<steps.length){steps[i].classList.add('active'); status.textContent=steps[i].querySelector('span').textContent+' · '+steps[i].querySelector('small').textContent; i++; setTimeout(run,750);} else {status.textContent='Connessione stabilita: ora la voce può attraversare il circuito.';} };
+      run();
+    });
+  }
+  const freq=document.getElementById('phreakFreq'), read=document.getElementById('phreakReadout'), play=document.getElementById('phreakPlay');
+  if(freq && read){
+    const update=()=>{const v=Number(freq.value); read.textContent=`${v} Hz · ${v===2600?'frequenza storicamente associata alla segnalazione telefonica':'tono dimostrativo'}`;};
+    freq.addEventListener('input',update); update();
+    play?.addEventListener('click',()=>{
+      const ctx=new (window.AudioContext||window.webkitAudioContext)(), o=ctx.createOscillator(), g=ctx.createGain();
+      o.type='sine'; o.frequency.value=Number(freq.value); g.gain.value=.035; o.connect(g).connect(ctx.destination); o.start(); o.stop(ctx.currentTime+1.2); setTimeout(()=>ctx.close(),1500);
+    });
   }
 })();
