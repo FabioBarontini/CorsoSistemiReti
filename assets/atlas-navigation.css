@@ -1,0 +1,30 @@
+/* Atlante della Rete — navigazione e orientamento v2 */
+.atlas-nav-v2{position:sticky;top:0;z-index:1000;background:rgba(8,11,12,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(199,169,107,.16);box-shadow:0 8px 30px rgba(0,0,0,.16);font-family:system-ui,sans-serif}
+.atlas-nav-main{max-width:1280px;margin:auto;min-height:62px;padding:0 28px;display:flex;align-items:center;gap:28px}
+.atlas-nav-brand{font:700 11px/1 'DM Mono',ui-monospace,monospace;letter-spacing:.18em;color:#e8dfcc;text-decoration:none;white-space:nowrap}
+.atlas-nav-mainlinks{display:flex;align-items:center;gap:4px;flex:1}
+.atlas-nav-mainlinks a{position:relative;padding:23px 13px 21px;color:#9da5a5;text-decoration:none;font:600 10px/1 'DM Mono',ui-monospace,monospace;letter-spacing:.13em;transition:.2s}
+.atlas-nav-mainlinks a:hover,.atlas-nav-mainlinks a.active{color:#f1eadc}
+.atlas-nav-mainlinks a.active:after{content:"";position:absolute;left:13px;right:13px;bottom:0;height:2px;background:#c7a96b;box-shadow:0 0 14px rgba(199,169,107,.45)}
+.atlas-nav-search{margin-left:auto}
+.atlas-nav-sub{border-top:1px solid rgba(255,255,255,.035);background:rgba(255,255,255,.018)}
+.atlas-nav-sub-inner{max-width:1280px;margin:auto;padding:0 28px;min-height:38px;display:flex;align-items:center;gap:7px;overflow:auto;scrollbar-width:none}
+.atlas-nav-sub-inner::-webkit-scrollbar{display:none}
+.atlas-nav-sub .label{font:9px/1 'DM Mono',monospace;letter-spacing:.16em;color:#6f7778;margin-right:6px;white-space:nowrap}
+.atlas-nav-sub a{color:#818a8b;text-decoration:none;font:9px/1 'DM Mono',monospace;letter-spacing:.08em;padding:7px 9px;border:1px solid transparent;border-radius:999px;white-space:nowrap;transition:.2s}
+.atlas-nav-sub a:hover,.atlas-nav-sub a.active{color:#c9d9d6;border-color:rgba(118,183,199,.22);background:rgba(118,183,199,.045)}
+.atlas-orientation{max-width:1280px;margin:0 auto;padding:13px 28px 0;color:#737c7d;font:9px/1.6 'DM Mono',monospace;letter-spacing:.08em;text-transform:uppercase;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.atlas-orientation a{color:#9ba6a5;text-decoration:none}.atlas-orientation a:hover{color:#d9d0bd}.atlas-orientation .here{color:#c7a96b}.atlas-orientation .arrow{color:#485153}
+.atlas-arrivals{max-width:1280px;margin:0 auto;padding:5px 28px 0;color:#666f70;font:8px/1.6 'DM Mono',monospace;letter-spacing:.07em;text-transform:uppercase}
+.atlas-arrivals a{color:#7f8c8d;text-decoration:none}.atlas-arrivals a:hover{color:#b9d2d5}
+.atlas-route{max-width:1280px;margin:0 auto;padding:11px 28px 0;display:flex;align-items:center;gap:7px;overflow:auto;scrollbar-width:none}
+.atlas-route::-webkit-scrollbar{display:none}
+.atlas-route a,.atlas-route span{white-space:nowrap}
+.atlas-route a{color:#899394;text-decoration:none;font:9px 'DM Mono',monospace;letter-spacing:.08em}
+.atlas-route a:hover{color:#d9d0bd}.atlas-route .current{color:#c7a96b}.atlas-route .dot{color:#3e4749}
+.atlas-home-orientation{max-width:1280px;margin:0 auto;padding:28px 28px 0}
+.atlas-home-orientation-inner{border:1px solid rgba(199,169,107,.16);background:linear-gradient(135deg,rgba(199,169,107,.035),rgba(118,183,199,.025));padding:20px 22px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.atlas-home-path{display:block;text-decoration:none;color:inherit;padding:17px;border:1px solid rgba(255,255,255,.055);background:rgba(0,0,0,.11);transition:.25s}.atlas-home-path:hover{transform:translateY(-2px);border-color:rgba(199,169,107,.28)}
+.atlas-home-path .eyebrow{font:9px 'DM Mono',monospace;letter-spacing:.14em;color:#c7a96b}.atlas-home-path h3{font:400 22px/1.2 'Libre Baskerville',serif;color:#e9e1d2;margin:8px 0}.atlas-home-path p{margin:0;color:#8f999a;font-size:13px;line-height:1.55}.atlas-home-path .go{display:block;margin-top:12px;color:#9fcbd2;font:9px 'DM Mono',monospace;letter-spacing:.08em}
+@media(max-width:850px){.atlas-nav-main{padding:0 16px;gap:14px}.atlas-nav-brand{font-size:9px}.atlas-nav-mainlinks a{padding:21px 8px 19px;font-size:9px}.atlas-nav-mainlinks a.active:after{left:8px;right:8px}.atlas-nav-sub-inner,.atlas-orientation,.atlas-arrivals,.atlas-route{padding-left:16px;padding-right:16px}.atlas-home-orientation{padding-left:16px;padding-right:16px}.atlas-home-orientation-inner{grid-template-columns:1fr}}
+@media(max-width:600px){.atlas-nav-main{min-height:56px}.atlas-nav-mainlinks{overflow:auto;scrollbar-width:none}.atlas-nav-mainlinks::-webkit-scrollbar{display:none}.atlas-nav-mainlinks a{padding:19px 7px 17px}.atlas-nav-brand{display:none}.atlas-nav-search{display:none}.atlas-orientation{padding-top:10px}}

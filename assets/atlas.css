@@ -134,3 +134,10 @@ a{color:var(--gold)}.nav{position:sticky;top:0;z-index:50;padding:12px 4vw;backg
 .deep-card:hover{transform:translateY(-4px);border-color:#c99a7d66}
 .deep-card .num{font:10px "DM Mono";color:#c88d84;letter-spacing:.15em}.deep-card h4{font:20px "Libre Baskerville";font-weight:400;margin:10px 0 10px;color:#e4d2c6}.deep-card p{font-size:13px;line-height:1.75;margin:0}
 @media(max-width:800px){.security-visuals{grid-template-columns:1fr}.deep-dive-grid{grid-template-columns:1fr}}
+
+/* === WAYFINDER: tiny arrival map === */
+.wayfinder{max-width:1180px;margin:0 auto;padding:7px 6vw 6px;font:9px/1.5 "DM Mono",monospace;letter-spacing:.08em;color:#8f948f;text-transform:uppercase;opacity:.92}
+.wayfinder-inner{display:flex;align-items:center;gap:8px;flex-wrap:wrap;border-left:1px solid rgba(201,163,107,.28);padding-left:10px}
+.wayfinder-label{color:#c9a36b}.wayfinder a{color:#9db6ba;text-decoration:none;border-bottom:1px solid rgba(157,182,186,.22);transition:.25s}.wayfinder a:hover{color:#eee8d9;border-color:#c9a36b}.wayfinder .sep{color:#515957}
+.person-card .tc-art:after{background:linear-gradient(180deg,rgba(8,10,15,0),rgba(8,10,15,.14) 100%),radial-gradient(circle at 50% 15%,rgba(127,199,211,.10),transparent 40%)}
+.person-card .tc-scan{opacity:.32}

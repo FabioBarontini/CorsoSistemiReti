@@ -8,7 +8,7 @@
 <meta content="La storia di Internet, dalla Guerra Fredda al Web." name="description"/>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;700&family=Libre+Baskerville:wght@400;700&display=swap');
-:root{--bg:#050709;--paper:#0d1114;--paper2:#12181d;--ink:#e9e5db;--muted:#a7adb0;--dim:#687177;--green:#a9cdb8;--amber:#c9a36b;--red:#b56b63;--line:#ffffff18;--max:1120px}
+:root{--bg:#050709;--paper:#0d1114;--paper2:#12181d;--ink:#e9e5db;--muted:#a7adb0;--dim:#687177;--green:#a9cdb8;--amber:#c9a36b;--red:#b56b63;--line:#ffffff18;--max:1040px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,Arial,sans-serif;line-height:1.8;overflow-x:hidden}
 body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");z-index:100}
 a{color:var(--green)} .mono{font-family:"DM Mono",monospace}
@@ -20,7 +20,7 @@ a{color:var(--green)} .mono{font-family:"DM Mono",monospace}
 .network{position:absolute;inset:0;opacity:.65}.node{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 20px var(--green);animation:pulse 3s infinite}.node:after{content:"";position:absolute;width:180px;height:1px;background:linear-gradient(90deg,#a9cdb844,transparent);transform-origin:left;transform:rotate(var(--r));opacity:.5}.n1{left:18%;top:35%;--r:18deg}.n2{left:35%;top:24%;--r:145deg}.n3{left:53%;top:51%;--r:-25deg}.n4{left:73%;top:31%;--r:160deg}.n5{left:83%;top:67%;--r:205deg}.n6{left:28%;top:73%;--r:-40deg}@keyframes pulse{50%{opacity:.35;transform:scale(.7)}}
 .hero-inner{position:relative;z-index:3;max-width:980px;padding:110px 30px 80px;text-align:center}.eyebrow{font:11px "DM Mono";letter-spacing:.28em;color:var(--green);text-transform:uppercase}.hero h1{font:400 clamp(54px,9vw,118px)/.94 "Libre Baskerville";margin:24px 0 28px;letter-spacing:-.04em}.hero h1 em{color:#c4b28e;font-style:normal}.hero-sub{max-width:760px;margin:auto;color:#c2c6c7;font-size:19px}.scroll{margin-top:55px;color:#777f83;font:10px "DM Mono";letter-spacing:.2em}.scroll i{display:block;height:58px;width:1px;background:#9ab6a6;margin:14px auto 0;animation:drop 1.8s infinite}@keyframes drop{50%{transform:scaleY(.35);transform-origin:top;opacity:.35}}
 .progress{position:fixed;z-index:60;left:0;top:62px;height:2px;background:var(--green);width:0}
-.chapter{position:relative;max-width:var(--max);margin:auto;padding:150px 34px 130px}.chapter:before{content:attr(data-num);position:absolute;right:30px;top:110px;color:#ffffff09;font:140px "DM Mono";pointer-events:none}
+.chapter{position:relative;max-width:var(--max);margin:auto;padding:150px 72px 130px}.chapter:before{content:attr(data-num);position:absolute;right:30px;top:110px;color:#ffffff09;font:140px "DM Mono";pointer-events:none}
 .kicker{font:11px "DM Mono";letter-spacing:.22em;color:var(--amber);text-transform:uppercase}.chapter h2{font:400 clamp(38px,6vw,72px)/1.08 "Libre Baskerville";margin:14px 0 34px;max-width:900px}.intro{font-size:22px;line-height:1.65;color:#d0d4d2;max-width:820px}.prose{max-width:790px;font-size:17px;color:#b9bec0}.prose p{margin:0 0 1.25em}.prose strong{color:#e7e2d7}.prose em{color:#c9b990}
 .scene{margin:65px 0;min-height:390px;position:relative;border:1px solid var(--line);overflow:hidden;background:#080b0d;box-shadow:0 30px 100px #0008}.scene img{width:100%;height:100%;min-height:390px;object-fit:cover;display:block;filter:grayscale(.35) contrast(1.1);opacity:.55}.scene .veil{position:absolute;inset:0;background:linear-gradient(90deg,#030506ee,#03050655 55%,#030506dd),linear-gradient(0deg,#030506,#03050600 50%)}.scene-caption{position:absolute;left:34px;bottom:28px;max-width:620px}.scene-caption .tag{font:10px "DM Mono";color:var(--green);letter-spacing:.16em}.scene-caption h3{font:400 34px "Libre Baskerville";margin:8px 0}.scene-caption p{color:#b7bdbe;margin:0}
 .quote{margin:60px 0;max-width:820px;border-left:2px solid var(--green);padding:10px 0 10px 32px;font:400 26px/1.55 "Libre Baskerville";color:#ece8dd}.quote small{display:block;margin-top:15px;font:10px "DM Mono";color:#778084;letter-spacing:.12em}
@@ -246,12 +246,47 @@ radial-gradient(circle at 50% 50%,rgba(199,169,107,.15),transparent 55%),#0a0d10
 </style>
 <link href="./assets/atlas.css" rel="stylesheet"/><link href="./assets/interactive.css" rel="stylesheet"/><link href="./assets/immersive.css" rel="stylesheet"/><link href="./assets/book-mode.css" rel="stylesheet"/>
 <style id="history-page-css">
-.history-intro{max-width:1120px;margin:105px auto 0;padding:90px 34px 55px;position:relative;overflow:hidden;background:radial-gradient(circle at 85% 20%,rgba(118,183,199,.10),transparent 35%),linear-gradient(145deg,#101718,#060809);border:1px solid rgba(201,163,107,.2);box-shadow:0 30px 100px rgba(0,0,0,.35)}
+.history-intro{max-width:1040px;margin:105px auto 0;padding:90px 72px 55px;position:relative;overflow:hidden;background:radial-gradient(circle at 85% 20%,rgba(118,183,199,.10),transparent 35%),linear-gradient(145deg,#101718,#060809);border:1px solid rgba(201,163,107,.2);box-shadow:0 30px 100px rgba(0,0,0,.35)}
 .history-intro:after{content:"01";position:absolute;right:20px;bottom:-45px;font:180px "DM Mono";color:rgba(255,255,255,.025)}
 .history-intro h1{font:400 clamp(50px,8vw,100px)/.98 "Libre Baskerville";max-width:900px;margin:14px 0 24px;color:#eee8d9}.history-intro h1 em{color:#c9a36b;font-style:normal}.history-intro p{max-width:760px;font:18px/1.85 Inter,Arial;color:#b9c0c0}.history-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}.history-links a{padding:11px 15px;border:1px solid rgba(118,183,199,.25);color:#c8dadd;text-decoration:none;font:10px "DM Mono";letter-spacing:.1em}.history-links a:hover{background:rgba(118,183,199,.08);border-color:#8dc8d5}
-.history-end{max-width:1120px;margin:0 auto;padding:110px 34px 140px}.history-end h2{font:400 clamp(40px,6vw,76px)/1.05 "Libre Baskerville";margin:12px 0 35px;color:#eee8d9}.history-next{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.history-next a{display:block;padding:28px;text-decoration:none;border:1px solid rgba(201,163,107,.2);background:linear-gradient(145deg,#111718,#080a0b);transition:.3s}.history-next a:hover{transform:translateY(-5px);border-color:rgba(118,183,199,.4)}.history-next span{display:block;font:10px "DM Mono";letter-spacing:.18em;color:#c9a36b}.history-next strong{display:block;margin-top:10px;color:#e6e2d8;font:400 20px/1.4 "Libre Baskerville"}@media(max-width:800px){.history-next{grid-template-columns:1fr}.history-intro{margin-top:80px}}
+.history-end{max-width:1040px;margin:0 auto;padding:110px 72px 140px}.history-end h2{font:400 clamp(40px,6vw,76px)/1.05 "Libre Baskerville";margin:12px 0 35px;color:#eee8d9}.history-next{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.history-next a{display:block;padding:28px;text-decoration:none;border:1px solid rgba(201,163,107,.2);background:linear-gradient(145deg,#111718,#080a0b);transition:.3s}.history-next a:hover{transform:translateY(-5px);border-color:rgba(118,183,199,.4)}.history-next span{display:block;font:10px "DM Mono";letter-spacing:.18em;color:#c9a36b}.history-next strong{display:block;margin-top:10px;color:#e6e2d8;font:400 20px/1.4 "Libre Baskerville"}@media(max-width:800px){.history-next{grid-template-columns:1fr}.history-intro{margin-top:80px;padding-left:22px;padding-right:22px}.chapter{padding-left:22px;padding-right:22px}.history-end{padding-left:22px;padding-right:22px}.history-rail{padding-left:22px;padding-right:22px}}
 </style>
-<style id="history-rail-css">.history-rail{position:sticky;top:62px;z-index:40;max-width:1120px;margin:0 auto;height:52px;padding:0 34px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,7,9,.82);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}.history-rail .brand{font:10px "DM Mono";letter-spacing:.18em;color:#7e8b8e}.history-rail .navlinks{display:flex;gap:16px}.history-rail .navlinks a{font:10px "DM Mono";color:#6f797c;text-decoration:none}.history-rail .navlinks a:hover{color:#d9e1df}</style></head><body><nav class="nav atlas-global-nav"><a class="brand" href="index.html">ATLANTE DELLA RETE</a><div class="navlinks"><a href="index.html">HOME</a><a class="active" href="storia-internet.html">STORIA</a><a href="lezioni.html">LEZIONI</a><a href="timeline.html">TIMELINE</a><a href="album.html">ALBUM</a><a href="security.html">SICUREZZA</a><a href="maps-internet.html">MAPPE</a><a href="biblioteca.html">STORIE</a><a href="search.html">CERCA</a></div></nav><section class="history-intro"><div class="kicker">SEZIONE · STORIA DI INTERNET</div><h1>Prima che esistesse <em>il Web</em></h1><p>Un storia attraverso le idee, le macchine e le persone che hanno trasformato la comunicazione a distanza in una rete mondiale.</p><div class="history-links"><a href="timeline.html">TIMELINE →</a><a href="album.html">PERSONAGGI →</a><a href="maps-internet.html">MAPPE →</a></div></section><div class="progress" id="progress"></div>
+<style id="history-rail-css">.history-rail{position:sticky;top:62px;z-index:40;max-width:1040px;margin:0 auto;height:52px;padding:0 72px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,7,9,.82);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}.history-rail .brand{font:10px "DM Mono";letter-spacing:.18em;color:#7e8b8e}.history-rail .navlinks{display:flex;gap:16px}.history-rail .navlinks a{font:10px "DM Mono";color:#6f797c;text-decoration:none}.history-rail .navlinks a:hover{color:#d9e1df}</style><link rel="stylesheet" href="./assets/atlas-navigation.css"><style id="storia-centering-fix">
+/* Correzione layout: i capitoli della storia devono restare centrati anche
+   quando immersive.css applica le proprie regole globali a .chapter. */
+.chapter{
+  width:100%;
+  max-width:1040px !important;
+  margin-left:auto !important;
+  margin-right:auto !important;
+  padding-left:72px !important;
+  padding-right:72px !important;
+}
+.chapter > .prose,
+.chapter > .intro,
+.chapter > h2,
+.chapter > .kicker,
+.chapter > .quote,
+.chapter > .terminal,
+.chapter > .scene,
+.chapter > .timeline,
+.chapter > .facts,
+.chapter > .image-row,
+.chapter > .packetlab{
+  max-width:100%;
+}
+@media (max-width:800px){
+  .chapter{padding-left:22px !important;padding-right:22px !important;}
+}
+</style>
+</head><body><nav class="atlas-nav-v2">
+<div class="atlas-nav-main">
+<a class="atlas-nav-brand" href="index.html">ATLANTE DELLA RETE</a>
+<div class="atlas-nav-mainlinks"><a class="" href="index.html">HOME</a><a class="active" href="storia-internet.html">STORIA</a><a class="" href="lezioni.html">LEZIONI</a><a class="" href="percorsi.html">ESPLORA</a><a class="" href="search.html">CERCA</a></div>
+</div>
+<div class="atlas-nav-sub"><div class="atlas-nav-sub-inner"><span class="label">STORIA</span><a class="active" href="storia-internet.html">STORIA</a><a class="" href="comunicazione.html">COMUNICAZIONE</a><a class="" href="web-architettura.html">WEB</a><a class="" href="percorsi.html">PERCORSI</a></div></div>
+</nav><div class="atlas-orientation"><span>SEI QUI</span><span class="arrow">›</span><a href="storia-internet.html">STORIA</a><span class="arrow">›</span><span class="here">STORIA DI INTERNET</span></div><div class="atlas-arrivals">PUOI ARRIVARE QUI DA · <a href="index.html">HOME</a> · <a href="percorsi.html">PERCORSI</a></div></div>
+<section class="history-intro"><div class="kicker">SEZIONE · STORIA DI INTERNET</div><h1>Prima che esistesse <em>il Web</em></h1><p>Un storia attraverso le idee, le macchine e le persone che hanno trasformato la comunicazione a distanza in una rete mondiale.</p><div class="history-links"><a href="timeline.html">TIMELINE →</a><a href="album.html">PERSONAGGI →</a><a href="maps-internet.html">MAPPE →</a></div></section><div class="progress" id="progress"></div>
 <header class="history-rail"><div class="brand">STORIA / INTERNET</div><div class="navlinks">
 <a href="#lezione0">00</a><a href="#baran">01</a><a href="#arpanet">02</a><a href="#mail">03</a><a href="#case">04</a><a href="#irc">05</a><a href="#web">06</a><a href="#1995">07</a>
 </div></header>
