@@ -22,16 +22,13 @@ body{background:radial-gradient(circle at 20% 10%,#15201d 0,transparent 32%),rad
 .intersection{max-width:1100px;margin:0 auto;padding:0 25px 120px}.intersection-box{border:1px solid #c9a36b28;background:radial-gradient(circle at 70% 30%,#2a21151a,#0b0e10);padding:42px}.intersection-box h2{font:400 36px 'Libre Baskerville';margin:0 0 15px}.intersection-box p{max-width:780px;color:#9ea6a7}.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}.chips a{padding:10px 13px;border:1px solid #ffffff18;color:#aeb8b5;text-decoration:none;font:10px 'DM Mono';letter-spacing:.08em}.chips a:hover{border-color:#a9cdb855;color:white}
 @media(max-width:760px){.path-hero{min-height:62vh}.webframe{height:930px}.station{width:120px}.station b{font-size:13px}.s0{left:50%;top:8%}.s1{left:17%;top:22%}.s2{left:50%;top:24%}.s3{left:83%;top:22%}.s4{left:12%;top:45%}.s5{left:39%;top:47%}.s6{left:63%;top:45%}.s7{left:88%;top:45%}.s8{left:22%;top:72%}.s9{left:50%;top:72%}.s10{left:78%;top:72%}.s11{left:50%;top:93%}.routes-head{display:block}.routes-head p{margin-top:15px}}
 </style>
-<link rel="stylesheet" href="./assets/atlas-navigation.css"></head>
-<body>
-<nav class="atlas-nav-v2">
-<div class="atlas-nav-main">
-<a class="atlas-nav-brand" href="index.html">ATLANTE DELLA RETE</a>
-<div class="atlas-nav-mainlinks"><a class="" href="index.html">HOME</a><a class="" href="storia-internet.html">STORIA</a><a class="" href="lezioni.html">LEZIONI</a><a class="active" href="percorsi.html">ESPLORA</a><a class="" href="search.html">CERCA</a></div>
-</div>
-<div class="atlas-nav-sub"><div class="atlas-nav-sub-inner"><span class="label">ESPLORA</span><a class="" href="timeline.html">TIMELINE</a><a class="" href="album.html">ALBUM</a><a class="" href="maps-internet.html">MAPPE</a><a class="active" href="percorsi.html">PERCORSI</a><a class="" href="biblioteca.html">BIBLIOTECA</a><a class="" href="search.html">CERCA</a></div></div>
-</nav><div class="atlas-orientation"><span>SEI QUI</span><span class="arrow">›</span><a href="percorsi.html">ESPLORA</a><span class="arrow">›</span><span class="here">ESPLORA</span></div></div>
 
+<link rel="stylesheet" href="assets/study.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="assets/supabase-config.js"></script>
+</head>
+<body>
+<nav class="nav atlas-global-nav"><a class="brand" href="index.html">ATLANTE DELLA RETE</a><a href="index.html">HOME</a><a href="storia-internet.html">STORIA</a><a href="lezioni.html">LEZIONI</a><a href="timeline.html">TIMELINE</a><a href="album.html">ALBUM</a><a href="security.html">SICUREZZA</a><a href="maps-internet.html">MAPPE</a><a href="comunicazione.html">COMUNICAZIONE</a><a href="biblioteca.html">STORIE</a><a class="active" href="percorsi.html">PERCORSI</a><a href="search.html">CERCA</a></nav>
 <header class="path-hero"><div class="path-title"><div class="kicker">ATLANTE · PERCORSI</div><h1>Non esiste una sola strada.<br><em>Esistono incroci.</em></h1><p>Questa pagina raccoglie alcuni percorsi suggeriti attraverso l'Atlante. Ogni percorso è una sequenza di stazioni; le stazioni appartengono a più percorsi e, quando si incrociano, aprono nuove direzioni.</p></div></header>
 <section class="path-intro"><div class="kicker">LA MAPPA</div><h2>Una ragnatela di idee</h2><p>Non devi seguire tutti i percorsi. Scegline uno, fermati dove qualcosa ti incuriosisce e poi cambia direzione. I nodi sono pagine reali dell'Atlante: clicca su una stazione e continua da lì.</p></section>
 <section class="web"><div class="legend"><span><i></i> storia e infrastruttura</span><span><i class="gold"></i> persone e idee</span><span><i class="blue"></i> protocolli e Web</span><span><i class="red"></i> sicurezza</span></div>
@@ -74,4 +71,6 @@ body{background:radial-gradient(circle at 20% 10%,#15201d 0,transparent 32%),rad
 const stations=[...document.querySelectorAll('.station')];
 stations.forEach(s=>{s.addEventListener('mouseenter',()=>s.classList.add('active'));s.addEventListener('mouseleave',()=>s.classList.remove('active'));});
 </script>
+
+<script src="assets/study-tools.js"></script>
 </body></html>
