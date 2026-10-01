@@ -1,11 +1,185 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Il mio Atlante — Accesso</title><link rel="stylesheet" href="assets/study.css"><style>body{margin:0;background:#050608;color:#e9e3d6;font-family:Inter,Arial,sans-serif}</style></head><body>
-<div class="auth-shell"><div class="auth-box"><div style="font:10px 'DM Mono';letter-spacing:.2em;color:#c7a96b">ATLANTE DELLA RETE</div><h1>Il mio Atlante</h1><p>Accedi per conservare sottolineature, segnalibri e note personali su tutti i dispositivi.</p><label>NOME — solo per una nuova registrazione</label><input id="name" autocomplete="name"><label>E-MAIL</label><input id="email" type="email" autocomplete="email"><label>PASSWORD</label><input id="password" type="password" autocomplete="current-password"><button id="submit">ACCEDI</button><div class="auth-switch"><button id="signup">CREA ACCOUNT</button><button id="forgot">PASSWORD DIMENTICATA</button></div><div class="auth-msg" id="msg"></div><p style="font-size:11px;margin-top:25px"><a href="index.html" style="color:#9fcbb1">← Torna all'Atlante</a></p></div></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="assets/supabase-config.js"></script>
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Il mio Atlante — Accesso</title>
+  <style>
+    :root{--bg:#070b0c;--panel:#0d1315;--line:#2a3436;--text:#eee8dc;--muted:#a7aaa5;--gold:#c9a45d;--red:#9f6259}
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at 70% 20%,#152022 0,#070b0c 45%,#050707 100%);color:var(--text);font-family:Georgia,serif;min-height:100vh}
+    .wrap{max-width:680px;margin:7vh auto;padding:34px;background:rgba(10,15,16,.92);border:1px solid var(--line);box-shadow:0 20px 70px #0008}
+    .eyebrow{font:12px/1.2 monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+    h1{font-size:54px;line-height:.98;font-weight:400;margin:12px 0 18px}
+    .intro{font-size:20px;line-height:1.45;color:#d3d0c8;max-width:580px}
+    label{display:block;font:12px monospace;letter-spacing:.12em;text-transform:uppercase;margin:24px 0 7px;color:#c8bfae}
+    input{width:100%;padding:14px 13px;background:#111719;color:#fff;border:1px solid #364144;font-size:16px}
+    input:focus{outline:1px solid var(--gold);border-color:var(--gold)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+    button{padding:14px;border:1px solid #6f5a34;background:#171814;color:#f2eee6;font-size:14px;cursor:pointer}
+    button:hover{background:#24241d} button.primary{background:#211f17;border-color:var(--gold)}
+    button:disabled{opacity:.5;cursor:wait}
+    .links{display:flex;gap:22px;flex-wrap:wrap;margin-top:18px}
+    .linkbtn{background:none;border:0;padding:0;color:#d8b96f;text-decoration:underline;cursor:pointer}
+    #status{display:none;margin-top:20px;padding:13px 15px;border:1px solid #394447;background:#101718;font:14px/1.45 system-ui,sans-serif}
+    #status.ok{border-color:#5b765e;color:#cfe2cf} #status.error{border-color:#87514b;color:#f1c8c1}
+    .diagnostic{margin-top:24px;padding-top:18px;border-top:1px solid #283032;font:12px/1.5 monospace;color:#858d8c}
+    .diagnostic strong{color:#b8bfbd}
+    a{color:#d8b96f}
+    @media(max-width:700px){.wrap{margin:0;border-left:0;border-right:0;min-height:100vh}.row{grid-template-columns:1fr}h1{font-size:43px}}
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <div class="eyebrow">Atlante della Rete</div>
+  <h1>Il mio Atlante</h1>
+  <p class="intro">Accedi per conservare sottolineature, segnalibri e note personali su tutti i tuoi dispositivi.</p>
+
+  <label for="name">Nome <small>— solo per una nuova registrazione</small></label>
+  <input id="name" autocomplete="name" placeholder="Nome e cognome">
+
+  <label for="email">E-mail</label>
+  <input id="email" type="email" autocomplete="email" placeholder="nome@scuola.it">
+
+  <label for="password">Password</label>
+  <input id="password" type="password" autocomplete="current-password" placeholder="••••••••">
+
+  <div class="row">
+    <button id="login" class="primary">ACCEDI</button>
+    <button id="signup">CREA ACCOUNT</button>
+  </div>
+
+  <div class="links">
+    <button id="forgot" class="linkbtn">Password dimenticata?</button>
+    <a href="index.html">← Torna all'Atlante</a>
+  </div>
+
+  <div id="status" role="status" aria-live="polite"></div>
+
+  <div class="diagnostic">
+    <strong>Stato collegamento</strong><br>
+    <span id="diag">Controllo configurazione…</span>
+  </div>
+</main>
+
+<script type="module">
+  const $ = id => document.getElementById(id);
+  const status = $("status");
+  const diag = $("diag");
+
+  function show(message, kind="ok") {
+    status.textContent = message;
+    status.className = kind;
+    status.style.display = "block";
+  }
+
+  function setBusy(busy) {
+    ["login","signup","forgot"].forEach(id => $(id).disabled = busy);
+  }
+
+  const cfg = window.ATLANTE_SUPABASE;
+  if (!cfg?.url || !cfg?.anonKey) {
+    diag.textContent = "Configurazione mancante: controlla assets/supabase-config.js";
+    show("Il sito non è ancora collegato a Supabase. Controlla assets/supabase-config.js.", "error");
+    throw new Error("ATLANTE_SUPABASE configuration missing");
+  }
+
+  diag.textContent = "Configurazione trovata. Caricamento del client Supabase…";
+
+  let sb;
+  try {
+    const mod = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm");
+    sb = mod.createClient(cfg.url, cfg.anonKey);
+    diag.textContent = "Supabase collegato. Pronto.";
+  } catch (err) {
+    console.error(err);
+    diag.textContent = "Impossibile caricare la libreria Supabase.";
+    show("Non riesco a caricare il client Supabase. Controlla la connessione Internet e la Console del browser (F12).", "error");
+    throw err;
+  }
+
+  function redirectUrl() {
+    return new URL("reset-password.html", window.location.href).href;
+  }
+
+  $("login").addEventListener("click", async () => {
+    const email = $("email").value.trim();
+    const password = $("password").value;
+    if (!email || !password) return show("Inserisci e-mail e password.", "error");
+
+    setBusy(true); show("Accesso in corso…");
+    const { data, error } = await sb.auth.signInWithPassword({ email, password });
+    setBusy(false);
+
+    if (error) {
+      console.error(error);
+      return show(error.message, "error");
+    }
+
+    show("Accesso riuscito. Apertura del tuo Atlante…");
+    window.location.href = "studio.html";
+  });
+
+  $("signup").addEventListener("click", async () => {
+    const name = $("name").value.trim();
+    const email = $("email").value.trim();
+    const password = $("password").value;
+
+    if (!name) return show("Inserisci il nome.", "error");
+    if (!email) return show("Inserisci l'e-mail.", "error");
+    if (password.length < 6) return show("La password deve contenere almeno 6 caratteri.", "error");
+
+    setBusy(true); show("Creazione dell'account…");
+
+    const { data, error } = await sb.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { display_name: name },
+        emailRedirectTo: new URL("studio.html", window.location.href).href
+      }
+    });
+
+    setBusy(false);
+
+    if (error) {
+      console.error(error);
+      return show(error.message, "error");
+    }
+
+    if (data.session) {
+      show("Account creato. Apertura del tuo Atlante…");
+      window.location.href = "studio.html";
+    } else {
+      show("Account creato. Controlla la tua e-mail per confermare l'indirizzo, poi torna qui per accedere.", "ok");
+    }
+  });
+
+  $("forgot").addEventListener("click", async () => {
+    const email = $("email").value.trim();
+    if (!email) return show("Inserisci prima il tuo indirizzo e-mail.", "error");
+
+    setBusy(true); show("Invio del messaggio di recupero…");
+
+    const { error } = await sb.auth.resetPasswordForEmail(email, {
+      redirectTo: redirectUrl()
+    });
+
+    setBusy(false);
+
+    if (error) {
+      console.error(error);
+      return show(error.message, "error");
+    }
+
+    show("Messaggio inviato. Controlla la casella e-mail e apri il link per impostare una nuova password.", "ok");
+  });
+</script>
+
+<!-- Configurazione caricata DOPO il markup ma PRIMA dello script module grazie a defer implicito. -->
+<script src="assets/supabase-config.js"></script>
 <script>
-const cfg=window.ATLANTE_SUPABASE||{};const ok=cfg.url&&!cfg.url.includes('TUO-PROGETTO')&&cfg.anonKey&&!cfg.anonKey.includes('LA-TUA');let sb=ok?supabase.createClient(cfg.url,cfg.anonKey):null;const msg=t=>document.getElementById('msg').textContent=t;
-if(!sb)msg('Configura prima assets/supabase-config.js con URL e anon key del progetto Supabase.');
-const next=new URLSearchParams(location.search).get('next');
-document.getElementById('submit').onclick=async()=>{if(!sb)return;const email=document.getElementById('email').value.trim(),password=document.getElementById('password').value;const {error}=await sb.auth.signInWithPassword({email,password});if(error)msg(error.message);else location.href=next||'studio.html';};
-document.getElementById('signup').onclick=async()=>{if(!sb)return;const email=document.getElementById('email').value.trim(),password=document.getElementById('password').value,name=document.getElementById('name').value.trim();const {data,error}=await sb.auth.signUp({email,password,options:{data:{display_name:name}}});if(error)msg(error.message);else msg(data.session?'Account creato.':'Controlla la posta per confermare l\'account.');};
-document.getElementById('forgot').onclick=async()=>{if(!sb)return;const email=document.getElementById('email').value.trim();if(!email)return msg('Inserisci prima la tua e-mail.');const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});msg(error?error.message:'Controlla la posta per reimpostare la password.');};
-</script></body></html>
+  // I moduli vengono valutati dopo il parsing; questa verifica serve solo a rendere
+  // esplicito il caricamento della configurazione.
+</script>
+</body>
+</html>
