@@ -14,7 +14,7 @@
   async function init(){
     if(hasConfig && window.supabase){ sb=window.supabase.createClient(cfg.url,cfg.anonKey); const {data}=await sb.auth.getSession(); user=data.session?.user||null; sb.auth.onAuthStateChange((_e,session)=>{user=session?.user||null; renderUserBar();}); }
     injectUI();
-    if(user){ await loadPageHighlights(); await loadPageNotes(); await recordVisit(); }
+    if(user){ await loadPageHighlights(); await loadPageNotes(); await recordVisit(); setTimeout(focusAnnotationFromHash,120); }
   }
 
 
@@ -56,37 +56,81 @@
     for(const n of pageNotes) applyNoteAnchor(n);
   }
   function textRoot(){ return document.querySelector('main, article, .chapter, .content, .page') || document.body; }
-  function applyQuote(quote,color,id){
-    if(!quote || document.querySelector('[data-study-hl="'+id+'"]')) return;
-    const root=textRoot(); const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>{ if(!n.nodeValue.trim())return NodeFilter.FILTER_REJECT; if(n.parentElement.closest('script,style,nav,.nav,.study-userbar,.study-drawer,.study-selectbar,.study-highlight'))return NodeFilter.FILTER_REJECT; return NodeFilter.FILTER_ACCEPT; }});
-    let nodes=[], all=''; while(walker.nextNode()){nodes.push(walker.currentNode);all+=walker.currentNode.nodeValue;}
-    const idx=all.indexOf(quote); if(idx<0)return;
-    let pos=0,startNode=null,endNode=null,startOffset=0,endOffset=0;
-    for(const n of nodes){const next=pos+n.nodeValue.length; if(startNode===null && idx>=pos && idx<next){startNode=n;startOffset=idx-pos;} const endIdx=idx+quote.length; if(endIdx>pos && endIdx<=next){endNode=n;endOffset=endIdx-pos;break;} pos=next;}
-    if(!startNode||!endNode)return;
-    try{const range=document.createRange();range.setStart(startNode,startOffset);range.setEnd(endNode,endOffset);const mark=document.createElement('mark');mark.className='study-highlight study-highlight-'+color;mark.dataset.studyHl=id;mark.title='La tua sottolineatura';range.surroundContents(mark);mark.onclick=()=>deleteHighlight(id);}catch(e){}
+  function textNodes(root, includeMarks=false){
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>{
+      if(!n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+      const p=n.parentElement;
+      if(p && p.closest('script,style,nav,.nav,.study-userbar,.study-drawer,.study-selectbar,.study-note-marker')) return NodeFilter.FILTER_REJECT;
+      if(!includeMarks && p && p.closest('.study-highlight')) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }});
+    const nodes=[]; let all=''; while(walker.nextNode()){nodes.push(walker.currentNode);all+=walker.currentNode.nodeValue;}
+    return {nodes,all};
   }
+  function findQuote(quote, includeMarks=false){
+    if(!quote) return null;
+    const {nodes,all}=textNodes(textRoot(),includeMarks);
+    const idx=all.indexOf(quote); if(idx<0) return null;
+    const endIdx=idx+quote.length; let pos=0, startNode=null,endNode=null,startOffset=0,endOffset=0;
+    for(const n of nodes){
+      const next=pos+n.nodeValue.length;
+      if(!startNode && idx>=pos && idx<next){startNode=n;startOffset=idx-pos;}
+      if(endIdx>pos && endIdx<=next){endNode=n;endOffset=endIdx-pos;break;}
+      pos=next;
+    }
+    return startNode&&endNode ? {nodes,idx,startNode,endNode,startOffset,endOffset} : null;
+  }
+  function wrapQuote(quote,color,id){
+    if(!quote || document.querySelector('[data-study-hl="'+id+'"]')) return false;
+    const found=findQuote(quote,false); if(!found)return false;
+    const {nodes,startNode,endNode,startOffset,endOffset}=found;
+    const startIndex=nodes.indexOf(startNode), endIndex=nodes.indexOf(endNode);
+    const parts=[];
+    for(let i=startIndex;i<=endIndex;i++){
+      const n=nodes[i];
+      const from=n===startNode?startOffset:0;
+      const to=n===endNode?endOffset:n.nodeValue.length;
+      if(to>from) parts.push({n,from,to});
+    }
+    // Work backwards so splitting/wrapping does not invalidate the remaining nodes.
+    for(let i=parts.length-1;i>=0;i--){
+      const part=parts[i];
+      try{
+        const r=document.createRange(); r.setStart(part.n,part.from); r.setEnd(part.n,part.to);
+        const mark=document.createElement('mark');
+        mark.className='study-highlight study-highlight-'+(color||'yellow');
+        mark.dataset.studyHl=id; mark.title='La tua sottolineatura';
+        r.surroundContents(mark);
+        mark.onclick=()=>deleteHighlight(id);
+      }catch(e){ /* lascia il passaggio intatto se il DOM della pagina non consente il wrapping */ }
+    }
+    return !!document.querySelector('[data-study-hl="'+id+'"]');
+  }
+  function applyQuote(quote,color,id){ wrapQuote(quote,color,id); }
 
   function applyNoteAnchor(note){
     if(!note || !note.quote || document.querySelector('[data-study-note="'+note.id+'"]')) return;
-    const root=textRoot();
-    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>{
-      if(!n.nodeValue.trim())return NodeFilter.FILTER_REJECT;
-      if(n.parentElement.closest('script,style,nav,.nav,.study-userbar,.study-drawer,.study-selectbar,.study-highlight,.study-note-marker'))return NodeFilter.FILTER_REJECT;
-      return NodeFilter.FILTER_ACCEPT;
-    }});
-    let nodes=[], all=''; while(walker.nextNode()){nodes.push(walker.currentNode);all+=walker.currentNode.nodeValue;}
-    const idx=all.indexOf(note.quote); if(idx<0)return;
-    let pos=0,startNode=null,endNode=null,startOffset=0,endOffset=0;
-    const endIdx=idx+note.quote.length;
-    for(const n of nodes){const next=pos+n.nodeValue.length; if(startNode===null && idx>=pos && idx<next){startNode=n;startOffset=idx-pos;} if(endIdx>pos && endIdx<=next){endNode=n;endOffset=endIdx-pos;break;} pos=next;}
-    if(!endNode)return;
+    // Per trovare una nota possiamo attraversare anche il testo già evidenziato.
+    const found=findQuote(note.quote,true); if(!found)return;
+    const {endNode,endOffset}=found;
     try{
       const range=document.createRange(); range.setStart(endNode,endOffset); range.collapse(true);
       const marker=document.createElement('button'); marker.type='button'; marker.className='study-note-marker'; marker.dataset.studyNote=note.id; marker.textContent='✎'; marker.title=(note.title||'Nota')+' — apri nota';
       marker.setAttribute('aria-label','Apri nota: '+(note.title||'Nota')); marker.onclick=(ev)=>{ev.preventDefault();ev.stopPropagation();openSavedNote(note);};
       range.insertNode(marker);
     }catch(e){}
+  }
+
+  function focusAnnotationFromHash(){
+    const hash=location.hash||''; if(!hash)return;
+    const m=hash.match(/^#(note|highlight)=([^&]+)$/); if(!m)return;
+    const type=m[1], id=decodeURIComponent(m[2]);
+    let el=document.querySelector(type==='note'?'[data-study-note="'+CSS.escape(id)+'"]':'[data-study-hl="'+CSS.escape(id)+'"]');
+    if(!el) return;
+    el.classList.add('study-focus');
+    el.scrollIntoView({behavior:'smooth',block:'center'});
+    setTimeout(()=>el.classList.remove('study-focus'),2200);
+    if(type==='note') setTimeout(()=>openSavedNote(pageNotes.find(n=>String(n.id)===String(id))),450);
   }
 
   function openSavedNote(note){

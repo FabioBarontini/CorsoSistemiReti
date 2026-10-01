@@ -16,3 +16,5 @@
 /* Note ancorate al punto del testo */
 .study-note-marker{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;margin:0 3px;border:1px solid #c7a96b88;border-radius:50%;background:#c7a96b20;color:#e6cf98;font:12px/1 'DM Mono',monospace;vertical-align:middle;cursor:pointer;box-shadow:0 0 0 3px #c7a96b0d;transition:.18s ease}.study-note-marker:hover{transform:translateY(-1px) scale(1.08);background:#c7a96b35;box-shadow:0 0 18px #c7a96b44}.study-note-marker:focus-visible{outline:2px solid #c7a96b;outline-offset:2px}
 .study-card-help{margin:-6px 0 14px;color:#707b78;font-size:12px;line-height:1.5}
+
+.study-highlight.study-focus{animation:studyFocus 2.2s ease;box-shadow:0 0 0 3px #e7c85a99,0 0 28px #e7c85a66}.study-note-marker.study-focus{animation:studyNoteFocus 2.2s ease;transform:scale(1.35);box-shadow:0 0 0 5px #c7a96b33,0 0 28px #c7a96b88}@keyframes studyFocus{0%,100%{filter:none}20%,70%{filter:brightness(1.5)}}@keyframes studyNoteFocus{0%,100%{filter:none}20%,70%{filter:brightness(1.7)}}
