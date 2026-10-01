@@ -43,6 +43,11 @@
   <label for="password">Password</label>
   <input id="password" type="password" autocomplete="current-password" placeholder="••••••••">
 
+  <div id="confirm-wrap" style="display:none">
+    <label for="password-confirm">Conferma password</label>
+    <input id="password-confirm" type="password" autocomplete="new-password" placeholder="Ripeti la password">
+  </div>
+
   <div class="row">
     <button id="login" class="primary">ACCEDI</button>
     <button id="signup">CREA ACCOUNT</button>
@@ -65,6 +70,18 @@
   const $ = id => document.getElementById(id);
   const status = $("status");
   const diag = $("diag");
+  const confirmWrap = $("confirm-wrap");
+  const confirmPassword = $("password-confirm");
+  let signupMode = false;
+
+  function setSignupMode(on) {
+    signupMode = on;
+    confirmWrap.style.display = on ? "block" : "none";
+    $("password").autocomplete = on ? "new-password" : "current-password";
+    if (!on) confirmPassword.value = "";
+  }
+
+  setSignupMode(false);
 
   function show(message, kind="ok") {
     status.textContent = message;
@@ -116,26 +133,40 @@
     }
 
     show("Accesso riuscito. Apertura del tuo Atlante…");
-    window.location.href = "studio.html";
+    const requestedNext = new URLSearchParams(location.search).get("next") || "studio.html";
+    const nextUrl = new URL(requestedNext, window.location.href);
+    window.location.href = nextUrl.origin === window.location.origin ? nextUrl.href : new URL("studio.html", window.location.href).href;
   });
 
   $("signup").addEventListener("click", async () => {
+    if (!signupMode) {
+      setSignupMode(true);
+      show("Compila anche la conferma della password, poi premi di nuovo CREA ACCOUNT.", "ok");
+      confirmPassword.focus();
+      return;
+    }
+
     const name = $("name").value.trim();
     const email = $("email").value.trim();
     const password = $("password").value;
+    const password2 = confirmPassword.value;
 
     if (!name) return show("Inserisci il nome.", "error");
     if (!email) return show("Inserisci l'e-mail.", "error");
     if (password.length < 6) return show("La password deve contenere almeno 6 caratteri.", "error");
+    if (password !== password2) return show("Le due password non coincidono.", "error");
 
     setBusy(true); show("Creazione dell'account…");
 
+    const requestedNext = new URLSearchParams(location.search).get("next") || "studio.html";
+    const nextUrl = new URL(requestedNext, window.location.href);
+    const destination = nextUrl.origin === window.location.origin ? nextUrl.href : new URL("studio.html", window.location.href).href;
     const { data, error } = await sb.auth.signUp({
       email,
       password,
       options: {
         data: { display_name: name },
-        emailRedirectTo: new URL("studio.html", window.location.href).href
+        emailRedirectTo: destination
       }
     });
 
@@ -148,9 +179,9 @@
 
     if (data.session) {
       show("Account creato. Apertura del tuo Atlante…");
-      window.location.href = "studio.html";
+      window.location.href = destination;
     } else {
-      show("Account creato. Controlla la tua e-mail per confermare l'indirizzo, poi torna qui per accedere.", "ok");
+      show("Account creato. Controlla la tua e-mail e conferma l'indirizzo prima di accedere. Se non ricevi il messaggio, controlla anche Spam/Promozioni.", "ok");
     }
   });
 
