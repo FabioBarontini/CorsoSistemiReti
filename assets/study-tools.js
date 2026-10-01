@@ -9,10 +9,12 @@
   function addEl(tag, cls, html='') { const e=document.createElement(tag); if(cls)e.className=cls; if(html)e.innerHTML=html; return e; }
   function safe(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 
+  const pageNotes = [];
+
   async function init(){
     if(hasConfig && window.supabase){ sb=window.supabase.createClient(cfg.url,cfg.anonKey); const {data}=await sb.auth.getSession(); user=data.session?.user||null; sb.auth.onAuthStateChange((_e,session)=>{user=session?.user||null; renderUserBar();}); }
     injectUI();
-    if(user){ await loadPageHighlights(); await recordVisit(); }
+    if(user){ await loadPageHighlights(); await loadPageNotes(); await recordVisit(); }
   }
 
 
@@ -42,8 +44,16 @@
     if(error) return alert(error.message); await loadPageHighlights(); hideSelect();
   }
   async function loadPageHighlights(){
-    const {data,error}=await sb.from('highlights').select('*').eq('page_url',pageUrl).order('created_at'); if(error)return;
+    const {data,error}=await sb.from('highlights').select('*').eq('page_url',pageUrl).eq('user_id',user.id).order('created_at'); if(error)return;
     for(const h of data||[]) applyQuote(h.quote,h.color,h.id);
+  }
+
+  async function loadPageNotes(){
+    pageNotes.length=0;
+    const {data,error}=await sb.from('notes').select('*').eq('page_url',pageUrl).eq('user_id',user.id).order('created_at');
+    if(error)return;
+    (data||[]).forEach(n=>pageNotes.push(n));
+    for(const n of pageNotes) applyNoteAnchor(n);
   }
   function textRoot(){ return document.querySelector('main, article, .chapter, .content, .page') || document.body; }
   function applyQuote(quote,color,id){
@@ -56,6 +66,42 @@
     if(!startNode||!endNode)return;
     try{const range=document.createRange();range.setStart(startNode,startOffset);range.setEnd(endNode,endOffset);const mark=document.createElement('mark');mark.className='study-highlight study-highlight-'+color;mark.dataset.studyHl=id;mark.title='La tua sottolineatura';range.surroundContents(mark);mark.onclick=()=>deleteHighlight(id);}catch(e){}
   }
+
+  function applyNoteAnchor(note){
+    if(!note || !note.quote || document.querySelector('[data-study-note="'+note.id+'"]')) return;
+    const root=textRoot();
+    const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>{
+      if(!n.nodeValue.trim())return NodeFilter.FILTER_REJECT;
+      if(n.parentElement.closest('script,style,nav,.nav,.study-userbar,.study-drawer,.study-selectbar,.study-highlight,.study-note-marker'))return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }});
+    let nodes=[], all=''; while(walker.nextNode()){nodes.push(walker.currentNode);all+=walker.currentNode.nodeValue;}
+    const idx=all.indexOf(note.quote); if(idx<0)return;
+    let pos=0,startNode=null,endNode=null,startOffset=0,endOffset=0;
+    const endIdx=idx+note.quote.length;
+    for(const n of nodes){const next=pos+n.nodeValue.length; if(startNode===null && idx>=pos && idx<next){startNode=n;startOffset=idx-pos;} if(endIdx>pos && endIdx<=next){endNode=n;endOffset=endIdx-pos;break;} pos=next;}
+    if(!endNode)return;
+    try{
+      const range=document.createRange(); range.setStart(endNode,endOffset); range.collapse(true);
+      const marker=document.createElement('button'); marker.type='button'; marker.className='study-note-marker'; marker.dataset.studyNote=note.id; marker.textContent='✎'; marker.title=(note.title||'Nota')+' — apri nota';
+      marker.setAttribute('aria-label','Apri nota: '+(note.title||'Nota')); marker.onclick=(ev)=>{ev.preventDefault();ev.stopPropagation();openSavedNote(note);};
+      range.insertNode(marker);
+    }catch(e){}
+  }
+
+  function openSavedNote(note){
+    ensureDrawer();
+    const d=document.getElementById('study-drawer'); d.classList.add('open'); document.getElementById('study-overlay').classList.add('open');
+    d.querySelector('h2').textContent=note.title||'Nota';
+    document.getElementById('study-note-title').value=note.title||'';
+    document.getElementById('study-note-quote').value=note.quote||'Nota sulla pagina';
+    document.getElementById('study-note-body').value=note.body||'';
+    document.getElementById('study-note-body').readOnly=true;
+    document.getElementById('study-note-title').readOnly=true;
+    document.getElementById('study-note-status').textContent='Nota collegata a questo passaggio.';
+    document.getElementById('study-save-note').style.display='none';
+  }
+
   async function deleteHighlight(id){ if(!confirm('Eliminare questa sottolineatura?'))return; await sb.from('highlights').delete().eq('id',id); location.reload(); }
 
   async function toggleBookmark(){
@@ -64,12 +110,16 @@
     else {await sb.from('bookmarks').insert({user_id:user.id,page_url:pageUrl,page_title:pageTitle}); alert('Pagina salvata nei segnalibri.');}
   }
   function openNote(){
-    if(!requireUser())return; ensureDrawer(); const d=document.getElementById('study-drawer'); d.classList.add('open'); document.getElementById('study-overlay').classList.add('open');
-    document.getElementById('study-note-quote').value=selectedText||''; document.getElementById('study-note-title').value=''; document.getElementById('study-note-body').value='';
+    if(!requireUser())return;
+    if(!selectedText){ alert('Seleziona prima una frase del testo. La nota verrà fissata esattamente in quel punto.'); return; }
+    ensureDrawer(); const d=document.getElementById('study-drawer'); d.classList.add('open'); document.getElementById('study-overlay').classList.add('open');
+    d.querySelector('h2').textContent='Nuova nota';
+    document.getElementById('study-note-quote').value=selectedText; document.getElementById('study-note-title').value=''; document.getElementById('study-note-body').value='';
+    document.getElementById('study-note-body').readOnly=false; document.getElementById('study-note-title').readOnly=false; document.getElementById('study-save-note').style.display='inline-block';
   }
   function ensureDrawer(){ if(document.getElementById('study-drawer'))return; const ov=addEl('div','study-overlay');ov.id='study-overlay';document.body.appendChild(ov);ov.onclick=closeDrawer; const d=addEl('aside','study-drawer');d.id='study-drawer';d.innerHTML='<button class="study-close">CHIUDI</button><h2>Nuova nota</h2><label>TITOLO</label><input id="study-note-title" placeholder="Es. Ricordare questo passaggio"><label>PASSAGGIO COLLEGATO</label><textarea id="study-note-quote" readonly></textarea><label>LA TUA NOTA</label><textarea id="study-note-body" placeholder="Scrivi qui..."></textarea><div class="study-actions"><button id="study-save-note">SALVA NOTA</button><button class="secondary study-close">ANNULLA</button></div><div class="study-status" id="study-note-status"></div>';document.body.appendChild(d);d.querySelectorAll('.study-close').forEach(b=>b.onclick=closeDrawer);d.querySelector('#study-save-note').onclick=saveNote; }
   function closeDrawer(){document.getElementById('study-drawer')?.classList.remove('open');document.getElementById('study-overlay')?.classList.remove('open');}
-  async function saveNote(){const title=document.getElementById('study-note-title').value.trim();const body=document.getElementById('study-note-body').value.trim();const quote=document.getElementById('study-note-quote').value;if(!body)return;const {error}=await sb.from('notes').insert({user_id:user.id,page_url:pageUrl,page_title:pageTitle,title,body,quote});document.getElementById('study-note-status').textContent=error?error.message:'Nota salvata nel tuo Atlante.';if(!error)setTimeout(closeDrawer,700);}
+  async function saveNote(){const title=document.getElementById('study-note-title').value.trim();const body=document.getElementById('study-note-body').value.trim();const quote=document.getElementById('study-note-quote').value;if(!body)return;const {data,error}=await sb.from('notes').insert({user_id:user.id,page_url:pageUrl,page_title:pageTitle,title,body,quote}).select().single();document.getElementById('study-note-status').textContent=error?error.message:'Nota salvata in questo punto della pagina.';if(!error){if(data){pageNotes.push(data);applyNoteAnchor(data);}setTimeout(closeDrawer,700);hideSelect();}}
   async function logout(){if(sb)await sb.auth.signOut(); location.href='index.html';}
   function hideSelect(){document.getElementById('study-selectbar').style.display='none';window.getSelection()?.removeAllRanges();selectedText='';}
 
