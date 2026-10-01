@@ -31,8 +31,8 @@
   }
   function renderUserBar(){
     const bar=document.getElementById('study-userbar'); if(!bar)return;
-    if(user){ bar.innerHTML='<span>STUDIO</span><a href="studio.html">IL MIO ATLANTE</a><button id="study-note-btn">✎ NOTE</button><button id="study-bookmark-btn">🔖</button><button id="study-logout">ESCI</button>'; bar.querySelector('#study-note-btn').onclick=()=>openNote(); bar.querySelector('#study-bookmark-btn').onclick=()=>toggleBookmark(); bar.querySelector('#study-logout').onclick=logout; }
-    else { bar.innerHTML='<a href="login.html">ACCEDI AL MIO ATLANTE</a>'; }
+    if(user){ bar.innerHTML='<span>STUDIO</span><a href="studio.html?from='+encodeURIComponent(location.href)+'">IL MIO ATLANTE</a><button id="study-note-btn">✎ NOTE</button><button id="study-bookmark-btn">🔖</button><button id="study-logout">ESCI</button>'; bar.querySelector('#study-note-btn').onclick=()=>openNote(); bar.querySelector('#study-bookmark-btn').onclick=()=>toggleBookmark(); bar.querySelector('#study-logout').onclick=logout; }
+    else { bar.innerHTML='<a href="login.html?next='+encodeURIComponent('studio.html?from='+encodeURIComponent(location.href))+'">ACCEDI AL MIO ATLANTE</a>'; }
   }
   function positionSelectionBar(sel,el){ const r=sel.getRangeAt(0).getBoundingClientRect(); el.style.left=Math.max(8,r.left+window.scrollX)+'px'; el.style.top=Math.max(70,r.top+window.scrollY-52)+'px'; el.style.display='flex'; }
   function requireUser(){ if(!user){ location.href='login.html?next='+encodeURIComponent(location.href); return false;} return true; }
