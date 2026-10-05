@@ -18,25 +18,3 @@
 .study-card-help{margin:-6px 0 14px;color:#707b78;font-size:12px;line-height:1.5}
 
 .study-highlight.study-focus{animation:studyFocus 2.2s ease;box-shadow:0 0 0 3px #e7c85a99,0 0 28px #e7c85a66}.study-note-marker.study-focus{animation:studyNoteFocus 2.2s ease;transform:scale(1.35);box-shadow:0 0 0 5px #c7a96b33,0 0 28px #c7a96b88}@keyframes studyFocus{0%,100%{filter:none}20%,70%{filter:brightness(1.5)}}@keyframes studyNoteFocus{0%,100%{filter:none}20%,70%{filter:brightness(1.7)}}
-
-/* Zona di studio: visivamente separata dalle pagine narrative dell'Atlante */
-body:has(.study-dashboard){background:#0b1012;color:#e9e3d6;background-image:radial-gradient(circle at 15% 5%,rgba(199,169,107,.10),transparent 30%),radial-gradient(circle at 90% 70%,rgba(73,111,105,.10),transparent 32%),linear-gradient(135deg,#0a1011,#11191a 52%,#090d0e);}
-.study-dashboard{position:relative;overflow:hidden;min-height:100vh;padding-top:105px}
-.study-dashboard:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(rgba(199,169,107,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(199,169,107,.08) 1px,transparent 1px);background-size:38px 38px;mask-image:linear-gradient(to bottom,#000,transparent 80%)}
-.study-atmosphere{position:absolute;z-index:-1;top:45px;right:-120px;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(199,169,107,.12),rgba(70,107,99,.05) 38%,transparent 68%);filter:blur(2px)}
-.study-kicker{font:10px 'DM Mono';letter-spacing:.22em;color:#c7a96b;margin-top:22px}
-.study-dashboard h1{letter-spacing:-.035em}
-.study-dashboard .lead{max-width:720px;font-family:'Libre Baskerville',serif;line-height:1.7}
-.study-stats{margin:42px 0 30px}.study-stat{background:linear-gradient(145deg,rgba(22,30,31,.92),rgba(9,13,14,.92));box-shadow:0 18px 55px rgba(0,0,0,.18);border-color:rgba(199,169,107,.12);position:relative;overflow:hidden}.study-stat:after{content:"";position:absolute;right:-35px;bottom:-45px;width:120px;height:120px;border-radius:50%;border:1px solid rgba(199,169,107,.08)}
-.exploring{background:linear-gradient(135deg,rgba(27,40,39,.9),rgba(12,17,18,.92));border-color:rgba(159,203,177,.18);box-shadow:0 20px 70px rgba(0,0,0,.18)}
-.dashboard-actions{margin-bottom:48px}
-.study-grid{position:relative}
-.study-card{background:linear-gradient(145deg,rgba(18,25,27,.96),rgba(8,11,12,.96));border-color:rgba(255,255,255,.08);box-shadow:0 18px 55px rgba(0,0,0,.16)}
-.paths-bottom{margin:95px 0 0;padding:52px 0 10px;border-top:1px solid rgba(199,169,107,.15)}
-.paths-intro{max-width:780px;margin-bottom:28px}.paths-intro h2{font:400 34px 'Libre Baskerville';margin:12px 0}.paths-intro p{color:#8f9998;line-height:1.65}
-.path-card{display:grid;grid-template-columns:125px 1fr;gap:25px;align-items:center;padding:24px 0;border-bottom:1px solid rgba(255,255,255,.08)}
-.path-progress{--pct:0deg;width:104px;height:104px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#c7a96b var(--pct),#26302f 0);box-shadow:0 0 35px rgba(199,169,107,.10)}
-.path-progress:before{content:"";position:absolute;width:82px;height:82px;border-radius:50%;background:#0c1112}
-.path-progress>div{position:relative;text-align:center}.path-progress b{display:block;font:22px 'DM Mono';color:#e9dfca}.path-progress span{font:7px 'DM Mono';letter-spacing:.12em;color:#77827f}
-.path-main{min-width:0}.path-title{font:400 23px 'Libre Baskerville';color:#e8e0d2}.path-meta{font:10px 'DM Mono';color:#707b79;margin-top:5px}.path-line{margin-top:18px}
-@media(max-width:700px){.path-card{grid-template-columns:1fr}.path-progress{width:92px;height:92px}.path-progress:before{width:72px;height:72px}}
