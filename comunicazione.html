@@ -1,15 +1,45 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Il lungo viaggio del segnale · Atlante della Rete</title><link rel="stylesheet" href="./assets/atlas.css"><link rel="stylesheet" href="./assets/interactive.css"><link rel="stylesheet" href="./assets/immersive.css"><link rel="stylesheet" href="./assets/book-mode.css"><link rel="stylesheet" href="./assets/comunicazione.css">
-<link rel="stylesheet" href="assets/study.css">
+<!DOCTYPE html>
+<html lang="it"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Il lungo viaggio del segnale · Atlante della Rete</title><link href="./assets/atlas.css" rel="stylesheet"/><link href="./assets/interactive.css" rel="stylesheet"/><link href="./assets/immersive.css" rel="stylesheet"/><link href="./assets/book-mode.css" rel="stylesheet"/><link href="./assets/comunicazione.css" rel="stylesheet"/>
+<link href="assets/study.css" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/supabase-config.js"></script>
-</head><body class="comm-page story-page book-mode"><nav class="nav atlas-global-nav"><a class="brand" href="index.html">ATLANTE DELLA RETE</a><a href="index.html">HOME</a><a href="storia-internet.html">STORIA</a><a href="lezioni.html">LEZIONI</a><a href="timeline.html">TIMELINE</a><a href="album.html">ALBUM</a><a href="security.html">SICUREZZA</a><a href="maps-internet.html">MAPPE</a><a class="active" href="biblioteca.html">STORIE</a><a href="percorsi.html">PERCORSI</a><a href="search.html">CERCA</a></nav>
+<link href="./assets/comunicazione-hub.css" rel="stylesheet"/></head><body class="comm-page story-page book-mode"><nav class="nav atlas-global-nav atlas-main-nav">
+<a class="brand" href="index.html">ATLANTE DELLA RETE</a>
+<a data-nav="home" href="index.html">HOME</a>
+<details class="nav-group"><summary>ESPLORA</summary><div class="nav-menu">
+<a data-nav="history" href="storia-internet.html">Storia di Internet</a>
+<a data-nav="communication" href="comunicazione.html">Storia della comunicazione</a>
+<a data-nav="timeline" href="timeline.html">Timeline</a>
+<a data-nav="album" href="album.html">Album</a>
+<a data-nav="maps" href="maps-internet.html">Mappe</a>
+</div></details>
+<details class="nav-group"><summary>IMPARA</summary><div class="nav-menu">
+<a data-nav="lessons" href="lezioni.html">Lezioni</a>
+<a data-nav="architecture" href="web-architettura.html">Architettura del Web</a>
+</div></details>
+<a data-nav="security" href="security.html">SICUREZZA</a>
+<a data-nav="stories" href="biblioteca.html">STORIE</a>
+<details class="nav-group"><summary>STRUMENTI</summary><div class="nav-menu">
+<a data-nav="paths" href="percorsi.html">Percorsi</a>
+<a data-nav="search" href="search.html">Cerca</a>
+</div></details>
+<a data-nav="studio" href="studio.html">IL MIO ATLANTE</a>
+</nav>
 <header class="comm-hero"><div class="wire"></div><div class="comm-hero-inner"><div class="comm-kicker">TELECOMUNICAZIONI · PRIMA DELLA RETE</div><h1>Il lungo viaggio del segnale</h1><p class="lead">Prima dei pacchetti, dei router e dei browser, qualcuno dovette risolvere un problema più antico: far arrivare un'informazione a una persona che non potevamo vedere, né sentire.</p></div></header>
-<main class="comm-main"><article class="comm-story">
+<main class="comm-main"><section class="communication-map" id="communication-map">
+<div class="comm-hub-head"><div class="comm-kicker">PRIMA DELLE RETI DI COMPUTER</div><h2>La storia comincia qui.</h2><p>Prima di parlare di pacchetti, router e Internet bisogna capire come abbiamo imparato a trasformare un messaggio in un segnale, farlo viaggiare e costruire una rete capace di collegare persone lontane.</p></div>
+<div class="comm-hub-grid">
+<a class="comm-hub-card" href="comunicazione-telegrafo.html"><span>01</span><h3>IL TELEGRAFO</h3><p>Corrente, codice Morse, elettromagnete e cavi: il messaggio comincia a viaggiare senza una persona.</p><b>ENTRA →</b></a>
+<a class="comm-hub-card featured" href="comunicazione-telefono.html"><span>02</span><h3>IL TELEFONO</h3><p>La voce diventa un segnale elettrico. Microfono, centrali, selettori, disco combinatore e rete telefonica.</p><b>ENTRA NEL TELEFONO →</b></a>
+<a class="comm-hub-card" href="comunicazione-phreaking.html"><span>03</span><h3>PHREAKING</h3><p>Quando qualcuno scopre che la rete telefonica può ascoltare anche un suono prodotto dall'uomo.</p><b>ENTRA →</b></a>
+<a class="comm-hub-card" href="storia-internet.html#baran"><span>04</span><h3>DAI CIRCUITI AI PACCHETTI</h3><p>La rete telefonica funziona, ma per i computer ha un problema: il percorso resta occupato. Arriva il packet switching.</p><b>CONTINUA →</b></a>
+</div>
+</section><article class="comm-story">
 <p class="drop">Immaginate di essere su una collina. Davanti a voi c'è una valle. Dall'altra parte, una seconda collina. Su quella collina c'è qualcuno che non può sentirvi.</p>
 <p>Avete una notizia. Potrebbe essere un avvertimento, un ordine, l'arrivo di una nave. Potete gridare, ma la voce si perde. Potete mandare qualcuno, ma allora non state trasmettendo l'informazione: state trasportando una persona che la porta con sé.</p>
 <p>Per migliaia di anni questa è stata la regola. La distanza si superava facendo muovere qualcosa di fisico: un messaggero, una nave, un cavallo, una lettera.</p>
 <p>Poi arriva un'idea che sembra quasi banale, ma cambia tutto:</p>
-<div class="comm-quote">Non deve viaggiare chi porta il messaggio.<br><strong>Può viaggiare un segnale.</strong></div>
+<div class="comm-quote">Non deve viaggiare chi porta il messaggio.<br/><strong>Può viaggiare un segnale.</strong></div>
 <p>Un fuoco. Una bandiera. Un lampo. Una posizione di un braccio. Un suono. E, più avanti, una variazione elettrica lungo un filo.</p>
 <h2>Il problema vero: rappresentare</h2>
 <p>Un segnale, però, non è ancora un messaggio. Un lampo non significa automaticamente «arriva l'esercito». Deve esistere un accordo: questo segnale significa questo.</p>
@@ -24,12 +54,12 @@
 <h2>La differenza che prepara l'informatica</h2>
 <p>Il telegrafo ci insegna che una macchina può lavorare con <strong>stati distinti</strong>. Il telefono mostra che un segnale può rappresentare una grandezza che varia continuamente. Sono due modi diversi di rappresentare il mondo.</p>
 <p>Quando più avanti incontreremo il digitale, il bit, i protocolli e i pacchetti, questa distinzione tornerà continuamente. Non perché Internet sia «uguale al telegrafo», ma perché eredita una domanda antica: <strong>quale forma deve avere l'informazione per poter essere trasportata?</strong></p>
-<div class="comm-lab"><div class="lab-title">ESPERIMENTO · COSTRUISCI UN MESSAGGIO</div><p>Scrivi una parola. Il sistema la trasforma nel codice Morse e puoi ascoltarne il ritmo.</p><input id="morseInput" value="CIAO" style="width:100%;background:#07090a;border:1px solid #ffffff18;color:#eee;padding:14px;font:18px 'DM Mono';margin:10px 0"><div id="morseDisplay" class="morse-display"></div><div id="morseOutput" class="morse-output"></div><div class="lab-controls"><button id="morsePlay">ASCOLTA IL CODICE</button></div></div>
+<div class="comm-lab"><div class="lab-title">ESPERIMENTO · COSTRUISCI UN MESSAGGIO</div><p>Scrivi una parola. Il sistema la trasforma nel codice Morse e puoi ascoltarne il ritmo.</p><input id="morseInput" style="width:100%;background:#07090a;border:1px solid #ffffff18;color:#eee;padding:14px;font:18px 'DM Mono';margin:10px 0" value="CIAO"/><div class="morse-display" id="morseDisplay"></div><div class="morse-output" id="morseOutput"></div><div class="lab-controls"><button id="morsePlay">ASCOLTA IL CODICE</button></div></div>
 <h2>Una voce è qualcosa di diverso</h2>
 <p>Con il telegrafo abbiamo imparato a trasmettere simboli. Ma una voce non è una successione di lettere separate da pause regolari. È una vibrazione complessa: le corde vocali, la bocca e il tratto vocale producono variazioni di pressione nell'aria.</p>
 <p>Il telefono nasce quando qualcuno prova a risolvere questo problema fisico: <strong>come trasformare una vibrazione dell'aria in una variazione elettrica e poi ricostruirla dall'altra parte?</strong></p>
 <div class="mechanism"><div class="node"><strong>ARIA</strong><span>La voce fa vibrare l'aria.</span></div><div class="arrow">→</div><div class="node"><strong>ELETTRICITÀ</strong><span>Il trasduttore converte il movimento in un segnale.</span></div><div class="arrow">→</div><div class="node"><strong>ARIA</strong><span>Il ricevitore ricrea la vibrazione.</span></div></div>
-<div class="comm-lab"><div class="lab-title">ESPERIMENTO · GUARDARE LA VOCE</div><div class="wave-wrap"><canvas id="waveCanvas" class="wave"></canvas><div class="wave-label">RAPPRESENTAZIONE SCHEMATICA DI UNA FORMA D'ONDA</div></div><div class="wave-caption"><span>PRESSIONE / AMPIEZZA</span><span>TEMPO →</span></div><p style="margin-top:16px">La curva non è la voce stessa. È una rappresentazione della variazione che un sistema può trasformare e trasportare.</p></div>
+<div class="comm-lab"><div class="lab-title">ESPERIMENTO · GUARDARE LA VOCE</div><div class="wave-wrap"><canvas class="wave" id="waveCanvas"></canvas><div class="wave-label">RAPPRESENTAZIONE SCHEMATICA DI UNA FORMA D'ONDA</div></div><div class="wave-caption"><span>PRESSIONE / AMPIEZZA</span><span>TEMPO →</span></div><p style="margin-top:16px">La curva non è la voce stessa. È una rappresentazione della variazione che un sistema può trasformare e trasportare.</p></div>
 <h2>Quando il telefono diventa una rete</h2>
 <p>Una coppia di telefoni è un esperimento. Milioni di telefoni richiedono un'infrastruttura.</p>
 <p>Serve sapere chi sta chiamando, chi deve ricevere, quale percorso deve essere attivato e come liberarlo quando la conversazione finisce. La rete telefonica introduce così una delle idee fondamentali delle telecomunicazioni: <strong>la commutazione</strong>.</p>
@@ -44,7 +74,7 @@
 <p>È un passaggio fondamentale: una vulnerabilità non è sempre una riga di codice. Può essere anche una decisione progettuale, un segnale messo sul canale sbagliato, un confine di fiducia che qualcuno ha dato per scontato.</p>
 <p>Il phreaking prepara così una mentalità che ritroveremo nell'hacking: <strong>non fermarsi a ciò che il sistema mostra all'utente; cercare di capire ciò che il sistema sta davvero facendo.</strong></p>
 <div class="comm-links"><a href="comunicazione-telegrafo.html">01 · IL TELEGRAFO</a><a href="comunicazione-telefono.html">02 · IL TELEFONO</a><a href="comunicazione-phreaking.html">03 · IL PHREAKING</a><a href="lezione-captain-crunch.html">CAPTAIN CRUNCH · STORIA</a><a href="lezione-wozniak-bluebox.html">WOZNIAK &amp; BLUE BOX</a></div>
-<section class="comm-sources"><h3>Fonti e materiali</h3><p>Per i documenti storici: <a href="https://www.loc.gov/collections/samuel-morse-papers/articles-and-essays/invention-of-the-telegraph/" target="_blank" rel="noopener">Library of Congress · Invention of the Telegraph</a>; <a href="https://www.loc.gov/item/mcc.019/" target="_blank" rel="noopener">il primo messaggio telegrafico di Morse</a>; <a href="https://www.loc.gov/item/mcc.004/" target="_blank" rel="noopener">il disegno del telefono di Bell</a>. Per il phreaking: <a href="https://www.projectmf.org/intro.html" target="_blank" rel="noopener">Project MF</a>.</p></section>
+<section class="comm-sources"><h3>Fonti e materiali</h3><p>Per i documenti storici: <a href="https://www.loc.gov/collections/samuel-morse-papers/articles-and-essays/invention-of-the-telegraph/" rel="noopener" target="_blank">Library of Congress · Invention of the Telegraph</a>; <a href="https://www.loc.gov/item/mcc.019/" rel="noopener" target="_blank">il primo messaggio telegrafico di Morse</a>; <a href="https://www.loc.gov/item/mcc.004/" rel="noopener" target="_blank">il disegno del telefono di Bell</a>. Per il phreaking: <a href="https://www.projectmf.org/intro.html" rel="noopener" target="_blank">Project MF</a>.</p></section>
 </article></main><script src="./assets/atlas.js"></script><script src="./assets/comunicazione.js"></script>
 <script src="assets/study-tools.js"></script>
 </body></html>

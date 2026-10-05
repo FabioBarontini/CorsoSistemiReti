@@ -252,10 +252,31 @@ radial-gradient(circle at 50% 50%,rgba(199,169,107,.15),transparent 55%),#0a0d10
 .history-end{max-width:1120px;margin:0 auto;padding:110px 34px 140px}.history-end h2{font:400 clamp(40px,6vw,76px)/1.05 "Libre Baskerville";margin:12px 0 35px;color:#eee8d9}.history-next{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.history-next a{display:block;padding:28px;text-decoration:none;border:1px solid rgba(201,163,107,.2);background:linear-gradient(145deg,#111718,#080a0b);transition:.3s}.history-next a:hover{transform:translateY(-5px);border-color:rgba(118,183,199,.4)}.history-next span{display:block;font:10px "DM Mono";letter-spacing:.18em;color:#c9a36b}.history-next strong{display:block;margin-top:10px;color:#e6e2d8;font:400 20px/1.4 "Libre Baskerville"}@media(max-width:800px){.history-next{grid-template-columns:1fr}.history-intro{margin-top:80px}}
 </style>
 <style id="history-rail-css">.history-rail{position:sticky;top:62px;z-index:40;max-width:1120px;margin:0 auto;height:52px;padding:0 34px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,7,9,.82);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.08)}.history-rail .brand{font:10px "DM Mono";letter-spacing:.18em;color:#7e8b8e}.history-rail .navlinks{display:flex;gap:16px}.history-rail .navlinks a{font:10px "DM Mono";color:#6f797c;text-decoration:none}.history-rail .navlinks a:hover{color:#d9e1df}</style>
-<link rel="stylesheet" href="assets/study.css">
+<link href="assets/study.css" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/supabase-config.js"></script>
-</head><body><nav class="nav atlas-global-nav"><a class="brand" href="index.html">ATLANTE DELLA RETE</a><div class="navlinks"><a href="index.html">HOME</a><a class="active" href="storia-internet.html">STORIA</a><a href="lezioni.html">LEZIONI</a><a href="timeline.html">TIMELINE</a><a href="album.html">ALBUM</a><a href="security.html">SICUREZZA</a><a href="maps-internet.html">MAPPE</a><a href="biblioteca.html">STORIE</a><a href="percorsi.html">PERCORSI</a><a href="search.html">CERCA</a></div></nav><section class="history-intro"><div class="kicker">SEZIONE · STORIA DI INTERNET</div><h1>Prima che esistesse <em>il Web</em></h1><p>Un storia attraverso le idee, le macchine e le persone che hanno trasformato la comunicazione a distanza in una rete mondiale.</p><div class="history-links"><a href="timeline.html">TIMELINE →</a><a href="album.html">PERSONAGGI →</a><a href="maps-internet.html">MAPPE →</a></div></section><div class="progress" id="progress"></div>
+<link href="assets/history-organization.css" rel="stylesheet"/></head><body><nav class="nav atlas-global-nav atlas-main-nav">
+<a class="brand" href="index.html">ATLANTE DELLA RETE</a>
+<a data-nav="home" href="index.html">HOME</a>
+<details class="nav-group"><summary>ESPLORA</summary><div class="nav-menu">
+<a data-nav="history" href="storia-internet.html">Storia di Internet</a>
+<a data-nav="communication" href="comunicazione.html">Storia della comunicazione</a>
+<a data-nav="timeline" href="timeline.html">Timeline</a>
+<a data-nav="album" href="album.html">Album</a>
+<a data-nav="maps" href="maps-internet.html">Mappe</a>
+</div></details>
+<details class="nav-group"><summary>IMPARA</summary><div class="nav-menu">
+<a data-nav="lessons" href="lezioni.html">Lezioni</a>
+<a data-nav="architecture" href="web-architettura.html">Architettura del Web</a>
+</div></details>
+<a data-nav="security" href="security.html">SICUREZZA</a>
+<a data-nav="stories" href="biblioteca.html">STORIE</a>
+<details class="nav-group"><summary>STRUMENTI</summary><div class="nav-menu">
+<a data-nav="paths" href="percorsi.html">Percorsi</a>
+<a data-nav="search" href="search.html">Cerca</a>
+</div></details>
+<a data-nav="studio" href="studio.html">IL MIO ATLANTE</a>
+</nav><section class="history-intro"><div class="kicker">SEZIONE · STORIA DI INTERNET</div><h1>Prima che esistesse <em>il Web</em></h1><p>Un storia attraverso le idee, le macchine e le persone che hanno trasformato la comunicazione a distanza in una rete mondiale.</p><div class="history-links"><a href="timeline.html">TIMELINE →</a><a href="album.html">PERSONAGGI →</a><a href="maps-internet.html">MAPPE →</a></div></section><div class="progress" id="progress"></div>
 <header class="history-rail"><div class="brand">STORIA / INTERNET</div><div class="navlinks">
 <a href="#lezione0">00</a><a href="#baran">01</a><a href="#arpanet">02</a><a href="#mail">03</a><a href="#case">04</a><a href="#irc">05</a><a href="#web">06</a><a href="#1995">07</a>
 </div></header>
@@ -265,7 +286,7 @@ radial-gradient(circle at 50% 50%,rgba(199,169,107,.15),transparent 55%),#0a0d10
 <h1>Prima che esistesse<br/><em>il Web</em></h1>
 <p class="hero-sub">La storia di Internet non comincia con un browser. Comincia molto prima: con una guerra, una domanda, computer isolati, linee telefoniche, modem, comunità, messaggi nel buio e una lunga serie di persone che provano a costruire ponti.</p>
 <div class="scroll">INIZIA IL VIAGGIO<i></i></div></div>
-</section>
+</section><div class="before-internet-link" id="before-internet-link"><div><span>PRIMA DI INTERNET</span><strong>La storia della comunicazione</strong><p>Se vuoi capire da dove arrivano le reti, parti dal telegrafo e dal telefono.</p></div><a href="comunicazione.html">ENTRA NELLA STORIA →</a></div>
 <section class="chapter" data-num="∞" style="padding-top:95px;padding-bottom:95px">
 <div class="choice-card" style="max-width:900px;margin:0 auto">
 <div class="choice-title">PORTA D'INGRESSO · PRIMA DELLA RETE</div>

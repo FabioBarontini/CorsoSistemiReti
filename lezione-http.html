@@ -4,7 +4,28 @@
 <link rel="stylesheet" href="assets/study.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/supabase-config.js"></script>
-</head><body class="book-mode"><nav class="nav atlas-global-nav"><a class="brand" href="index.html">ATLANTE DELLA RETE</a><a href="index.html">HOME</a><a href="storia-internet.html">STORIA</a><a href="lezioni.html">LEZIONI</a><a href="timeline.html">TIMELINE</a><a href="album.html">ALBUM</a><a href="security.html">SICUREZZA</a><a href="maps-internet.html">MAPPE</a><a href="comunicazione.html">COMUNICAZIONE</a><a href="biblioteca.html">STORIE</a><a href="percorsi.html">PERCORSI</a><a href="search.html">CERCA</a></nav>
+</head><body class="book-mode"><nav class="nav atlas-global-nav atlas-main-nav">
+<a class="brand" href="index.html">ATLANTE DELLA RETE</a>
+<a data-nav="home" href="index.html">HOME</a>
+<details class="nav-group"><summary>ESPLORA</summary><div class="nav-menu">
+<a data-nav="history" href="storia-internet.html">Storia di Internet</a>
+<a data-nav="communication" href="comunicazione.html">Storia della comunicazione</a>
+<a data-nav="timeline" href="timeline.html">Timeline</a>
+<a data-nav="album" href="album.html">Album</a>
+<a data-nav="maps" href="maps-internet.html">Mappe</a>
+</div></details>
+<details class="nav-group"><summary>IMPARA</summary><div class="nav-menu">
+<a data-nav="lessons" href="lezioni.html">Lezioni</a>
+<a data-nav="architecture" href="web-architettura.html">Architettura del Web</a>
+</div></details>
+<a data-nav="security" href="security.html">SICUREZZA</a>
+<a data-nav="stories" href="biblioteca.html">STORIE</a>
+<details class="nav-group"><summary>STRUMENTI</summary><div class="nav-menu">
+<a data-nav="paths" href="percorsi.html">Percorsi</a>
+<a data-nav="search" href="search.html">Cerca</a>
+</div></details>
+<a data-nav="studio" href="studio.html">IL MIO ATLANTE</a>
+</nav>
 <section class="hero"><div class="hero-inner"><div class="kicker">PROTOCOLLI</div><h1>Il giorno in cui il Web imparò a parlare.</h1><p class="lead">Una richiesta attraversa la rete. Un server ascolta. Poi risponde.</p></div></section>
 <section class="wrap"><article class="chapter reveal"><div class="eyebrow">01 · LA DOMANDA</div><h2>Non basta avere una pagina.</h2><div class="prose"><p>Un documento può esistere su una macchina lontana. Ma come si fa a chiederlo? E come fa quella macchina a capire cosa vogliamo?</p><p>Il Web ha bisogno di un linguaggio comune. Non un linguaggio umano. Un protocollo.</p></div><div class="quote">«Chiedimi una risorsa. Io saprò cosa significa la tua richiesta. E saprò come risponderti.»</div></article>
 <article class="chapter reveal"><div class="eyebrow">02 · HTTP</div><h2>Richiesta. Risposta.</h2><div class="prose"><p>HTTP, HyperText Transfer Protocol, definisce il modo in cui client e server si scambiano messaggi per trasferire risorse sul Web.</p><p>Il client invia una richiesta. Il server la interpreta e restituisce una risposta. Dentro quei messaggi ci sono metodi, intestazioni, codici di stato e, quando serve, un corpo.</p></div></article>

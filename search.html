@@ -5,6 +5,27 @@
 <link rel="stylesheet" href="assets/study.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="assets/supabase-config.js"></script>
-</head><body class="search-page"><nav class="nav atlas-global-nav"><a class="brand" href="index.html">ATLANTE DELLA RETE</a><a href="index.html">HOME</a><a href="storia-internet.html">STORIA</a><a href="lezioni.html">LEZIONI</a><a href="timeline.html">TIMELINE</a><a href="album.html">ALBUM</a><a href="security.html">SICUREZZA</a><a href="maps-internet.html">MAPPE</a><a href="percorsi.html">PERCORSI</a><a class="active" href="search.html">CERCA</a></nav><header class="search-hero"><div class="search-kicker">ATLANTE · INDICE VIVENTE</div><h1>Dove compare<br>questa parola?</h1><p>Non cercare soltanto un titolo. Cerca una traccia dentro le storie: una persona, un protocollo, un luogo, una macchina, un'idea. I risultati mostrano <strong>in quale pagina</strong> compare il termine e ne riportano un frammento del testo.</p><div class="search-box"><input id="siteSearch" type="search" autocomplete="off" spellcheck="false" placeholder="Cerca nell'Atlante…"><button id="searchClear" class="search-clear" hidden aria-label="Cancella">×</button></div><div id="searchMeta" class="search-meta"></div><div class="search-help"><button data-term="Baran">BARAN</button><button data-term="packet switching">PACKET SWITCHING</button><button data-term="crittografia">CRITTOGRAFIA</button><button data-term="DNS">DNS</button><button data-term="Enigma">ENIGMA</button><button data-term="Internet">INTERNET</button></div></header><main id="searchResults" class="search-results"></main><script src="./assets/search-data.js"></script><script src="./assets/search.js"></script><script>document.querySelectorAll('.search-help button').forEach(b=>b.addEventListener('click',()=>{const i=document.getElementById('siteSearch');i.value=b.dataset.term;i.dispatchEvent(new Event('input'));i.focus()}));</script>
+</head><body class="search-page"><nav class="nav atlas-global-nav atlas-main-nav">
+<a class="brand" href="index.html">ATLANTE DELLA RETE</a>
+<a data-nav="home" href="index.html">HOME</a>
+<details class="nav-group"><summary>ESPLORA</summary><div class="nav-menu">
+<a data-nav="history" href="storia-internet.html">Storia di Internet</a>
+<a data-nav="communication" href="comunicazione.html">Storia della comunicazione</a>
+<a data-nav="timeline" href="timeline.html">Timeline</a>
+<a data-nav="album" href="album.html">Album</a>
+<a data-nav="maps" href="maps-internet.html">Mappe</a>
+</div></details>
+<details class="nav-group"><summary>IMPARA</summary><div class="nav-menu">
+<a data-nav="lessons" href="lezioni.html">Lezioni</a>
+<a data-nav="architecture" href="web-architettura.html">Architettura del Web</a>
+</div></details>
+<a data-nav="security" href="security.html">SICUREZZA</a>
+<a data-nav="stories" href="biblioteca.html">STORIE</a>
+<details class="nav-group"><summary>STRUMENTI</summary><div class="nav-menu">
+<a data-nav="paths" href="percorsi.html">Percorsi</a>
+<a data-nav="search" href="search.html">Cerca</a>
+</div></details>
+<a data-nav="studio" href="studio.html">IL MIO ATLANTE</a>
+</nav><header class="search-hero"><div class="search-kicker">ATLANTE · INDICE VIVENTE</div><h1>Dove compare<br>questa parola?</h1><p>Non cercare soltanto un titolo. Cerca una traccia dentro le storie: una persona, un protocollo, un luogo, una macchina, un'idea. I risultati mostrano <strong>in quale pagina</strong> compare il termine e ne riportano un frammento del testo.</p><div class="search-box"><input id="siteSearch" type="search" autocomplete="off" spellcheck="false" placeholder="Cerca nell'Atlante…"><button id="searchClear" class="search-clear" hidden aria-label="Cancella">×</button></div><div id="searchMeta" class="search-meta"></div><div class="search-help"><button data-term="Baran">BARAN</button><button data-term="packet switching">PACKET SWITCHING</button><button data-term="crittografia">CRITTOGRAFIA</button><button data-term="DNS">DNS</button><button data-term="Enigma">ENIGMA</button><button data-term="Internet">INTERNET</button></div></header><main id="searchResults" class="search-results"></main><script src="./assets/search-data.js"></script><script src="./assets/search.js"></script><script>document.querySelectorAll('.search-help button').forEach(b=>b.addEventListener('click',()=>{const i=document.getElementById('siteSearch');i.value=b.dataset.term;i.dispatchEvent(new Event('input'));i.focus()}));</script>
 <script src="assets/study-tools.js"></script>
 </body></html>
