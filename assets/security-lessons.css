@@ -24,17 +24,25 @@ main{max-width:1120px;margin:auto;padding:80px 32px 120px}.chapter{padding:78px 
 .lab-page .security-navline a{flex:0 0 auto}
 @media(max-width:800px){.lab-page .chapter .num strong{font-size:18px}.lab-page .security-navline{top:62px}.lab-page .chapter{padding:58px 0}}
 
-/* CLUSIT 2026 — ponte tra fondamenti e lettura degli attacchi */
-.clusit-chapter .clusit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:38px 0}
-.clusit-card{display:block;padding:26px 24px;border:1px solid rgba(200,141,132,.22);background:linear-gradient(145deg,#170d10,#0b0809);text-decoration:none;color:inherit;transition:.3s ease}
-.clusit-card:hover{transform:translateY(-4px);border-color:rgba(201,163,107,.5);background:linear-gradient(145deg,#1c1013,#0c090a)}
-.clusit-card .tag{display:block;font:10px 'DM Mono';letter-spacing:.15em;color:#c9a36b;margin-bottom:12px}
-.clusit-card h3{font:400 25px 'Libre Baskerville';color:#eee8dc;margin:0 0 12px}
-.clusit-card p{color:#aaa09d;line-height:1.7;margin:0 0 18px}
-.clusit-card strong{font:10px 'DM Mono';letter-spacing:.1em;color:#d09b91}
-.clusit-video{margin:42px 0;padding:28px;border:1px solid rgba(200,141,132,.2);background:rgba(7,5,6,.55)}
-.clusit-video h3{font:400 30px 'Libre Baskerville';margin:8px 0 10px;color:#eee8dc}
-.clusit-video p{max-width:760px;color:#aaa09d;line-height:1.75}
-.clusit-video .video-card{display:flex;align-items:center;gap:16px;margin-top:22px;padding:18px 20px;border:1px solid rgba(201,163,107,.25);background:#10090b;color:#e8dfd4;text-decoration:none}
-.clusit-video .video-card:hover{border-color:rgba(201,163,107,.55)}
-@media(max-width:760px){.clusit-chapter .clusit-grid{grid-template-columns:1fr}}
+/* --- Fonti e reperti: CLUSIT + Manifesto Hacker --- */
+.source-kicker{font:10px "DM Mono",monospace;letter-spacing:.22em;color:#c9a36b;margin-bottom:14px;text-transform:uppercase}
+.clusit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:28px 0}
+.clusit-card,.clusit-video,.manifesto-note{border:1px solid rgba(201,163,107,.24);background:rgba(255,255,255,.025);padding:26px}
+.clusit-card h3,.clusit-video h3{margin:8px 0 10px;font-size:25px}
+.clusit-card p,.clusit-video p,.manifesto-note p{margin-bottom:18px}
+.source-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 15px;border:1px solid rgba(201,163,107,.42);color:#e5e0d5;text-decoration:none;font:10px "DM Mono",monospace;letter-spacing:.12em;transition:.2s ease}
+.source-button:hover{background:rgba(201,163,107,.1);border-color:#c9a36b;transform:translateY(-1px)}
+.clusit-video{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:18px 0}
+.clusit-video>div{flex:1}
+.video-button{white-space:nowrap}
+.manifesto-card{margin:28px 0;padding:34px 34px 26px;border:1px solid rgba(201,163,107,.38);background:linear-gradient(145deg,rgba(201,163,107,.07),rgba(0,0,0,.12));position:relative;box-shadow:0 20px 60px rgba(0,0,0,.18)}
+.manifesto-title{text-align:center;font:14px "DM Mono",monospace;letter-spacing:.18em;color:#c9a36b}
+.manifesto-author{text-align:center;margin-top:10px;font:9px "DM Mono",monospace;letter-spacing:.15em;color:#8e989a}
+.manifesto-card blockquote{margin:28px auto 0;max-width:760px;text-align:center;font:italic 28px/1.5 "Libre Baskerville",serif;color:#eee8dc}
+.manifesto-card blockquote+blockquote{margin-top:10px}
+.manifesto-footer{text-align:center;margin-top:25px;padding-top:14px;border-top:1px solid rgba(201,163,107,.16);font:9px "DM Mono",monospace;letter-spacing:.14em;color:#7f8889}
+.manifesto-columns{margin-top:20px}
+.manifesto-note{margin-top:22px}
+.manifesto-note strong{font:10px "DM Mono",monospace;letter-spacing:.16em;color:#c9a36b}
+.manifesto-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+@media(max-width:800px){.clusit-grid{grid-template-columns:1fr}.clusit-video{display:block}.video-button{white-space:normal;margin-top:12px}.manifesto-card{padding:24px 18px}.manifesto-card blockquote{font-size:22px}.manifesto-title{font-size:11px}.manifesto-links .source-button{width:100%}}
