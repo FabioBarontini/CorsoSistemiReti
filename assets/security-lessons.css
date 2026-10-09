@@ -24,25 +24,19 @@ main{max-width:1120px;margin:auto;padding:80px 32px 120px}.chapter{padding:78px 
 .lab-page .security-navline a{flex:0 0 auto}
 @media(max-width:800px){.lab-page .chapter .num strong{font-size:18px}.lab-page .security-navline{top:62px}.lab-page .chapter{padding:58px 0}}
 
-/* --- Fonti e reperti: CLUSIT + Manifesto Hacker --- */
-.source-kicker{font:10px "DM Mono",monospace;letter-spacing:.22em;color:#c9a36b;margin-bottom:14px;text-transform:uppercase}
-.clusit-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:28px 0}
-.clusit-card,.clusit-video,.manifesto-note{border:1px solid rgba(201,163,107,.24);background:rgba(255,255,255,.025);padding:26px}
-.clusit-card h3,.clusit-video h3{margin:8px 0 10px;font-size:25px}
-.clusit-card p,.clusit-video p,.manifesto-note p{margin-bottom:18px}
-.source-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 15px;border:1px solid rgba(201,163,107,.42);color:#e5e0d5;text-decoration:none;font:10px "DM Mono",monospace;letter-spacing:.12em;transition:.2s ease}
-.source-button:hover{background:rgba(201,163,107,.1);border-color:#c9a36b;transform:translateY(-1px)}
-.clusit-video{display:flex;align-items:center;justify-content:space-between;gap:24px;margin:18px 0}
-.clusit-video>div{flex:1}
-.video-button{white-space:nowrap}
-.manifesto-card{margin:28px 0;padding:34px 34px 26px;border:1px solid rgba(201,163,107,.38);background:linear-gradient(145deg,rgba(201,163,107,.07),rgba(0,0,0,.12));position:relative;box-shadow:0 20px 60px rgba(0,0,0,.18)}
-.manifesto-title{text-align:center;font:14px "DM Mono",monospace;letter-spacing:.18em;color:#c9a36b}
-.manifesto-author{text-align:center;margin-top:10px;font:9px "DM Mono",monospace;letter-spacing:.15em;color:#8e989a}
-.manifesto-card blockquote{margin:28px auto 0;max-width:760px;text-align:center;font:italic 28px/1.5 "Libre Baskerville",serif;color:#eee8dc}
-.manifesto-card blockquote+blockquote{margin-top:10px}
-.manifesto-footer{text-align:center;margin-top:25px;padding-top:14px;border-top:1px solid rgba(201,163,107,.16);font:9px "DM Mono",monospace;letter-spacing:.14em;color:#7f8889}
-.manifesto-columns{margin-top:20px}
-.manifesto-note{margin-top:22px}
-.manifesto-note strong{font:10px "DM Mono",monospace;letter-spacing:.16em;color:#c9a36b}
-.manifesto-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
-@media(max-width:800px){.clusit-grid{grid-template-columns:1fr}.clusit-video{display:block}.video-button{white-space:normal;margin-top:12px}.manifesto-card{padding:24px 18px}.manifesto-card blockquote{font-size:22px}.manifesto-title{font-size:11px}.manifesto-links .source-button{width:100%}}
+/* Manifesto Hacker: documento storico e sua lettura critica */
+.hacker-manifesto-section .source-kicker{font:10px 'DM Mono',monospace;letter-spacing:.2em;color:var(--gold);margin-bottom:15px}
+.manifesto-card{margin:28px 0;padding:clamp(22px,4vw,42px);border:1px solid #caa36b55;background:linear-gradient(135deg,#10090a,#211014);box-shadow:inset 0 0 0 5px #caa36b08;position:relative;overflow:hidden}
+.manifesto-card:after{content:'1986';position:absolute;right:-5px;bottom:-36px;font:100px 'DM Mono',monospace;color:#caa36b0b;pointer-events:none}
+.manifesto-title{font:clamp(20px,3vw,32px) 'DM Mono',monospace;letter-spacing:.06em;color:#e3c69a}
+.manifesto-author{font:10px 'DM Mono',monospace;letter-spacing:.12em;color:#a99379;margin-top:12px}
+.manifesto-card blockquote{position:relative;z-index:1;margin:28px 0 0;padding-left:18px;border-left:2px solid var(--gold);font:clamp(18px,2.3vw,27px)/1.5 'Libre Baskerville',serif;color:#f0dfd6}
+.manifesto-footer{margin-top:30px;padding-top:14px;border-top:1px solid #caa36b30;font:10px 'DM Mono',monospace;letter-spacing:.1em;color:#a99379}
+.manifesto-columns{margin-top:25px}
+.manifesto-note{margin:28px 0;padding:22px 24px;border:1px solid #d28c8240;background:#b45e5d0b}
+.manifesto-note>strong{font:10px 'DM Mono',monospace;letter-spacing:.12em;color:#e1a196}
+.manifesto-note p{margin-bottom:0}
+.manifesto-links{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.source-button{display:inline-block;padding:12px 14px;border:1px solid #d09a8155;color:#e0b2a6;text-decoration:none;font:10px 'DM Mono',monospace;letter-spacing:.08em}
+.source-button:hover{background:#b45e5d14;border-color:#d28c82}
+@media(max-width:700px){.manifesto-card{padding:20px}.manifesto-title{overflow-wrap:anywhere}}
