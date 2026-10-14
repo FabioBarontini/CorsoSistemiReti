@@ -21,6 +21,24 @@
         if (block && !seen.has(block) && !block.closest('#securityPresentationDeck')) { seen.add(block); sections.push(block); }
       });
     }
+    // Se una pagina ha un hero ma non usa i wrapper .chapter, non fermarsi
+    // all'hero: costruire una slide per ogni sezione introdotta da un h2.
+    // La lezione introduttiva sulle reti usa proprio questa struttura.
+    const headings = main ? $$('h2', main).filter(h => !h.closest('#securityPresentationDeck')) : [];
+    if (main && headings.length && sections.length <= (hero ? 1 : 0)) {
+      sections = [];
+      headings.forEach((heading, i) => {
+        const group = document.createElement('section');
+        let node = heading;
+        while (node && (node === heading || !/^H2$/.test(node.tagName))) {
+          const next = node.nextElementSibling;
+          group.appendChild(node.cloneNode(true));
+          node = next;
+        }
+        if (group.children.length) sections.push(group);
+      });
+      if (hero) sections.unshift(hero);
+    }
     if (!sections.length && main) sections = [main];
     return sections.map((section, i) => {
       const title = clean($('h2', section)?.textContent || $('h1', section)?.textContent || $('h3', section)?.textContent || document.title || `Sezione ${i+1}`);

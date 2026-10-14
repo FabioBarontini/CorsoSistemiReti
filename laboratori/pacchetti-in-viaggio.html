@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Pacchetti in viaggio</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: una barra di navigazione a schede in alto, una sezione per attività; diagrammi di rete in SVG con i colori dei cavi patch */
+:root{
+  --bg:#F3F6F5; --surface:#FFFFFF; --sunk:#E6ECEA; --line:#C9D4D1;
+  --fg:#14211F; --muted:#51625E;
+  --cable:#1F5FD6; --cable-soft:#DCE7FB;
+  --packet:#E9A800; --packet-ink:#3A2A00;
+  --ok:#17875B; --ok-soft:#DDF2E8;
+  --bad:#C93C3C; --bad-soft:#F8E0E0;
+  --orange:#D9681A;
+  --display:"Chakra Petch", "Trebuchet MS", sans-serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", Arial, sans-serif;
+  --mono:"JetBrains Mono", Consolas, "Courier New", monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F1716; --surface:#172221; --sunk:#1E2B29; --line:#2F403D;
+  --fg:#E6EEEC; --muted:#9DB0AC;
+  --cable:#6E9CF5; --cable-soft:#1B2B4A;
+  --packet:#F2C230; --packet-ink:#2A1F00;
+  --ok:#4CC593; --ok-soft:#173327;
+  --bad:#F07272; --bad-soft:#3A1C1C;
+  --orange:#F0954F; color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --bg:#0F1716; --surface:#172221; --sunk:#1E2B29; --line:#2F403D;
+  --fg:#E6EEEC; --muted:#9DB0AC;
+  --cable:#6E9CF5; --cable-soft:#1B2B4A;
+  --packet:#F2C230; --packet-ink:#2A1F00;
+  --ok:#4CC593; --ok-soft:#173327;
+  --bad:#F07272; --bad-soft:#3A1C1C;
+  --orange:#F0954F; color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:1080px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{background:var(--surface);border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);z-index:10}
+.brand{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;padding-block:12px 4px}
+.brand h1{font-family:var(--display);font-weight:700;font-size:1.55rem;margin:0;letter-spacing:.01em}
+.brand .tag{color:var(--muted);font-size:.9rem}
+nav.tabs{display:flex;gap:4px;overflow-x:auto;padding-block:6px 0;scrollbar-width:thin}
+nav.tabs a{font-family:var(--display);font-weight:600;font-size:.95rem;color:var(--muted);text-decoration:none;padding:8px 12px;border-bottom:3px solid transparent;white-space:nowrap}
+nav.tabs a[aria-current="page"]{color:var(--fg);border-bottom-color:var(--cable)}
+nav.tabs a:hover{color:var(--fg)}
+nav.tabs a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--packet);outline-offset:2px}
+main{padding-block:24px 64px}
+section.panel>h2{font-family:var(--display);font-size:1.7rem;margin:0 0 4px;text-wrap:balance}
+.lead{color:var(--muted);max-width:68ch;margin:0 0 20px}
+h3{font-family:var(--display);font-size:1.2rem;margin:28px 0 8px}
+p{max-width:70ch}
+.eyebrow{font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cable)}
+button,.btn{font:600 .95rem var(--body);border:1px solid var(--line);background:var(--surface);color:var(--fg);padding:8px 14px;border-radius:8px;cursor:pointer}
+button.primary{background:var(--cable);border-color:var(--cable);color:#fff}
+:root[data-theme="dark"] button.primary{color:#0B1220}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) button.primary{color:#0B1220}}
+button:disabled{opacity:.5;cursor:not-allowed}
+button:hover:not(:disabled){filter:brightness(1.05)}
+input[type=text],select,textarea{font:1rem var(--body);background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:8px 10px;max-width:100%}
+textarea{width:100%;min-height:70px;font-family:var(--mono);font-size:.9rem}
+label{font-weight:700;font-size:.9rem}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:14px}
+.grid2>*,.grid4>*{min-width:0}
+.mono{font-family:var(--mono)}
+.muted{color:var(--muted)}
+.note{background:var(--cable-soft);border-radius:var(--r);padding:12px 14px;max-width:none}
+.svgbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow-x:auto}
+.svgbox svg{display:block;width:100%;min-width:620px;height:auto}
+.chips{display:flex;flex-wrap:wrap;gap:6px;min-height:34px}
+.chip{font-family:var(--mono);font-size:.85rem;padding:4px 8px;border-radius:6px;background:var(--sunk);border:1px solid var(--line)}
+.chip.pk{background:var(--packet);color:var(--packet-ink);border-color:transparent}
+.chip.lost{background:var(--bad-soft);color:var(--bad);border-color:var(--bad);text-decoration:line-through}
+.chip.resent{outline:2px dashed var(--orange);outline-offset:1px}
+.log{font-family:var(--mono);font-size:.82rem;max-height:180px;overflow:auto;background:var(--sunk);border-radius:8px;padding:8px 10px;margin:0;list-style:none}
+.log li{padding:2px 0;border-bottom:1px dashed var(--line)}
+.log li.bad{color:var(--bad)} .log li.ok{color:var(--ok)} .log li.warn{color:var(--orange)}
+.stat{display:flex;gap:18px;flex-wrap:wrap;font-variant-numeric:tabular-nums}
+.stat b{font-family:var(--display);font-size:1.3rem;display:block}
+.msgout{font-family:var(--mono);font-size:1.15rem;letter-spacing:.06em;background:var(--sunk);padding:10px 12px;border-radius:8px;word-break:break-all}
+/* livelli */
+.stack{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.stack li{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+.stack li .n{font-family:var(--mono);width:1.8em;color:var(--muted)}
+.stack li .t{flex:1;font-weight:700}
+.stack li.good{border-color:var(--ok);background:var(--ok-soft)}
+.stack li.wrong{border-color:var(--bad);background:var(--bad-soft)}
+.stack li button{padding:2px 9px}
+.cards{display:flex;flex-wrap:wrap;gap:8px}
+.pcard{font-family:var(--mono);font-weight:600;padding:8px 12px;border-radius:8px;border:2px solid var(--line);background:var(--surface);cursor:pointer}
+.pcard[aria-pressed="true"]{border-color:var(--packet);background:var(--packet);color:var(--packet-ink)}
+.bucket{border:2px dashed var(--line);border-radius:var(--r);padding:10px;min-height:96px;cursor:pointer;background:var(--surface)}
+.bucket h4{margin:0 0 6px;font-family:var(--display)}
+.bucket .placed{display:flex;flex-wrap:wrap;gap:6px}
+.bucket.armed{border-color:var(--packet)}
+.feedback{min-height:1.6em;font-weight:700}
+.feedback.ok{color:var(--ok)} .feedback.bad{color:var(--bad)}
+/* incapsulamento */
+.encap{display:flex;flex-direction:column;gap:0;font-family:var(--mono);font-size:.85rem}
+.layerbox{border:2px solid;border-radius:8px;padding:8px;margin-top:6px}
+.layerbox .hdr{display:inline-block;padding:3px 8px;border-radius:5px;margin-bottom:6px;font-weight:600}
+.lb-frame{border-color:var(--orange)} .lb-frame>.hdr{background:var(--orange);color:#fff}
+.lb-ip{border-color:var(--cable)} .lb-ip>.hdr{background:var(--cable);color:#fff}
+.lb-tcp{border-color:var(--ok)} .lb-tcp>.hdr{background:var(--ok);color:#fff}
+.lb-data{border-color:var(--packet);background:var(--packet);color:var(--packet-ink)}
+.hops{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.hop{font-size:.8rem;padding:4px 8px;border-radius:999px;background:var(--sunk);border:1px solid var(--line)}
+.hop.on{background:var(--cable);color:#fff;border-color:var(--cable)}
+.hop.done{background:var(--cable-soft)}
+/* url */
+.urlparts{display:flex;flex-wrap:wrap;gap:2px;font-family:var(--mono);font-size:1.05rem;margin:12px 0}
+.urlparts span{padding:6px 8px 4px;border-radius:6px;display:inline-flex;flex-direction:column;gap:2px}
+.urlparts span i{font-style:normal;font-family:var(--body);font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}
+.u-proto{background:var(--sunk)} .u-sub{background:var(--cable-soft)} .u-dom{background:var(--packet);color:var(--packet-ink)} .u-tld{background:var(--ok-soft)} .u-path{background:var(--bad-soft)}
+table.t{border-collapse:collapse;width:100%;font-size:.92rem}
+table.t th,table.t td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+table.t th{font-family:var(--display)}
+.tablewrap{overflow-x:auto}
+.browser{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.browser .bar{display:flex;gap:8px;align-items:center;background:var(--sunk);padding:8px;flex-wrap:wrap}
+.browser .bar .dots{display:flex;gap:5px}
+.browser .bar .dots i{width:10px;height:10px;border-radius:50%;background:var(--line);display:block}
+.browser .page{padding:16px;min-height:140px}
+/* lab */
+pre.out{font-family:var(--mono);font-size:.8rem;background:#0E1513;color:#CFE3DD;border-radius:8px;padding:10px;overflow-x:auto;margin:8px 0}
+.kbd{font-family:var(--mono);background:var(--sunk);border:1px solid var(--line);border-radius:5px;padding:1px 6px}
+/* quiz */
+.q{margin-bottom:16px}
+.q fieldset{border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;background:var(--surface)}
+.q legend{font-weight:700;padding:0 4px}
+.q label{display:block;font-weight:400;padding:4px 0;cursor:pointer}
+.q .exp{margin-top:6px;font-size:.92rem}
+.q.right fieldset{border-color:var(--ok)} .q.wrongq fieldset{border-color:var(--bad)}
+.lessons{counter-reset:l}
+.lesson{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start}
+.lesson .num{font-family:var(--display);font-weight:700;font-size:2.2rem;color:var(--cable);line-height:1}
+.lesson ul{margin:6px 0 0;padding-left:18px}
+.lesson a{color:var(--cable)}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+<link href="../assets/atlas.css" rel="stylesheet">
+<style>
+/* Integrazione con il tema dell'Atlante della Rete */
+:root{--bg:#070a0b;--surface:#0d1114;--paper:#0d1114;--sunk:#151c1d;--line:rgba(201,163,107,.28);--fg:#e9e5db;--ink:#e9e5db;--muted:#a7adb0;--cable:#8bbac3;--cable-soft:#15272a;--packet:#c9a36b;--packet-ink:#15110a;--ok:#a9cdb8;--ok-soft:#15251e;--bad:#d07b72;--bad-soft:#2b1716;--orange:#d99b66;--blue:#8bbac3;--blue-soft:#172528;--green:#a9cdb8;--green-soft:#15251e;--amber:#c9a36b;--amber-soft:#292216;--magenta:#d4a0c4;--magenta-soft:#291a26}
+body{margin:0!important;background:radial-gradient(circle at 50% 0,#151b1c 0,#090c0d 35%,#050707 100%)!important;color:#e9e5db!important}
+.nav.atlas-global-nav{position:sticky;top:0;z-index:60;padding:12px 4vw;background:rgba(5,8,9,.94);backdrop-filter:blur(14px);border-bottom:1px solid rgba(201,163,107,.24);display:flex;gap:18px;align-items:center;flex-wrap:wrap;font:normal 16px/1.7 Georgia,serif}
+.nav.atlas-global-nav .brand{font:11px "DM Mono",monospace;letter-spacing:.16em;color:#e9e2d2;margin-right:auto}
+.nav.atlas-global-nav a,.nav.atlas-global-nav summary{font:10px "DM Mono",monospace;letter-spacing:.08em;text-decoration:none;color:#bfc3bd;cursor:pointer}
+.nav.atlas-global-nav a:hover,.nav.atlas-global-nav summary:hover{color:#c9a36b}
+.nav-group{position:relative}.nav-menu{position:absolute;top:100%;left:0;min-width:210px;padding:10px;background:#0d1114;border:1px solid rgba(201,163,107,.3);display:grid;gap:10px}
+@media(max-width:760px){.nav.atlas-global-nav{gap:10px}.nav-menu{position:static}}
+</style></head><body><nav class="nav atlas-global-nav atlas-main-nav">
+<a class="brand" href="../index.html">ATLANTE DELLA RETE</a>
+<a data-nav="home" href="../index.html">HOME</a>
+<details class="nav-group"><summary>ESPLORA</summary><div class="nav-menu">
+<a href="../storia-internet.html">Storia di Internet</a><a href="../comunicazione.html">Storia della comunicazione</a><a href="../timeline.html">Timeline</a><a href="../album.html">Album</a><a href="../maps-internet.html">Mappe</a></div></details>
+<details class="nav-group"><summary>IMPARA</summary><div class="nav-menu"><a href="../lezioni.html">Lezioni</a><a href="../web-architettura.html">Architettura del Web</a></div></details>
+<details class="nav-group"><summary>LABORATORI</summary><div class="nav-menu"><a href="../laboratori.html">Tutti i laboratori</a><a href="pacchetti-in-viaggio.html">Pacchetti in viaggio</a><a href="viaggio-di-8761.html">Il viaggio di 8761</a></div></details>
+<a href="../security.html">SICUREZZA</a><a href="../biblioteca.html">STORIE</a><details class="nav-group"><summary>STRUMENTI</summary><div class="nav-menu"><a href="../percorsi.html">Percorsi</a><a href="../search.html">Cerca</a></div></details><a href="../studio.html">IL MIO ATLANTE</a>
+</nav>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><h1>Pacchetti in viaggio</h1><span class="tag">Reti di computer · attività per la classe terza</span></div>
+    <nav class="tabs" aria-label="Attività">
+      <a href="#percorso" data-tab="percorso">Percorso</a>
+      <a href="#pacchetti" data-tab="pacchetti">1 · Packet switching</a>
+      <a href="#livelli" data-tab="livelli">2 · Livelli e protocolli</a>
+      <a href="#incapsulamento" data-tab="incapsulamento">3 · Incapsulamento</a>
+      <a href="#web" data-tab="web">4 · URL e DNS</a>
+      <a href="#laboratorio" data-tab="laboratorio">Laboratorio</a>
+      <a href="#quiz" data-tab="quiz">Quiz finale</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+<!-- ============ PERCORSO ============ -->
+<section class="panel" id="p-percorso">
+  <span class="eyebrow">Capitolo 6 · Reti di computer</span>
+  <h2>Come viaggia un messaggio da un computer all'altro</h2>
+  <p class="lead">Quattro ore, quattro tappe. Ogni tappa ha un'attività da fare senza computer, in classe, e una da fare qui. Le attività di questa pagina funzionano anche da smartphone.</p>
+  <div class="grid2 lessons">
+    <div class="card lesson"><div class="num">1</div><div><h3 style="margin-top:0">Reti LAN, WAN e packet switching</h3>
+      <p class="muted" style="margin:0">Che cosa sono LAN e WAN, switch, access point e router. Perché i messaggi si spezzano in pacchetti.</p>
+      <ul><li>In classe: la rete sul banco (gioco da tavolo)</li><li>Qui: <a href="#pacchetti">simulatore di packet switching</a></li></ul></div></div>
+    <div class="card lesson"><div class="num">2</div><div><h3 style="margin-top:0">Protocolli e modelli a livelli</h3>
+      <p class="muted" style="margin:0">Le due filosofe, la pila TCP/IP, il modello ISO/OSI e il modello ibrido a cinque livelli.</p>
+      <ul><li>In classe: il gioco di ruolo delle filosofe</li><li>Qui: <a href="#livelli">ordina i livelli e smista i protocolli</a></li></ul></div></div>
+    <div class="card lesson"><div class="num">3</div><div><h3 style="margin-top:0">Incapsulamento e PDU</h3>
+      <p class="muted" style="margin:0">Segmenti, pacchetti, frame: ogni livello aggiunge la sua intestazione, come buste una dentro l'altra.</p>
+      <ul><li>In classe: la matrioska di buste</li><li>Qui: <a href="#incapsulamento">prepara e spedisci un pacchetto</a></li></ul></div></div>
+    <div class="card lesson"><div class="num">4</div><div><h3 style="margin-top:0">Client/server, web, URL e DNS</h3>
+      <p class="muted" style="margin:0">Come il browser trasforma un nome come www.zanichelli.it in un indirizzo IP e poi in una pagina.</p>
+      <ul><li>In classe: la rubrica DNS</li><li>Qui: <a href="#web">anatomia di un URL e viaggio di una richiesta</a>, poi <a href="#laboratorio">laboratorio</a> e <a href="#quiz">quiz finale</a></li></ul></div></div>
+  </div>
+</section>
+
+<!-- ============ PACKET SWITCHING ============ -->
+<section class="panel" id="p-pacchetti" hidden>
+  <span class="eyebrow">Tappa 1</span>
+  <h2>Simulatore di packet switching</h2>
+  <p class="lead">Scrivi un messaggio e spediscilo dal computer della LAN al portatile della W-LAN. Il messaggio viene diviso in pacchetti numerati e ogni router sceglie da solo dove inoltrarli. <b>Clicca su un router della nuvola per guastarlo</b> (e di nuovo per ripararlo) e guarda come reagisce la rete.</p>
+  <div class="card" style="margin-bottom:12px">
+    <div class="row">
+      <label for="ps-msg">Messaggio</label>
+      <input type="text" id="ps-msg" value="CIAO DALLA TERZA A!" maxlength="40" style="flex:1;min-width:200px">
+      <label for="ps-size">Caratteri per pacchetto</label>
+      <select id="ps-size"><option>2</option><option selected>3</option><option>4</option><option>5</option></select>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <label for="ps-mode">Tecnica</label>
+      <select id="ps-mode"><option value="packet">Commutazione di pacchetto</option><option value="circuit">Commutazione di circuito (per confronto)</option></select>
+      <button class="primary" id="ps-send">Invia il messaggio</button>
+      <button id="ps-reset">Ripara tutto e azzera</button>
+    </div>
+  </div>
+  <div class="svgbox"><svg id="ps-svg" viewBox="0 0 900 380" role="img" aria-label="Rete con un computer mittente, una nuvola di router e un portatile destinatario"></svg></div>
+  <div class="grid2" style="margin-top:12px">
+    <div class="card"><h3 style="margin-top:0">Mittente</h3><p class="muted" style="margin:0 0 6px">Pacchetti creati (numero/totale e contenuto)</p><div class="chips" id="ps-out"></div></div>
+    <div class="card"><h3 style="margin-top:0">Destinatario</h3><p class="muted" style="margin:0 0 6px">Ordine di arrivo</p><div class="chips" id="ps-in"></div>
+      <p class="muted" style="margin:10px 0 4px">Messaggio ricostruito</p><div class="msgout" id="ps-rebuilt">—</div></div>
+  </div>
+  <div class="grid2" style="margin-top:12px">
+    <div class="card"><div class="stat"><div><b id="st-sent">0</b>inviati</div><div><b id="st-arr">0</b>arrivati</div><div><b id="st-lost">0</b>persi</div><div><b id="st-re">0</b>ritrasmessi</div><div><b id="st-ooo">0</b>fuori ordine</div></div></div>
+    <div class="card"><ul class="log" id="ps-log" aria-live="polite"></ul></div>
+  </div>
+  <h3>Prova così</h3>
+  <ol>
+    <li>Invia il messaggio senza guasti. Arrivano tutti i pacchetti nello stesso ordine in cui sono partiti?</li>
+    <li>Invia di nuovo e, mentre i pacchetti viaggiano, guasta un router su cui ne sta arrivando uno. Che cosa fa il destinatario?</li>
+    <li>Guasta tre router e invia. Esiste ancora una strada? E se guasti C, E e F?</li>
+    <li>Passa alla commutazione di circuito e ripeti le prove 1 e 2. Che differenze noti?</li>
+  </ol>
+</section>
+
+<!-- ============ LIVELLI ============ -->
+<section class="panel" id="p-livelli" hidden>
+  <span class="eyebrow">Tappa 2</span>
+  <h2>Livelli e protocolli</h2>
+  <p class="lead">Due prove. Nella prima metti in ordine i sette livelli del modello ISO/OSI, dal più basso (1) al più alto (7). Nella seconda assegna ogni protocollo e ogni PDU al livello giusto della pila TCP/IP.</p>
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">Prova A · La pila ISO/OSI</h3>
+      <p class="muted" style="margin-top:0">Usa le frecce. In alto va il livello 7, in basso il livello 1.</p>
+      <ol class="stack" id="osi-list"></ol>
+      <div class="row" style="margin-top:10px"><button class="primary" id="osi-check">Controlla</button><button id="osi-shuffle">Mescola</button></div>
+      <p class="feedback" id="osi-fb" aria-live="polite"></p>
+      <div id="osi-map" hidden>
+        <p style="margin:6px 0">Corrispondenza con la pila di Internet (TCP/IP):</p>
+        <div class="tablewrap"><table class="t"><tr><th>ISO/OSI</th><th>TCP/IP</th></tr>
+          <tr><td>7 Applicazione · 6 Presentazione · 5 Sessione</td><td>Applicazione</td></tr>
+          <tr><td>4 Trasporto</td><td>Trasporto</td></tr>
+          <tr><td>3 Rete</td><td>Rete</td></tr>
+          <tr><td>2 Collegamento · 1 Fisico</td><td>Accesso</td></tr></table></div>
+        <p class="note" style="margin-top:10px">Per ricordarli dal basso: <b>F</b>ra <b>C</b>ento <b>R</b>ose, <b>T</b>re <b>S</b>ono <b>P</b>er <b>A</b>nna → Fisico, Collegamento, Rete, Trasporto, Sessione, Presentazione, Applicazione.</p>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">Prova B · Chi lavora dove?</h3>
+      <p class="muted" style="margin-top:0">Clicca una carta, poi clicca il livello giusto.</p>
+      <div class="cards" id="pr-cards"></div>
+      <p class="feedback" id="pr-fb" aria-live="polite"></p>
+      <div class="grid2" id="pr-buckets" style="gap:8px"></div>
+      <div class="row" style="margin-top:10px"><span class="mono" id="pr-score">Punti: 0 · errori: 0</span><button id="pr-reset">Ricomincia</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ INCAPSULAMENTO ============ -->
+<section class="panel" id="p-incapsulamento" hidden>
+  <span class="eyebrow">Tappa 3</span>
+  <h2>Prepara e spedisci un pacchetto</h2>
+  <p class="lead">Anna, da casa, chiede al server della scuola la pagina con gli orari. Il browser prepara i dati; tocca a te aggiungere le intestazioni nell'ordine giusto, dal livello più alto al più basso. Poi segui il pacchetto router dopo router.</p>
+  <div class="grid2">
+    <div class="card">
+      <h3 style="margin-top:0">1 · Incapsula</h3>
+      <div class="row"><button id="en-tcp">+ intestazione TCP</button><button id="en-ip">+ intestazione IP</button><button id="en-frame">+ intestazione frame</button><button id="en-reset">Ricomincia</button></div>
+      <p class="feedback" id="en-fb" aria-live="polite"></p>
+      <div class="encap" id="en-box"></div>
+    </div>
+    <div class="card">
+      <h3 style="margin-top:0">2 · Spedisci</h3>
+      <p class="muted" style="margin-top:0">Disponibile quando il frame è pronto.</p>
+      <div class="hops" id="en-hops"></div>
+      <p id="en-hoptext" class="note">Il pacchetto è ancora sul computer di Anna.</p>
+      <div class="row"><button class="primary" id="en-next" disabled>Passo successivo</button></div>
+      <h3>Che cosa cambia a ogni passo?</h3>
+      <div class="tablewrap"><table class="t" id="en-table"><tr><th>Parte</th><th>Cambia?</th></tr>
+        <tr><td>Intestazione del frame</td><td>Sì, a ogni collegamento: dipende dalla tecnologia (Ethernet, xDSL, fibra, Wi-Fi)</td></tr>
+        <tr><td>Intestazione IP</td><td>No, salvo il TTL che ogni router diminuisce di 1</td></tr>
+        <tr><td>Segmento TCP e dati</td><td>No, nessun router li apre</td></tr></table></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WEB ============ -->
+<section class="panel" id="p-web" hidden>
+  <span class="eyebrow">Tappa 4</span>
+  <h2>URL e DNS</h2>
+  <p class="lead">Prima scomponi un URL nelle sue parti. Poi segui che cosa succede quando lo scrivi nel browser: la richiesta al server DNS, la risposta con l'indirizzo IP, la richiesta HTTP al web server e la pagina che torna indietro.</p>
+  <div class="card">
+    <h3 style="margin-top:0">A · Anatomia di un URL</h3>
+    <div class="row"><label for="url-in">URL</label><input type="text" id="url-in" value="https://www.zanichelli.it/ricerca/prodotti?q=informatica" style="flex:1;min-width:240px"><button class="primary" id="url-go">Scomponi</button></div>
+    <div class="row" style="margin-top:8px"><span class="muted">Esempi:</span>
+      <button class="ex-url">https://it.wikipedia.org/wiki/ARPANET</button>
+      <button class="ex-url">http://www.comune.roma.it</button>
+      <button class="ex-url">https://www.w3.org/standards/</button></div>
+    <div class="urlparts" id="url-parts"></div>
+    <div id="url-explain"></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3 style="margin-top:0">B · Dal nome alla pagina</h3>
+    <p class="muted" style="margin-top:0">Siti e indirizzi IP inventati, usati solo per l'esercizio.</p>
+    <div class="row">
+      <label for="dns-site">Sito</label>
+      <select id="dns-site"></select>
+      <label><input type="checkbox" id="dns-cache"> usa la cache DNS</label>
+      <label><input type="checkbox" id="dns-down"> il server DNS è guasto</label>
+      <button class="primary" id="dns-go">Vai</button>
+    </div>
+    <div class="svgbox" style="margin-top:12px"><svg id="dns-svg" viewBox="0 0 900 300" role="img" aria-label="Client, server DNS e web server collegati attraverso Internet"></svg></div>
+    <p class="note" id="dns-text" style="margin-top:10px">Scegli un sito e premi Vai.</p>
+    <div class="browser" style="margin-top:10px"><div class="bar"><span class="dots"><i></i><i></i><i></i></span><span class="mono" id="br-url">about:blank</span></div><div class="page" id="br-page"><span class="muted">La pagina comparirà qui.</span></div></div>
+  </div>
+</section>
+
+<!-- ============ LAB ============ -->
+<section class="panel" id="p-laboratorio" hidden>
+  <span class="eyebrow">Laboratorio</span>
+  <h2>Quattro comandi per vedere la rete</h2>
+  <p class="lead">Su Windows apri il <b>Prompt dei comandi</b> (tasto Windows, scrivi <span class="kbd">cmd</span>, Invio). Esegui i comandi, leggi l'output con l'aiuto degli esempi e annota i tuoi risultati: restano salvati solo in questo browser. Se la rete della scuola blocca un comando, lavora sull'esempio.</p>
+  <div class="grid2" id="lab-cards"></div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="panel" id="p-quiz" hidden>
+  <span class="eyebrow">Verifica</span>
+  <h2>Quiz finale</h2>
+  <p class="lead">Quindici domande su tutto il percorso. Rispondi a tutte e poi premi «Correggi»: per ogni domanda vedrai la spiegazione.</p>
+  <form id="quiz-form"></form>
+  <div class="row"><button class="primary" id="quiz-check">Correggi</button><button id="quiz-reset">Ricomincia</button><span class="mono" id="quiz-score" aria-live="polite"></span></div>
+</section>
+</main>
+
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+const NS="http://www.w3.org/2000/svg";
+const el=(tag,attrs={},parent)=>{const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;};
+const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- tabs ---------- */
+const tabs=["percorso","pacchetti","livelli","incapsulamento","web","laboratorio","quiz"];
+function show(t){if(!tabs.includes(t))t="percorso";tabs.forEach(x=>{$("#p-"+x).hidden=x!==t;});$$("nav.tabs a").forEach(a=>{if(a.dataset.tab===t)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current");});store.set("reti-tab",t);}
+window.addEventListener("hashchange",()=>{show(location.hash.slice(1));window.scrollTo(0,0);});
+show(location.hash?location.hash.slice(1):store.get("reti-tab","percorso"));
+
+/* ================= 1. PACKET SWITCHING ================= */
+const N={S:{x:45,y:190,label:"PC (LAN)",kind:"end"},R0:{x:140,y:190,label:"router LAN",kind:"edge"},
+A:{x:245,y:105,label:"A"},B:{x:245,y:275,label:"B"},C:{x:390,y:65,label:"C"},E:{x:390,y:190,label:"E"},F:{x:390,y:315,label:"F"},
+G:{x:535,y:105,label:"G"},H:{x:535,y:275,label:"H"},I:{x:660,y:190,label:"I"},
+R9:{x:760,y:190,label:"router W-LAN",kind:"edge"},D:{x:855,y:190,label:"portatile (W-LAN)",kind:"end"}};
+const E=[["S","R0"],["R0","A"],["R0","B"],["A","C"],["A","E"],["B","E"],["B","F"],["C","G"],["C","E"],["E","G"],["E","H"],["F","H"],["F","E"],["G","H"],["G","I"],["H","I"],["I","R9"],["R9","D"]];
+const adj={};Object.keys(N).forEach(k=>adj[k]=[]);E.forEach(([a,b])=>{adj[a].push(b);adj[b].push(a);});
+const failed=new Set();
+const svg=$("#ps-svg");
+let gEdges,gNodes,gPk;
+function drawNet(){
+  svg.innerHTML="";
+  el("ellipse",{cx:452,cy:190,rx:270,ry:170,fill:css("--sunk"),stroke:"none"},svg);
+  el("text",{x:452,y:30,"text-anchor":"middle",fill:css("--muted"),"font-size":"13","font-family":"JetBrains Mono, monospace"},svg).textContent="Internet (WAN)";
+  gEdges=el("g",{},svg);
+  E.forEach(([a,b])=>{const dead=failed.has(a)||failed.has(b);el("line",{x1:N[a].x,y1:N[a].y,x2:N[b].x,y2:N[b].y,stroke:dead?css("--line"):css("--cable"),"stroke-width":dead?2:3,"stroke-dasharray":dead?"5 5":"none"},gEdges);});
+  gNodes=el("g",{},svg);
+  Object.entries(N).forEach(([id,n])=>{
+    const g=el("g",{transform:`translate(${n.x},${n.y})`},gNodes);
+    if(n.kind==="end"){
+      el("rect",{x:-26,y:-18,width:52,height:34,rx:4,fill:css("--surface"),stroke:css("--fg"),"stroke-width":2},g);
+      el("rect",{x:-18,y:-11,width:36,height:20,fill:css("--cable-soft")},g);
+      el("rect",{x:-32,y:18,width:64,height:6,rx:2,fill:css("--fg")},g);
+      el("text",{y:44,"text-anchor":"middle",fill:css("--fg"),"font-size":"12","font-family":"Atkinson Hyperlegible, sans-serif"},g).textContent=n.label;
+    }else{
+      const isF=failed.has(id),clickable=!n.kind;
+      const c=el("circle",{r:n.kind?20:24,fill:isF?css("--bad-soft"):css("--surface"),stroke:isF?css("--bad"):css("--cable"),"stroke-width":3},g);
+      // router arrows glyph
+      const p=el("path",{d:"M-10 -4 L10 -4 M5 -9 L10 -4 L5 1 M10 4 L-10 4 M-5 -1 L-10 4 L-5 9",stroke:isF?css("--bad"):css("--cable"),"stroke-width":2,fill:"none"},g);
+      if(isF){el("path",{d:"M-14 -14 L14 14 M14 -14 L-14 14",stroke:css("--bad"),"stroke-width":4},g);}
+      el("text",{y:n.kind?38:42,"text-anchor":"middle",fill:css("--fg"),"font-size":n.kind?"12":"14","font-weight":"700","font-family":n.kind?"Atkinson Hyperlegible, sans-serif":"Chakra Petch, sans-serif"},g).textContent=n.label;
+      if(clickable){g.style.cursor="pointer";g.setAttribute("tabindex","0");g.setAttribute("role","button");g.setAttribute("aria-label",(isF?"Ripara":"Guasta")+" il router "+id);
+        const tog=()=>toggleRouter(id);g.addEventListener("click",tog);g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();tog();}});}
+    }
+  });
+  gPk=el("g",{},svg);
+}
+function distTo(target){const d={};Object.keys(N).forEach(k=>d[k]=Infinity);if(failed.has(target))return d;d[target]=0;const q=[target];while(q.length){const u=q.shift();adj[u].forEach(v=>{if(!failed.has(v)&&d[v]===Infinity){d[v]=d[u]+1;q.push(v);}});}return d;}
+const logEl=$("#ps-log");
+function log(t,cls){const li=document.createElement("li");li.textContent=t;if(cls)li.className=cls;logEl.prepend(li);while(logEl.children.length>60)logEl.lastChild.remove();}
+let packets=[],sim=null,circuitPath=null,stats;
+function resetStats(){stats={sent:0,arr:0,lost:0,re:0,ooo:0};updStats();}
+function updStats(){$("#st-sent").textContent=stats.sent;$("#st-arr").textContent=stats.arr;$("#st-lost").textContent=stats.lost;$("#st-re").textContent=stats.re;$("#st-ooo").textContent=stats.ooo;}
+const palette=()=>[css("--packet"),css("--orange"),css("--ok"),css("--cable"),css("--bad")];
+function toggleRouter(id){
+  if(failed.has(id)){failed.delete(id);log("Router "+id+" riparato","ok");}
+  else{failed.add(id);log("Router "+id+" guasto!","bad");
+    packets.forEach(p=>{if(p.state==="move"&&(p.to===id||p.from===id))loseP(p,"il router "+id+" si è guastato");});
+    if(sim&&sim.mode==="circuit"&&circuitPath&&circuitPath.includes(id)){sim.broken=true;sim.queue=[];log("Circuito interrotto: la comunicazione cade","bad");packets.forEach(p=>{if(p.state!=="done"&&p.state!=="lost")loseP(p,"circuito interrotto");});}
+  }
+  redrawNet();
+}
+function redrawNet(){drawNet();packets.forEach(p=>{if(p.dot)gPk.appendChild(p.dot);});}
+function loseP(p,why){p.state="lost";stats.lost++;updStats();log("Pacchetto "+p.n+" perso ("+why+")","bad");if(p.dot){const x=p.x,y=p.y;p.dot.remove();p.dot=null;const g=el("g",{transform:`translate(${x},${y})`},gPk);el("path",{d:"M-7 -7 L7 7 M7 -7 L-7 7",stroke:css("--bad"),"stroke-width":3},g);setTimeout(()=>g.remove(),1500);}renderOut();}
+function makeDot(p){const g=el("g",{},gPk);el("rect",{x:-13,y:-10,width:26,height:20,rx:4,fill:p.color,stroke:css("--fg"),"stroke-width":1},g);el("text",{y:5,"text-anchor":"middle","font-size":"12","font-weight":"700",fill:"#1a1a1a","font-family":"JetBrains Mono, monospace"},g).textContent=p.n;return g;}
+function nextHop(cur,p){
+  if(sim.mode==="circuit"){const i=circuitPath.indexOf(cur);return circuitPath[i+1];}
+  const d=distTo("D");if(d[cur]===Infinity)return null;
+  const cands=adj[cur].filter(v=>!failed.has(v)&&d[v]<d[cur]);
+  if(!cands.length)return null;
+  return cands[Math.floor(Math.random()*cands.length)];
+}
+function startMove(p,from){
+  const to=nextHop(from,p);
+  if(!to){p.state="wait";p.waitAt=from;p.waitT=performance.now();return;}
+  p.from=from;p.to=to;p.state="move";p.t0=performance.now();
+  const dx=N[to].x-N[from].x,dy=N[to].y-N[from].y,len=Math.hypot(dx,dy);
+  const jitter=sim.mode==="circuit"?1:(0.6+Math.random()*1.4);
+  p.dur=(reduce?120:len*6)*jitter+(sim.mode==="circuit"?0:Math.random()*250);
+}
+function send(){
+  const msg=$("#ps-msg").value.trim()||"CIAO";const size=+$("#ps-size").value;const mode=$("#ps-mode").value;
+  packets.forEach(p=>{if(p.dot)p.dot.remove();});
+  packets=[];resetStats();logEl.innerHTML="";
+  const parts=[];for(let i=0;i<msg.length;i+=size)parts.push(msg.slice(i,i+size));
+  const pal=palette();
+  sim={mode,parts,total:parts.length,arrived:{},order:[],broken:false,queue:[],lastSpawn:0,idleSince:null,unreach:false};
+  if(mode==="circuit"){
+    const d=distTo("D");if(d.S===Infinity){log("Impossibile stabilire il circuito: nessuna strada libera","bad");sim=null;return;}
+    circuitPath=["S"];let c="S";while(c!=="D"){const cands=adj[c].filter(v=>!failed.has(v)&&d[v]<d[c]);c=cands[Math.floor(Math.random()*cands.length)];circuitPath.push(c);}
+    log("Circuito riservato: "+circuitPath.join(" → "),"ok");
+  }else circuitPath=null;
+  parts.forEach((t,i)=>sim.queue.push({n:i+1,text:t,color:pal[i%pal.length],resent:false}));
+  log("Messaggio diviso in "+parts.length+" pacchetti","ok");
+  renderOut();renderIn();
+  $("#ps-send").disabled=true;
+  requestAnimationFrame(tick);
+}
+function spawn(spec){const p=Object.assign({},spec,{state:"new",x:N.S.x,y:N.S.y});p.dot=makeDot(p);packets.push(p);stats.sent++;updStats();startMove(p,"S");}
+function tick(now){
+  if(!sim)return;
+  if(sim.queue.length&&now-sim.lastSpawn>(sim.mode==="circuit"?420:330)&&!sim.broken){spawn(sim.queue.shift());sim.lastSpawn=now;}
+  packets.forEach(p=>{
+    if(p.state==="wait"){const nh=nextHop(p.waitAt,p);if(nh){startMove(p,p.waitAt);}else if(now-p.waitT>2500){loseP(p,"nessuna strada verso la destinazione: il router lo scarta");}}
+    if(p.state!=="move")return;
+    const k=Math.min(1,(now-p.t0)/p.dur);const a=N[p.from],b=N[p.to];p.x=a.x+(b.x-a.x)*k;p.y=a.y+(b.y-a.y)*k;
+    if(p.dot)p.dot.setAttribute("transform",`translate(${p.x},${p.y-14})`);
+    if(k>=1){
+      if(failed.has(p.to)){loseP(p,"router "+p.to+" guasto");return;}
+      if(p.to==="D"){p.state="done";if(p.dot){p.dot.remove();p.dot=null;}arrive(p);return;}
+      startMove(p,p.to);
+    }
+  });
+  const inflight=packets.some(p=>p.state==="move"||p.state==="wait"||p.state==="new");
+  const missing=[];for(let i=1;i<=sim.total;i++)if(!sim.arrived[i])missing.push(i);
+  if(!missing.length&&!inflight&&!sim.queue.length){log("Messaggio completo e riordinato!","ok");$("#ps-send").disabled=false;sim=null;return;}
+  if(!inflight&&!sim.queue.length&&missing.length){
+    if(sim.mode==="circuit"){log("Comunicazione interrotta: con la commutazione di circuito bisogna ristabilire il circuito e rispedire tutto","bad");$("#ps-send").disabled=false;sim=null;return;}
+    if(sim.idleSince==null)sim.idleSince=now;
+    else if(now-sim.idleSince>900){
+      const d=distTo("D");
+      if(d.S===Infinity){if(!sim.unreach){log("Destinazione irraggiungibile: ripara almeno un router per continuare","warn");sim.unreach=true;}}
+      else{sim.unreach=false;log("Mancano i pacchetti "+missing.join(", ")+": il destinatario chiede di rispedirli","warn");
+        const pal=palette();missing.forEach(n=>{sim.queue.push({n,text:sim.parts[n-1],color:pal[(n-1)%pal.length],resent:true});stats.re++;});updStats();sim.idleSince=null;}
+    }
+  }else sim.idleSince=null;
+  requestAnimationFrame(tick);
+}
+function arrive(p){
+  if(sim.arrived[p.n])return;
+  if(sim.order.length&&p.n<Math.max(...sim.order))stats.ooo++;
+  sim.arrived[p.n]=p.text;sim.order.push(p.n);stats.arr++;updStats();
+  log("Arrivato il pacchetto "+p.n+"/"+sim.total+(p.resent?" (ritrasmesso)":""),"ok");
+  renderIn(p);
+}
+function renderOut(){const box=$("#ps-out");box.innerHTML="";if(!sim)return;sim.parts.forEach((t,i)=>{const c=document.createElement("span");c.className="chip pk";c.textContent=(i+1)+"/"+sim.total+" «"+t+"»";box.appendChild(c);});}
+function renderIn(){const box=$("#ps-in");box.innerHTML="";if(!sim){return;}
+  sim.order.forEach(n=>{const c=document.createElement("span");c.className="chip pk";c.textContent=n;box.appendChild(c);});
+  let s="";for(let i=1;i<=sim.total;i++){s+=sim.arrived[i]!=null?sim.arrived[i]:"_".repeat(sim.parts[i-1].length);}
+  $("#ps-rebuilt").textContent=s;}
+$("#ps-send").addEventListener("click",send);
+$("#ps-reset").addEventListener("click",()=>{failed.clear();packets.forEach(p=>{if(p.dot)p.dot.remove();});packets=[];sim=null;resetStats();logEl.innerHTML="";$("#ps-out").innerHTML="";$("#ps-in").innerHTML="";$("#ps-rebuilt").textContent="—";$("#ps-send").disabled=false;drawNet();});
+resetStats();drawNet();
+// redraw on theme change
+if(window.matchMedia)matchMedia("(prefers-color-scheme: dark)").addEventListener("change",()=>{redrawNet();drawDNS(-1);});
+new MutationObserver(()=>{redrawNet();drawDNS(-1);}).observe(document.documentElement,{attributes:true,attributeFilter:["data-theme"]});
+
+/* ================= 2. LIVELLI ================= */
+const OSI=["Fisico","Collegamento","Rete","Trasporto","Sessione","Presentazione","Applicazione"]; // index 0 = livello 1
+let osiOrder=[];
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function osiShuffle(){do{osiOrder=shuffle(OSI);}while(osiOrder.join()===OSI.slice().reverse().join());renderOsi();$("#osi-fb").textContent="";$("#osi-map").hidden=true;}
+function renderOsi(marks){const ol=$("#osi-list");ol.innerHTML="";osiOrder.forEach((name,i)=>{const li=document.createElement("li");const lvl=7-i;
+  if(marks)li.className=marks[i]?"good":"wrong";
+  li.innerHTML=`<span class="n">${lvl}</span><span class="t">${name}</span>`;
+  const up=document.createElement("button");up.textContent="↑";up.setAttribute("aria-label","Sposta "+name+" in su");up.disabled=i===0;up.onclick=()=>{[osiOrder[i-1],osiOrder[i]]=[osiOrder[i],osiOrder[i-1]];renderOsi();};
+  const dn=document.createElement("button");dn.textContent="↓";dn.setAttribute("aria-label","Sposta "+name+" in giù");dn.disabled=i===osiOrder.length-1;dn.onclick=()=>{[osiOrder[i+1],osiOrder[i]]=[osiOrder[i],osiOrder[i+1]];renderOsi();};
+  li.append(up,dn);ol.appendChild(li);});}
+$("#osi-check").onclick=()=>{const target=OSI.slice().reverse();const marks=osiOrder.map((n,i)=>n===target[i]);renderOsi(marks);const ok=marks.filter(Boolean).length;const fb=$("#osi-fb");
+  if(ok===7){fb.textContent="Perfetto: tutti e sette al posto giusto!";fb.className="feedback ok";$("#osi-map").hidden=false;}else{fb.textContent=ok+" livelli su 7 al posto giusto. Sposta quelli in rosso e ricontrolla.";fb.className="feedback bad";}};
+$("#osi-shuffle").onclick=osiShuffle;osiShuffle();
+
+const LAYERS=[{id:"app",name:"Applicazione"},{id:"tr",name:"Trasporto"},{id:"net",name:"Rete"},{id:"acc",name:"Accesso"}];
+const CARDS=[["HTTP","app","Il protocollo con cui il browser chiede le pagine web al server."],["SMTP","app","Il protocollo per spedire la posta elettronica."],["POP","app","Il protocollo per scaricare la posta dal server."],["FTP","app","Il protocollo per trasferire file."],
+["TCP","tr","Segmenta i dati e garantisce che arrivino tutti e in ordine."],["UDP","tr","Alternativa a TCP: più veloce, ma non garantisce la consegna."],["IP","net","L'unico protocollo del livello di rete: porta i pacchetti da un router all'altro."],
+["Ethernet","acc","La tecnologia delle LAN cablate."],["Wi-Fi","acc","La tecnologia delle LAN senza fili."],["LTE","acc","La tecnologia radio della telefonia mobile 4G."],
+["Dati","app","Al livello di applicazione si parla semplicemente di dati."],["Segmento","tr","Il PDU del livello di trasporto."],["Pacchetto","net","Il PDU del livello di rete."],["Frame","acc","Il PDU del livello di collegamento, che nella pila TCP/IP fa parte dell'accesso."]];
+let prSel=null,prPts=0,prErr=0,prLeft=[];
+function prReset(){prSel=null;prPts=0;prErr=0;prLeft=shuffle(CARDS);renderPr();$("#pr-fb").textContent="";}
+function renderPr(){const box=$("#pr-cards");box.innerHTML="";prLeft.forEach(c=>{const b=document.createElement("button");b.className="pcard";b.type="button";b.textContent=c[0];b.setAttribute("aria-pressed",prSel===c?"true":"false");b.onclick=()=>{prSel=prSel===c?null:c;renderPr();};box.appendChild(b);});
+  if(!prLeft.length){const p=document.createElement("p");p.className="feedback ok";p.textContent="Hai smistato tutte le carte!";box.appendChild(p);}
+  const bk=$("#pr-buckets");if(!bk.children.length){LAYERS.forEach(L=>{const d=document.createElement("div");d.className="bucket";d.id="bk-"+L.id;d.tabIndex=0;d.setAttribute("role","button");d.innerHTML=`<h4>${L.name}</h4><div class="placed"></div>`;const go=()=>placeCard(L.id);d.onclick=go;d.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}};bk.appendChild(d);});}
+  $$(".bucket").forEach(b=>b.classList.toggle("armed",!!prSel));
+  $("#pr-score").textContent="Punti: "+prPts+" · errori: "+prErr;}
+function placeCard(lid){if(!prSel)return;const fb=$("#pr-fb");const [name,good,why]=prSel;
+  if(lid===good){prPts++;fb.className="feedback ok";fb.textContent="Giusto: "+name+". "+why;const chip=document.createElement("span");chip.className="chip pk";chip.textContent=name;$("#bk-"+lid+" .placed").appendChild(chip);prLeft=prLeft.filter(c=>c!==prSel);}
+  else{prErr++;fb.className="feedback bad";fb.textContent=name+" non lavora a questo livello. Riprova.";}
+  prSel=null;renderPr();}
+$("#pr-reset").onclick=()=>{$("#pr-buckets").innerHTML="";prReset();};prReset();
+
+/* ================= 3. INCAPSULAMENTO ================= */
+let enc=[],hop=-1,ttl=64;
+const HOPS=[
+ {n:"PC di Anna",tech:"Ethernet",mac:"PC di Anna → router di casa",txt:"Il PC di Anna mette il pacchetto IP in un frame Ethernet e lo invia sul cavo al router di casa."},
+ {n:"Router di casa",tech:"xDSL (cavo telefonico)",mac:"router di casa → centrale dell'operatore",txt:"Il router di casa toglie il frame Ethernet, legge l'indirizzo IP di destinazione, diminuisce il TTL e rimette il pacchetto in un frame xDSL per il cavo telefonico."},
+ {n:"Centrale dell'operatore",tech:"Fibra ottica",mac:"centrale → router dell'operatore",txt:"Nella centrale il segnale passa dal cavo telefonico alla fibra ottica: nuovo frame, stesso pacchetto IP."},
+ {n:"Router di Internet",tech:"Fibra ottica",mac:"router → router del data center",txt:"Un router di Internet sceglie il cammino migliore verso la destinazione in quel momento e inoltra il pacchetto."},
+ {n:"Router del data center",tech:"Ethernet",mac:"router del data center → web server",txt:"Il router del data center consegna il pacchetto al web server della scuola dentro un frame Ethernet."},
+ {n:"Web server della scuola",tech:"—",mac:"—",txt:"Il server spacchetta tutto: toglie il frame, poi l'intestazione IP, poi quella TCP, e consegna i dati al programma web server, che risponderà con la pagina degli orari."}];
+function renderEnc(){
+  const box=$("#en-box");box.innerHTML="";
+  const data=`<div class="layerbox lb-data">Dati applicazione: GET /orari.html (richiesta HTTP)</div>`;
+  let html=data;
+  if(enc.includes("tcp"))html=`<div class="layerbox lb-tcp"><span class="hdr">Intestazione TCP</span><div>porta mittente 51734 · porta destinazione 443 · segmento n. 1</div>${html}</div>`;
+  if(enc.includes("ip"))html=`<div class="layerbox lb-ip"><span class="hdr">Intestazione IP</span><div>IP mittente 203.0.113.25 · IP destinatario 198.51.100.80 · TTL ${ttl}</div>${html}</div>`;
+  if(enc.includes("frame")){const h=HOPS[Math.max(hop,0)];html=`<div class="layerbox lb-frame"><span class="hdr">Intestazione frame · ${h.tech}</span><div>collegamento: ${h.mac}</div>${html}</div>`;}
+  if(hop===HOPS.length-1)html=data;
+  box.innerHTML=`<p class="muted" style="margin:0 0 4px">${enc.length===0?"Dati":enc.length===1?"Segmento TCP":enc.length===2?"Pacchetto IP":"Frame"}</p>`+html;
+  const hb=$("#en-hops");hb.innerHTML="";HOPS.forEach((h,i)=>{const s=document.createElement("span");s.className="hop"+(i===hop?" on":i<hop?" done":"");s.textContent=h.n;hb.appendChild(s);});
+  $("#en-next").disabled=!(enc.length===3&&hop<HOPS.length-1);
+}
+function addLayer(l){const fb=$("#en-fb");const want=["tcp","ip","frame"][enc.length];
+  if(hop>=0){fb.className="feedback bad";fb.textContent="Il pacchetto è già in viaggio: premi Ricomincia per prepararne un altro.";return;}
+  if(enc.includes(l)){fb.className="feedback bad";fb.textContent="Questa intestazione c'è già.";return;}
+  if(l!==want){fb.className="feedback bad";fb.textContent={tcp:"Prima va aggiunta l'intestazione TCP: è il livello di trasporto, subito sotto l'applicazione.",ip:"L'intestazione IP si aggiunge al segmento TCP: prima serve il livello di trasporto.",frame:"Il frame si aggiunge per ultimo, attorno al pacchetto IP."}[want]||"Ordine sbagliato.";return;}
+  enc.push(l);fb.className="feedback ok";fb.textContent={tcp:"Ora i dati sono un segmento TCP.",ip:"Ora il segmento è dentro un pacchetto IP.",frame:"Frame pronto! Ora puoi spedirlo."}[l];
+  if(l==="frame"){hop=0;$("#en-hoptext").textContent=HOPS[0].txt;}
+  renderEnc();}
+$("#en-tcp").onclick=()=>addLayer("tcp");$("#en-ip").onclick=()=>addLayer("ip");$("#en-frame").onclick=()=>addLayer("frame");
+$("#en-reset").onclick=()=>{enc=[];hop=-1;ttl=64;$("#en-fb").textContent="";$("#en-hoptext").textContent="Il pacchetto è ancora sul computer di Anna.";renderEnc();};
+$("#en-next").onclick=()=>{if(hop<HOPS.length-1){hop++;if(hop>=1&&hop<=4)ttl--;$("#en-hoptext").textContent=HOPS[hop].txt;renderEnc();}};
+renderEnc();
+
+/* ================= 4. URL e DNS ================= */
+const TLD={it:"geografico · Italia",eu:"geografico · Unione europea",us:"geografico · Stati Uniti",uk:"geografico · Regno Unito",fr:"geografico · Francia",de:"geografico · Germania",es:"geografico · Spagna",ch:"geografico · Svizzera",com:"funzionale · attività commerciali",org:"funzionale · organizzazioni no-profit",edu:"funzionale · istituzioni educative (USA)",gov:"funzionale · governo degli Stati Uniti",net:"funzionale · in origine per i fornitori di rete",int:"funzionale · organizzazioni internazionali",info:"funzionale · siti informativi",io:"geografico · Territorio britannico dell'Oceano Indiano, molto usato dalle startup"};
+function parseUrl(){
+  let raw=$("#url-in").value.trim();if(!raw)return;if(!/^[a-z]+:\/\//i.test(raw))raw="https://"+raw;
+  let u;try{u=new URL(raw);}catch(e){$("#url-parts").innerHTML="";$("#url-explain").innerHTML='<p class="feedback bad">Questo non sembra un URL valido. Controlla di aver scritto il nome del sito senza spazi.</p>';return;}
+  const host=u.hostname.split(".");const tld=host.pop();const dom=host.pop()||"";const sub=host.join(".");
+  const path=u.pathname+u.search+u.hash;
+  const part=(cls,txt,lab)=>txt?`<span class="${cls}">${txt.replace(/</g,"&lt;")}<i>${lab}</i></span>`:"";
+  $("#url-parts").innerHTML=part("u-proto",u.protocol+"//","protocollo")+part("u-sub",sub?sub+".":"","sottodominio")+part("u-dom",dom+".","dominio")+part("u-tld",tld,"dominio di primo livello")+part("u-path",path==="/"?"":path,"percorso della risorsa");
+  const proto=u.protocol==="https:"?"<b>https</b>: la versione sicura di HTTP. I dati tra browser e server viaggiano cifrati.":u.protocol==="http:"?"<b>http</b>: il protocollo del web senza cifratura. Chi intercetta il traffico può leggere i dati.":"<b>"+u.protocol.replace(":","")+"</b>: un protocollo diverso da HTTP.";
+  const t=TLD[tld.toLowerCase()];
+  $("#url-explain").innerHTML=`<div class="tablewrap"><table class="t">
+   <tr><th>Parte</th><th>Che cos'è</th></tr>
+   <tr><td class="mono">${u.protocol}//</td><td>${proto}</td></tr>
+   ${sub?`<tr><td class="mono">${sub}</td><td>Sottodominio: una parte del sito o un servizio specifico. <span class="mono">www</span> indica tradizionalmente il sito web.</td></tr>`:""}
+   <tr><td class="mono">${dom}</td><td>Dominio registrato da chi gestisce il sito, presso l'ente che amministra il dominio <span class="mono">.${tld}</span>.</td></tr>
+   <tr><td class="mono">.${tld}</td><td>Dominio di primo livello (TLD): ${t?t:"un dominio meno comune. Cerca a che cosa corrisponde!"}.</td></tr>
+   ${path&&path!=="/"?`<tr><td class="mono">${path.replace(/</g,"&lt;")}</td><td>Percorso: indica quale pagina o risorsa chiedere al server. La parte dopo il <span class="mono">?</span>, se c'è, contiene dei parametri, per esempio una ricerca.</td></tr>`:""}
+   <tr><td class="mono">${u.hostname}</td><td>Il nome completo del server. Per collegarsi, il browser dovrà chiedere al DNS il suo indirizzo IP.</td></tr></table></div>`;
+}
+$("#url-go").onclick=parseUrl;$("#url-in").addEventListener("keydown",e=>{if(e.key==="Enter")parseUrl();});
+$$(".ex-url").forEach(b=>b.onclick=()=>{$("#url-in").value=b.textContent;parseUrl();});
+parseUrl();
+
+const SITES=[{h:"www.pizzeria-da-gino.it",ip:"198.51.100.24",page:"<h3 style='margin:0'>Pizzeria da Gino</h3><p>Margherita 6 € · Diavola 7,50 € · Aperti dalle 19 alle 23.</p>"},
+{h:"www.istituto-marconi-esempio.it",ip:"203.0.113.80",page:"<h3 style='margin:0'>Orari della settimana</h3><p>3ª A · lunedì: Informatica, Matematica, Italiano, Inglese, Sistemi e reti.</p>"},
+{h:"meteo.esempio.eu",ip:"192.0.2.15",page:"<h3 style='margin:0'>Meteo di domani</h3><p>Sereno al mattino, nuvoloso dal pomeriggio. Massima 21 °C.</p>"},
+{h:"www.biblioteca-civica-esempio.org",ip:"198.51.100.131",page:"<h3 style='margin:0'>Biblioteca civica</h3><p>Prestito aperto martedì e giovedì, 15–19. Novità: 12 nuovi libri di informatica.</p>"}];
+const dnsCache={};
+SITES.forEach((s,i)=>{const o=document.createElement("option");o.value=i;o.textContent=s.h;$("#dns-site").appendChild(o);});
+const dsvg=$("#dns-svg");
+const DP={c:{x:110,y:200,l:"client (browser)"},d:{x:770,y:70,l:"server DNS"},w:{x:770,y:235,l:"web server"}};
+function drawDNS(step,site,fail,skip){
+  dsvg.innerHTML="";
+  el("ellipse",{cx:450,cy:155,rx:300,ry:120,fill:css("--sunk")},dsvg);
+  el("text",{x:450,y:24,"text-anchor":"middle",fill:css("--muted"),"font-size":"13","font-family":"JetBrains Mono, monospace"},dsvg).textContent="Internet";
+  Object.values(DP).forEach(p=>{const g=el("g",{transform:`translate(${p.x},${p.y})`},dsvg);
+    if(p===DP.c){el("rect",{x:-26,y:-20,width:52,height:36,rx:4,fill:css("--surface"),stroke:css("--fg"),"stroke-width":2},g);el("rect",{x:-32,y:16,width:64,height:6,rx:2,fill:css("--fg")},g);}
+    else{for(let i=0;i<3;i++)el("rect",{x:-24,y:-24+i*16,width:48,height:13,rx:3,fill:css("--surface"),stroke:css(p===DP.d?"--ok":"--cable"),"stroke-width":2},g);}
+    el("text",{y:p===DP.c?42:44,"text-anchor":"middle",fill:css("--fg"),"font-size":"13","font-weight":"700","font-family":"Atkinson Hyperlegible, sans-serif"},g).textContent=p.l;});
+  const arrows=[{a:"c",b:"d",lab:"1) qual è l'IP di "+(site?site.h:"…")+"?",off:-18},{a:"d",b:"c",lab:fail?"2) nessuna risposta":"2) è "+(site?site.ip:"…"),off:18},{a:"c",b:"w",lab:"3) GET / (richiesta HTTP)",off:-18},{a:"w",b:"c",lab:"4) pagina web (risposta HTTP)",off:18}];
+  arrows.forEach((ar,i)=>{if(i>step||(skip&&i<2))return;const A=DP[ar.a],B=DP[ar.b];const mx=(A.x+B.x)/2,my=(A.y+B.y)/2+ar.off*2.2;
+    const col=(fail&&i===1)?css("--bad"):i<2?css("--ok"):css("--cable");
+    el("path",{d:`M${A.x+(ar.a==="c"?30:-30)} ${A.y+ar.off*0.6} Q ${mx} ${my} ${B.x+(ar.b==="c"?30:-30)} ${B.y+ar.off*0.6}`,fill:"none",stroke:col,"stroke-width":3,"stroke-dasharray":(fail&&i===1)?"6 6":"none"},dsvg);
+    el("circle",{cx:B.x+(ar.b==="c"?30:-30),cy:B.y+ar.off*0.6,r:5,fill:col},dsvg);
+    el("text",{x:mx,y:my+(ar.off<0?-6:14),"text-anchor":"middle",fill:css("--fg"),"font-size":"12.5","font-family":"JetBrains Mono, monospace"},dsvg).textContent=ar.lab;});
+}
+let dnsTimer=null;
+function dnsGo(){
+  clearTimeout(dnsTimer);const site=SITES[+$("#dns-site").value];const cache=$("#dns-cache").checked;const down=$("#dns-down").checked;
+  const txt=$("#dns-text");$("#br-url").textContent="https://"+site.h;$("#br-page").innerHTML='<span class="muted">Caricamento…</span>';
+  const known=cache&&dnsCache[site.h];
+  const steps=[];
+  if(!known){
+    steps.push({s:0,t:"1) Il browser non conosce l'indirizzo IP di "+site.h+": lo chiede al server DNS."});
+    if(down){steps.push({s:1,fail:true,t:"2) Il server DNS non risponde. Il browser non sa a quale indirizzo IP collegarsi e mostra un errore, anche se il web server funziona benissimo. È quello che accadde il 21 ottobre 2016, quando un attacco DDoS al fornitore DNS Dyn rese irraggiungibili per ore molti grandi siti.",end:"fail"});}
+    else steps.push({s:1,t:"2) Il server DNS risponde: "+site.h+" corrisponde all'indirizzo IP "+site.ip+"."+(cache?" Il computer lo salva nella sua cache.":"")});
+  }else steps.push({s:1,skipTo:true,t:"Il computer ha già l'indirizzo IP di "+site.h+" nella cache DNS ("+site.ip+"): salta la domanda al server DNS."});
+  if(!(down&&!known)){steps.push({s:2,t:"3) Il browser si collega all'indirizzo "+site.ip+" e invia al web server una richiesta HTTP per la pagina."});
+    steps.push({s:3,t:"4) Il web server risponde inviando la pagina, che il browser visualizza.",end:"ok"});}
+  let i=0;
+  const run=()=>{const st=steps[i];drawDNS(st.s,site,st.fail,known);txt.textContent=st.t;
+    if(st.end==="fail")$("#br-page").innerHTML='<p class="feedback bad">Impossibile raggiungere il sito: indirizzo DNS non trovato.</p>';
+    if(st.end==="ok"){$("#br-page").innerHTML=site.page;if(cache)dnsCache[site.h]=site.ip;}
+    i++;if(i<steps.length)dnsTimer=setTimeout(run,reduce?300:1700);};
+  run();
+}
+$("#dns-go").onclick=dnsGo;
+drawDNS(-1);
+
+/* ================= LAB ================= */
+const LAB=[
+ {cmd:"ipconfig",title:"Il mio indirizzo IP",what:"Mostra la configurazione di rete del computer: indirizzo IP, subnet mask e gateway predefinito, cioè il router a cui il computer manda i pacchetti diretti fuori dalla LAN.",out:`Scheda Ethernet Ethernet:
+   Indirizzo IPv4. . . . . . . . . . . . : 192.168.10.37
+   Subnet mask . . . . . . . . . . . . . : 255.255.255.0
+   Gateway predefinito . . . . . . . . . : 192.168.10.1`,ask:["Qual è l'indirizzo IPv4 del tuo computer?","Qual è il gateway predefinito (il router della LAN)?","Il tuo compagno di banco ha lo stesso indirizzo? Perché no?"]},
+ {cmd:"ping www.zanichelli.it",title:"C'è qualcuno?",what:"Invia alcuni piccoli pacchetti a un server e misura quanto tempo impiegano ad andare e tornare (in millisecondi). Mostra anche l'indirizzo IP del server, ottenuto dal DNS.",out:`Esecuzione di Ping www.zanichelli.it [203.0.113.50] con 32 byte di dati:
+Risposta da 203.0.113.50: byte=32 durata=18ms TTL=56
+Risposta da 203.0.113.50: byte=32 durata=17ms TTL=56
+Pacchetti: Trasmessi = 4, Ricevuti = 4, Persi = 0 (0% persi)`,ask:["Quanti millisecondi impiega in media un pacchetto ad andare e tornare?","Prova con un sito che ha i server in un altro continente: il tempo cambia?","Quanti pacchetti sono andati persi?"]},
+ {cmd:"tracert www.zanichelli.it",title:"La strada dei pacchetti",what:"Elenca i router attraversati dai pacchetti per arrivare al server, uno per riga. Gli asterischi indicano router che non rispondono a questo tipo di richiesta.",out:`Rilevazione instradamento verso www.zanichelli.it [203.0.113.50]
+  1     1 ms    1 ms    1 ms  192.168.10.1
+  2     6 ms    5 ms    6 ms  10.12.0.1
+  3     9 ms    8 ms    9 ms  198.51.100.9
+  4     *        *        *     Richiesta scaduta.
+  5    17 ms   18 ms   17 ms  203.0.113.50
+Rilevazione completata.`,ask:["Quanti router attraversano i tuoi pacchetti?","Qual è il primo router? Lo hai già visto con ipconfig?","Ripeti il comando tra qualche minuto: il percorso è identico?"]},
+ {cmd:"nslookup www.zanichelli.it",title:"Chiedi al DNS",what:"Chiede direttamente al server DNS l'indirizzo IP associato a un nome. La prima parte dell'output indica quale server DNS ha risposto.",out:`Server:  dns.scuola.esempio
+Address:  192.168.10.2
+
+Risposta da un server non autorevole:
+Nome:    www.zanichelli.it
+Address:  203.0.113.50`,ask:["Quale server DNS usa il tuo computer?","Qual è l'indirizzo IP di www.zanichelli.it? È lo stesso visto con ping?","Prova con due siti diversi e confronta gli indirizzi."]}];
+const notes=store.get("reti-lab",{});
+LAB.forEach((L,i)=>{const c=document.createElement("div");c.className="card";
+  c.innerHTML=`<span class="eyebrow">comando ${i+1}</span><h3 style="margin:2px 0 6px">${L.title}</h3><p style="margin:0 0 6px"><span class="kbd">${L.cmd}</span></p><p class="muted" style="margin:0">${L.what}</p>
+  <p style="margin:10px 0 0;font-weight:700">Esempio di output (indirizzi inventati)</p><pre class="out">${L.out.replace(/</g,"&lt;")}</pre>
+  <ol style="margin:6px 0 8px;padding-left:20px">${L.ask.map(a=>"<li>"+a+"</li>").join("")}</ol>
+  <label for="lab-n${i}">I miei risultati</label><textarea id="lab-n${i}" placeholder="Incolla qui l'output o scrivi le risposte"></textarea>`;
+  $("#lab-cards").appendChild(c);const ta=c.querySelector("textarea");ta.value=notes[i]||"";ta.addEventListener("input",()=>{notes[i]=ta.value;store.set("reti-lab",notes);});});
+
+/* ================= QUIZ ================= */
+const Q=[
+["Una rete che collega i computer del laboratorio della scuola è una…",["LAN","WAN","URL","DNS"],0,"LAN, Local Area Network: una rete confinata in un edificio o in edifici vicini."],
+["Quale apparato smista il traffico tra le reti e costituisce i punti di snodo di Internet?",["Lo switch","L'access point","Il router","Il modem del PC"],2,"Il router inoltra i pacchetti verso la destinazione scegliendo il cammino migliore."],
+["Che cosa fa un access point?",["Collega i dispositivi senza fili alla rete","Traduce i nomi in indirizzi IP","Ospita le pagine web","Cifra la posta elettronica"],0,"L'access point comunica via radio con i dispositivi Wi-Fi e di solito è collegato a uno switch o a un router."],
+["Nel packet switching, i pacchetti dello stesso messaggio…",["seguono sempre lo stesso cammino","possono seguire cammini diversi e arrivare in disordine","viaggiano solo se la linea è libera","vengono uniti dai router"],1,"Ogni router sceglie il cammino migliore in quel momento; è il destinatario a riordinare i pacchetti."],
+["Se un pacchetto va perso, che cosa succede?",["Il messaggio è perso per sempre","Il destinatario chiede al mittente di rispedire solo il pacchetto mancante","Il mittente rispedisce tutto il messaggio","Il router più vicino lo ricostruisce"],1,"La perdita causa solo un ritardo: viene richiesto e rispedito il pacchetto mancante."],
+["Il progetto da cui è nata Internet si chiamava…",["WWW","ARPANET","CERN","Ethernet"],1,"ARPANET, realizzata negli USA tra la fine degli anni Sessanta e l'inizio degli anni Ottanta."],
+["Un protocollo di rete è…",["un cavo per collegare i computer","un insieme di regole condivise per comunicare","un programma antivirus","un tipo di router"],1,"Senza regole comuni, apparati e software di produttori diversi non potrebbero comunicare."],
+["Quanti livelli ha il modello ISO/OSI?",["4","5","7","9"],2,"Sette: fisico, collegamento, rete, trasporto, sessione, presentazione, applicazione."],
+["A quale livello lavora il protocollo IP?",["Applicazione","Trasporto","Rete","Fisico"],2,"IP è l'unico protocollo del livello di rete, sia nelle LAN sia nelle WAN."],
+["Quale protocollo garantisce che i dati arrivino tutti e nell'ordine giusto?",["UDP","TCP","HTTP","IP"],1,"TCP rileva pacchetti persi o fuori ordine e fa ritrasmettere i dati mancanti."],
+["Come si chiama il PDU del livello di trasporto?",["Frame","Pacchetto","Segmento","Bit"],2,"Segmenti al trasporto, pacchetti alla rete, frame al collegamento."],
+["Durante il viaggio, a ogni router…",["cambia l'intestazione IP","cambia l'intestazione del frame, mentre il pacchetto IP resta lo stesso","cambiano i dati","cambia l'intestazione TCP"],1,"Il frame dipende dalla tecnologia del singolo collegamento (Ethernet, xDSL, fibra); il pacchetto IP viaggia intatto da un capo all'altro."],
+["Nel modello client/server, il server…",["invia richieste e attende risposte","resta in attesa di richieste e risponde","funziona solo senza Internet","è sempre uno smartphone"],1,"Il server attende le richieste dei client e risponde inviando i dati richiesti."],
+["Chi ha inventato il World Wide Web nel 1991?",["Bill Gates","Tim Berners-Lee al CERN","Vint Cerf all'IETF","Steve Jobs"],1,"Tim Berners-Lee, al CERN di Ginevra, per far circolare gli articoli scientifici in forma ipertestuale."],
+["A che cosa serve il DNS?",["A cifrare le pagine web","A restituire l'indirizzo IP associato a un nome di dominio","A scegliere il cammino dei pacchetti","A collegare il Wi-Fi"],1,"I router lavorano con gli indirizzi IP: il DNS traduce il nome scritto dall'utente nell'indirizzo del server."]];
+function renderQuiz(){const f=$("#quiz-form");f.innerHTML="";Q.forEach((q,i)=>{const d=document.createElement("div");d.className="q";d.id="q"+i;
+  d.innerHTML=`<fieldset><legend>${i+1}. ${q[0]}</legend>${q[1].map((o,j)=>`<label><input type="radio" name="q${i}" value="${j}" id="q${i}o${j}"> ${o}</label>`).join("")}<div class="exp" hidden></div></fieldset>`;f.appendChild(d);});$("#quiz-score").textContent="";}
+$("#quiz-check").onclick=e=>{e.preventDefault();let ok=0,ans=0;Q.forEach((q,i)=>{const d=$("#q"+i);const sel=d.querySelector("input:checked");const ex=d.querySelector(".exp");d.classList.remove("right","wrongq");
+  if(sel){ans++;const r=+sel.value===q[2];if(r)ok++;d.classList.add(r?"right":"wrongq");ex.hidden=false;ex.innerHTML=(r?'<b style="color:var(--ok)">Giusto.</b> ':'<b style="color:var(--bad)">Risposta corretta: '+q[1][q[2]]+'.</b> ')+q[3];}else{ex.hidden=false;ex.innerHTML='<span class="muted">Non hai risposto.</span>';}});
+  $("#quiz-score").textContent="Risultato: "+ok+" / "+Q.length+(ans<Q.length?" ("+(Q.length-ans)+" senza risposta)":"");};
+$("#quiz-reset").onclick=e=>{e.preventDefault();renderQuiz();};
+$("#quiz-form").addEventListener("submit",e=>e.preventDefault());
+renderQuiz();
+})();
+</script>
+
+</body></html>
