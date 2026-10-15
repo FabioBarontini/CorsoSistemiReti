@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Laboratorio di Sistemi e Reti: ricostruire un diario dei metadati analizzando un PCAP con Wireshark.">
+<title>Il diario nascosto della rete | Atlante della Rete</title>
+<style>
+:root{color-scheme:dark;--bg:#07111f;--panel:#0d1b2c;--panel2:#11243a;--line:#25435c;--text:#eaf4ff;--muted:#a9bed0;--cyan:#52e0e0;--blue:#79aaff;--red:#ff7777;--green:#9de6bd;--radius:18px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#14334c 0,transparent 35%),var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}a{color:var(--cyan)}a:hover{color:#fff} .wrap{width:min(1120px,calc(100% - 32px));margin:auto}.topline{border-bottom:1px solid var(--line);background:#07111fe8}.topline .wrap{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:13px 0;color:var(--muted);font-size:.86rem}.brand{font-weight:800;letter-spacing:.12em;color:var(--cyan);text-transform:uppercase}.hero{padding:62px 0 42px;position:relative;overflow:hidden}.eyebrow{color:var(--cyan);font-size:.8rem;letter-spacing:.17em;font-weight:800;text-transform:uppercase}.hero h1{font-size:clamp(2.2rem,6vw,4.4rem);line-height:1.04;letter-spacing:-.04em;max-width:850px;margin:15px 0 20px}.hero h1 span{color:var(--cyan)}.lead{font-size:1.15rem;max-width:780px;color:#c3d7e8}.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}.chip{border:1px solid var(--line);border-radius:999px;padding:6px 12px;color:var(--muted);font-size:.85rem;background:#0c1b2a}.hero-grid{display:grid;grid-template-columns:1.4fr .8fr;gap:24px;align-items:stretch}.mission{border:1px solid var(--line);border-radius:var(--radius);padding:24px;background:linear-gradient(145deg,#10263a,#0b1727);box-shadow:0 18px 60px #0003}.mission strong{color:var(--cyan)}.mission .big{font-size:1.1rem}.mission-art{display:flex;align-items:center;justify-content:center;min-height:220px;border:1px solid var(--line);border-radius:var(--radius);background:repeating-linear-gradient(0deg,transparent,transparent 31px,#23415a40 32px),repeating-linear-gradient(90deg,transparent,transparent 31px,#23415a40 32px),#0b1929}.network{width:min(100%,300px);height:auto}.section{padding:28px 0 36px}.section h2{font-size:clamp(1.55rem,3vw,2.2rem);line-height:1.15;margin:0 0 12px}.section-intro{color:var(--muted);max-width:780px;margin:0 0 24px}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{background:linear-gradient(155deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--radius);padding:21px}.num{font-size:.78rem;letter-spacing:.13em;color:var(--cyan);font-weight:800}.card h3{margin:8px 0;font-size:1.12rem}.card p{margin:0;color:var(--muted)}.downloads{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.download{display:flex;gap:15px;align-items:flex-start;padding:20px;border-radius:var(--radius);border:1px solid var(--line);background:#0d1b2c}.fileicon{flex:0 0 45px;height:48px;border-radius:11px;display:grid;place-items:center;background:#17354a;color:var(--cyan);font-weight:900;font-size:.8rem}.download h3{margin:0 0 4px;font-size:1.05rem}.download p{margin:0 0 12px;color:var(--muted);font-size:.92rem}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-weight:750;padding:10px 14px;border-radius:10px;border:1px solid #3a7c8c;background:#103443;color:#dffefe}.btn:hover{background:#174a5b}.btn.primary{background:var(--cyan);border-color:var(--cyan);color:#06202a}.btn.primary:hover{background:#a4ffff;color:#06202a}.buttonrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.filterlist{display:grid;grid-template-columns:1fr 1fr;gap:10px}.filter{padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:#091726}.filter code{color:var(--cyan);font-size:.98rem;overflow-wrap:anywhere}.filter p{margin:5px 0 0;color:var(--muted);font-size:.9rem}.note{border-left:4px solid var(--cyan);padding:14px 17px;background:#0d2232;border-radius:0 12px 12px 0;color:#d8eaf7}.warning{border-left-color:var(--red);background:#281b27}.steps{counter-reset:step;display:grid;gap:12px}.step{counter-increment:step;display:grid;grid-template-columns:42px 1fr;gap:13px;align-items:start}.step:before{content:counter(step,decimal-leading-zero);color:var(--cyan);font-weight:900;font-size:1rem;border:1px solid var(--line);border-radius:10px;display:grid;place-items:center;height:42px;background:#0c2030}.step h3{margin:0 0 3px}.step p{margin:0;color:var(--muted)}table{border-collapse:collapse;width:100%;margin:16px 0;background:#0b1928;border-radius:12px;overflow:hidden}th,td{padding:12px 13px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}th{background:#132b40;color:var(--cyan);font-size:.9rem}td{color:#d8e7f4}tr:last-child td{border-bottom:0}.footer{margin-top:28px;border-top:1px solid var(--line);padding:28px 0 40px;color:var(--muted);font-size:.9rem}.small{font-size:.88rem;color:var(--muted)}.tag{font-size:.72rem;color:var(--green);border:1px solid #2e6b5a;border-radius:999px;padding:3px 8px;white-space:nowrap}.contents{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}.contents a{font-size:.9rem;text-decoration:none;padding:6px 10px;border:1px solid var(--line);border-radius:8px;color:var(--muted)}.contents a:hover{color:var(--cyan);border-color:var(--cyan)}
+@media(max-width:760px){.hero-grid,.grid,.downloads,.filterlist{grid-template-columns:1fr}.hero{padding-top:42px}.mission-art{min-height:180px}.topline .wrap{align-items:flex-start;flex-direction:column}th,td{padding:9px;font-size:.9rem}}
+@media print{body{background:#fff;color:#111}.topline,.buttonrow,.contents{display:none}.card,.mission,.download,.filter{background:#fff;color:#111;border-color:#aaa}.lead,.section-intro,.card p,.download p,.filter p,.small,.step p{color:#333}.hero h1 span,.eyebrow,.num,th,.filter code{color:#067d83}.section{break-inside:avoid}}
+
+.formpanel{background:linear-gradient(155deg,#10263a,#0b1727);border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-top:18px}
+.formgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.field{display:flex;flex-direction:column;gap:6px}.field label{font-weight:700;color:#d9edfa;font-size:.92rem}
+.field input,.field textarea,.field select{width:100%;background:#071522;color:var(--text);border:1px solid #35546d;border-radius:9px;padding:10px 11px;font:inherit}
+.field textarea{min-height:74px;resize:vertical}.field input:focus,.field textarea:focus{outline:2px solid var(--cyan);outline-offset:1px}
+.eventform{border:1px solid var(--line);border-radius:13px;padding:16px;margin:14px 0;background:#091827}
+.eventform h3{margin:0 0 12px;color:var(--cyan);font-size:1rem}
+.formactions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.solutionbox{display:none;margin-top:20px;border:1px solid #397e68;background:#0c251f;border-radius:14px;padding:20px}
+.solutionbox.visible{display:block}.solutionbox h3{color:var(--green)}
+.lockbox{display:flex;gap:10px;flex-wrap:wrap;align-items:end;margin-top:16px;padding:16px;background:#091726;border:1px solid var(--line);border-radius:12px}
+.lockbox .field{flex:1;min-width:220px}
+.status{min-height:1.5em;color:var(--muted);font-size:.9rem;margin-top:8px}
+.solutionbox table{font-size:.9rem}.solutionbox td,.solutionbox th{padding:9px}
+@media(max-width:760px){.formgrid{grid-template-columns:1fr}.lockbox{align-items:stretch}.lockbox .btn{width:100%}}
+
+</style>
+</head>
+<body>
+<div class="topline"><div class="wrap"><div class="brand">Atlante della Rete / Laboratorio</div><div>Sistemi e Reti · Cybersecurity · Metadati</div></div></div>
+<header class="hero"><div class="wrap"><div class="hero-grid"><div><div class="eyebrow">Missione di analisi · Wireshark</div><h1>Il diario <span>nascosto</span> della rete</h1><p class="lead">È possibile ricostruire alcune informazioni sulle comunicazioni senza leggere i messaggi? Analizza una cattura di rete, raccogli prove e costruisci un diario dei metadati distinguendo fatti, deduzioni e limiti.</p><div class="chips"><span class="chip">PCAP sintetico</span><span class="chip">Lavoro individuale o a coppie</span><span class="chip">45–55 minuti</span><span class="chip">Wireshark</span></div><div class="buttonrow"><a class="btn primary" href="#materiali">↓ Scarica i materiali</a><a class="btn" href="#procedura">Inizia l'indagine →</a></div></div><div class="mission-art" aria-label="Illustrazione di una rete di dispositivi"><svg class="network" viewBox="0 0 320 250" role="img" aria-label="Pacchetti che attraversano una rete"><g stroke="#2e7180" stroke-width="2" fill="none"><path d="M160 122 L65 55 M160 122 L255 55 M160 122 L65 195 M160 122 L255 195 M65 55 L255 55 M65 195 L255 195" stroke-dasharray="5 6"/><path d="M80 58 L140 105 M239 62 L180 105 M81 187 L140 140 M239 187 L180 140" stroke="#52e0e0"/></g><g fill="#102a3e" stroke="#52e0e0" stroke-width="2"><rect x="117" y="84" width="86" height="76" rx="13"/><rect x="27" y="25" width="76" height="54" rx="9"/><rect x="217" y="25" width="76" height="54" rx="9"/><rect x="27" y="170" width="76" height="54" rx="9"/><rect x="217" y="170" width="76" height="54" rx="9"/></g><g fill="#52e0e0"><circle cx="141" cy="108" r="4"/><circle cx="160" cy="108" r="4"/><circle cx="179" cy="108" r="4"/><rect x="138" y="123" width="44" height="4" rx="2"/><rect x="145" y="133" width="30" height="4" rx="2"/><circle cx="44" cy="42" r="3"/><circle cx="54" cy="42" r="3"/><circle cx="64" cy="42" r="3"/><circle cx="234" cy="42" r="3"/><circle cx="244" cy="42" r="3"/><circle cx="254" cy="42" r="3"/></g><g fill="#b9d6e9" font-size="9" font-family="monospace"><text x="37" y="65">DNS / HTTP</text><text x="226" y="65">TLS</text><text x="38" y="205">TIMESTAMP</text><text x="229" y="205">IP / PORTE</text></g></svg></div></div></div></header>
+<main class="wrap">
+<nav class="contents" aria-label="Indice della pagina"><a href="#obiettivo">Obiettivo</a><a href="#procedura">Procedura</a><a href="#filtri">Filtri Wireshark</a><a href="#tabella">Tabella dei metadati</a><a href="#materiali">Materiali</a><a href="#limiti">Limiti della traccia</a></nav>
+<section class="section" id="obiettivo"><h2>La missione</h2><p class="section-intro">Non devi indovinare la vita del proprietario del dispositivo. Devi documentare ciò che la cattura mostra davvero e formulare soltanto deduzioni proporzionate alle prove.</p><div class="grid"><article class="card"><div class="num">01 / OSSERVA</div><h3>Raccogli i fatti</h3><p>Individua orari, indirizzi IP, porte, richieste DNS, richieste HTTP e conversazioni TCP. Annota sempre un campo o un numero di pacchetto come riscontro.</p></article><article class="card"><div class="num">02 / INTERPRETA</div><h3>Costruisci il diario</h3><p>Metti in ordine gli eventi e descrivi quale servizio sembra essere stato contattato. Separa ciò che vedi da ciò che ipotizzi.</p></article><article class="card"><div class="num">03 / VALUTA</div><h3>Riconosci i limiti</h3><p>Spiega cosa non puoi sapere: l'identità della persona, il successo di una richiesta, il contenuto di una sessione cifrata o l'attività svolta con certezza.</p></article></div></section>
+<section class="section" id="procedura"><h2>Procedura di indagine</h2><p class="section-intro">Segui i passaggi nell'ordine indicato. Usa la tabella di questa pagina oppure la scheda scaricabile per registrare le osservazioni.</p><div class="steps"><div class="step"><div><h3>Scarica e apri il PCAP</h3><p>Scarica il file dalla sezione Materiali e aprilo con Wireshark. La cattura è sintetica e usa nomi e indirizzi fittizi.</p></div></div><div class="step"><div><h3>Imposta l'orario leggibile</h3><p>La traccia è datata 14 ottobre 2026; gli orari sono pensati come ora italiana (CEST). Se necessario, seleziona <b>View → Time Display Format → Date and Time of Day</b>. La colonna Time può essere relativa all'inizio della cattura.</p></div></div><div class="step"><div><h3>Filtra DNS e HTTP</h3><p>Individua i nomi richiesti e le richieste HTTP. Espandi i dettagli del pacchetto e registra Host e Request URI quando disponibili.</p></div></div><div class="step"><div><h3>Esamina le connessioni TCP/443</h3><p>Confronta destinazioni e tempi. Se Wireshark riconosce il ClientHello, verifica l'eventuale SNI; non interpretare la porta 443 come prova sufficiente di una sessione HTTPS completa.</p></div></div><div class="step"><div><h3>Compila il diario e valuta le deduzioni</h3><p>Per ogni fascia oraria scrivi la traccia osservata, il servizio/endpoint, la deduzione possibile e ciò che non puoi concludere. Concludi spiegando la differenza tra metadati e contenuto.</p></div></div></div></section>
+<section class="section" id="filtri"><h2>Filtri da usare in Wireshark</h2><p class="section-intro">Inserisci un filtro nella barra Display Filter e premi Invio. Se un filtro non viene riconosciuto dalla tua versione, usa quello alternativo indicato.</p><div class="filterlist"><div class="filter"><code>dns</code><p>Richieste e risposte DNS: osserva il nome richiesto e il momento.</p></div><div class="filter"><code>http.request</code><p>Richieste HTTP in chiaro; espandi Hypertext Transfer Protocol per Host e Request URI.</p></div><div class="filter"><code>tcp.port == 443</code><p>Pacchetti TCP che usano la porta 443. La porta da sola non dimostra il contenuto applicativo.</p></div><div class="filter"><code>tls.handshake.extensions_server_name</code><p>Prova a visualizzare i ClientHello riconosciuti e il nome server (SNI). In alternativa usa <code>tcp.port == 443</code>.</p></div><div class="filter"><code>ip.addr == 192.0.2.17</code><p>Mostra il traffico associato al dispositivo sotto indagine, se il filtro corrisponde alla cattura.</p></div><div class="filter"><code>tcp</code><p>Mostra il traffico TCP. Utile per esaminare porte, pacchetti e conversazioni.</p></div></div><div class="note" style="margin-top:16px"><b>Statistiche utili:</b> apri <b>Statistics → Conversations → TCP</b> e confronta indirizzi, porte, pacchetti, byte e durata. La durata rispecchia soltanto i pacchetti presenti nella cattura.</div></section>
+<section class="section" id="tabella">
+<h2>Il diario: compila online</h2>
+<p class="section-intro">Inserisci le osservazioni ricavate direttamente da Wireshark. Per ogni evento indica l'ora o il numero del pacchetto, il dato verificato, una deduzione prudente e ciò che non puoi concludere. Puoi compilare anche solo gli eventi che hai trovato.</p>
+<div class="note"><b>Regola dell'indagine:</b> non inserire una supposizione nella colonna “Dato osservato”. Se un'informazione non compare nella cattura, scrivi “non verificabile”.</div>
+<form id="metadataForm" class="formpanel">
+  <div class="formgrid">
+    <div class="field"><label for="studentName">Nome o codice studente (facoltativo)</label><input id="studentName" name="studentName" autocomplete="off" placeholder="Es. gruppo 3"></div>
+    <div class="field"><label for="dateWork">Data dell'attività</label><input id="dateWork" name="dateWork" type="date"></div>
+  </div>
+  <div id="eventFields">
+<fieldset class="eventform"><legend class="small">Evento 1</legend><div class="formgrid">
+<div class="field"><label for="time1">Ora / pacchetto</label><input id="time1" name="time1" placeholder="Es. timestamp o n. pacchetto"></div>
+<div class="field"><label for="obs1">Dato osservato (prova Wireshark)</label><textarea id="obs1" name="obs1" placeholder="Scrivi il campo o il valore effettivamente osservato"></textarea></div>
+<div class="field"><label for="ded1">Possibile deduzione</label><textarea id="ded1" name="ded1" placeholder="Che cosa potrebbe suggerire?"></textarea></div>
+<div class="field"><label for="lim1">Limite: cosa non posso concludere?</label><textarea id="lim1" name="lim1" placeholder="Quale conclusione sarebbe eccessiva?"></textarea></div>
+</div></fieldset><fieldset class="eventform"><legend class="small">Evento 2</legend><div class="formgrid">
+<div class="field"><label for="time2">Ora / pacchetto</label><input id="time2" name="time2" placeholder="Es. timestamp o n. pacchetto"></div>
+<div class="field"><label for="obs2">Dato osservato (prova Wireshark)</label><textarea id="obs2" name="obs2" placeholder="Scrivi il campo o il valore effettivamente osservato"></textarea></div>
+<div class="field"><label for="ded2">Possibile deduzione</label><textarea id="ded2" name="ded2" placeholder="Che cosa potrebbe suggerire?"></textarea></div>
+<div class="field"><label for="lim2">Limite: cosa non posso concludere?</label><textarea id="lim2" name="lim2" placeholder="Quale conclusione sarebbe eccessiva?"></textarea></div>
+</div></fieldset><fieldset class="eventform"><legend class="small">Evento 3</legend><div class="formgrid">
+<div class="field"><label for="time3">Ora / pacchetto</label><input id="time3" name="time3" placeholder="Es. timestamp o n. pacchetto"></div>
+<div class="field"><label for="obs3">Dato osservato (prova Wireshark)</label><textarea id="obs3" name="obs3" placeholder="Scrivi il campo o il valore effettivamente osservato"></textarea></div>
+<div class="field"><label for="ded3">Possibile deduzione</label><textarea id="ded3" name="ded3" placeholder="Che cosa potrebbe suggerire?"></textarea></div>
+<div class="field"><label for="lim3">Limite: cosa non posso concludere?</label><textarea id="lim3" name="lim3" placeholder="Quale conclusione sarebbe eccessiva?"></textarea></div>
+</div></fieldset><fieldset class="eventform"><legend class="small">Evento 4</legend><div class="formgrid">
+<div class="field"><label for="time4">Ora / pacchetto</label><input id="time4" name="time4" placeholder="Es. timestamp o n. pacchetto"></div>
+<div class="field"><label for="obs4">Dato osservato (prova Wireshark)</label><textarea id="obs4" name="obs4" placeholder="Scrivi il campo o il valore effettivamente osservato"></textarea></div>
+<div class="field"><label for="ded4">Possibile deduzione</label><textarea id="ded4" name="ded4" placeholder="Che cosa potrebbe suggerire?"></textarea></div>
+<div class="field"><label for="lim4">Limite: cosa non posso concludere?</label><textarea id="lim4" name="lim4" placeholder="Quale conclusione sarebbe eccessiva?"></textarea></div>
+</div></fieldset><fieldset class="eventform"><legend class="small">Evento 5</legend><div class="formgrid">
+<div class="field"><label for="time5">Ora / pacchetto</label><input id="time5" name="time5" placeholder="Es. timestamp o n. pacchetto"></div>
+<div class="field"><label for="obs5">Dato osservato (prova Wireshark)</label><textarea id="obs5" name="obs5" placeholder="Scrivi il campo o il valore effettivamente osservato"></textarea></div>
+<div class="field"><label for="ded5">Possibile deduzione</label><textarea id="ded5" name="ded5" placeholder="Che cosa potrebbe suggerire?"></textarea></div>
+<div class="field"><label for="lim5">Limite: cosa non posso concludere?</label><textarea id="lim5" name="lim5" placeholder="Quale conclusione sarebbe eccessiva?"></textarea></div>
+</div></fieldset><fieldset class="eventform"><legend class="small">Evento 6</legend><div class="formgrid">
+<div class="field"><label for="time6">Ora / pacchetto</label><input id="time6" name="time6" placeholder="Es. timestamp o n. pacchetto"></div>
+<div class="field"><label for="obs6">Dato osservato (prova Wireshark)</label><textarea id="obs6" name="obs6" placeholder="Scrivi il campo o il valore effettivamente osservato"></textarea></div>
+<div class="field"><label for="ded6">Possibile deduzione</label><textarea id="ded6" name="ded6" placeholder="Che cosa potrebbe suggerire?"></textarea></div>
+<div class="field"><label for="lim6">Limite: cosa non posso concludere?</label><textarea id="lim6" name="lim6" placeholder="Quale conclusione sarebbe eccessiva?"></textarea></div>
+</div></fieldset><fieldset class="eventform"><legend class="small">Evento 7</legend><div class="formgrid">
+<div class="field"><label for="time7">Ora / pacchetto</label><input id="time7" name="time7" placeholder="Es. timestamp o n. pacchetto"></div>
+<div class="field"><label for="obs7">Dato osservato (prova Wireshark)</label><textarea id="obs7" name="obs7" placeholder="Scrivi il campo o il valore effettivamente osservato"></textarea></div>
+<div class="field"><label for="ded7">Possibile deduzione</label><textarea id="ded7" name="ded7" placeholder="Che cosa potrebbe suggerire?"></textarea></div>
+<div class="field"><label for="lim7">Limite: cosa non posso concludere?</label><textarea id="lim7" name="lim7" placeholder="Quale conclusione sarebbe eccessiva?"></textarea></div>
+</div></fieldset><fieldset class="eventform"><legend class="small">Evento 8</legend><div class="formgrid">
+<div class="field"><label for="time8">Ora / pacchetto</label><input id="time8" name="time8" placeholder="Es. timestamp o n. pacchetto"></div>
+<div class="field"><label for="obs8">Dato osservato (prova Wireshark)</label><textarea id="obs8" name="obs8" placeholder="Scrivi il campo o il valore effettivamente osservato"></textarea></div>
+<div class="field"><label for="ded8">Possibile deduzione</label><textarea id="ded8" name="ded8" placeholder="Che cosa potrebbe suggerire?"></textarea></div>
+<div class="field"><label for="lim8">Limite: cosa non posso concludere?</label><textarea id="lim8" name="lim8" placeholder="Quale conclusione sarebbe eccessiva?"></textarea></div>
+</div></fieldset></div>
+<div class="field"><label for="finalReflection">Conclusione personale</label><textarea id="finalReflection" name="finalReflection" placeholder="Che cosa hai capito sul rapporto tra metadati, contenuto e privacy?"></textarea></div>
+<div class="formactions"><button class="btn primary" type="button" id="saveBtn">Salva su questo dispositivo</button><button class="btn" type="button" id="exportBtn">Esporta la scheda in CSV</button><button class="btn" type="button" id="clearBtn">Svuota la scheda</button></div>
+<p class="small">La compilazione viene salvata soltanto nel browser di questo dispositivo; non viene inviata al docente o al sito. Se usi un computer condiviso, esporta il CSV e poi cancella la scheda.</p>
+<div id="formStatus" class="status" role="status" aria-live="polite"></div>
+</form>
+
+<div class="formpanel">
+<h3>Confronta con la soluzione</h3>
+<p>Quando hai completato l'analisi, puoi chiedere la password al docente. La soluzione propone un'interpretazione ragionata della traccia: confrontala con le prove che hai raccolto, non limitarti a copiare le risposte.</p>
+<div class="lockbox">
+<div class="field"><label for="solutionPassword">Password comunicata dal docente</label><input id="solutionPassword" type="password" autocomplete="off" placeholder="Inserisci la password"></div>
+<button class="btn primary" type="button" id="compareBtn">Confronta con la soluzione</button>
+<button class="btn" type="button" id="hideSolutionBtn">Nascondi soluzione</button>
+</div>
+<div id="passwordStatus" class="status" role="status" aria-live="polite"></div>
+<div id="solutionBox" class="solutionbox" aria-live="polite">
+<h3>Soluzione orientativa — da confrontare con le prove</h3>
+<p><b>Attenzione:</b> gli orari sono quelli visualizzati nella traccia sintetica. La deduzione deve restare prudente: i domini e i contenuti sono fittizi e non descrivono una persona reale.</p>
+<table><thead><tr><th>Ora indicativa</th><th>Prova nel PCAP</th><th>Deduzione ragionevole</th><th>Limite</th></tr></thead><tbody>
+<tr><td>07:45</td><td>Pacchetti 1–2: query DNS <code>mobilita.lab.test</code>; pacchetto 6: HTTP <code>GET /linea/12?da=stazione&amp;verso=scuola</code>, Host <code>mobilita.lab.test</code>; pacchetto 7: risposta HTTP 200.</td><td>Il dispositivo ha richiesto il nome e poi ha inviato una richiesta HTTP a un endpoint che, dal nome e dai parametri, sembra riguardare una linea e un tragitto.</td><td>Non prova che una persona abbia compiuto quel tragitto, né che abbia letto o seguito la risposta. È un esempio inventato.</td></tr>
+<tr><td>08:10</td><td>Pacchetti 10–11: DNS <code>aula.lab.test</code>; pacchetto 15: <code>GET /agenda/oggi</code>; pacchetto 16: risposta HTTP 200.</td><td>È stata richiesta una risorsa chiamata “agenda/oggi” su un servizio fittizio chiamato “aula”.</td><td>Il nome suggerisce un'agenda, ma non dimostra quale attività scolastica sia avvenuta né chi stesse usando il dispositivo.</td></tr>
+<tr><td>13:20 e 13:24</td><td>Pacchetti 19–25 e 26–32: query DNS per <code>chat.lab.test</code> e due connessioni TCP verso <code>198.51.100.30:443</code>; ClientHello dimostrativi includono il nome server.</td><td>Il dispositivo ha tentato connessioni ripetute verso un servizio con nome “chat”. La ripetizione a pochi minuti di distanza è un metadato temporale.</td><td>Il flusso TLS è solo dimostrativo e incompleto: non dimostra una sessione HTTPS completa, un accesso riuscito o l'invio di messaggi reali.</td></tr>
+<tr><td>13:28</td><td>Pacchetti 33–39: DNS <code>media.lab.test</code> e connessione TCP verso <code>198.51.100.50:443</code>, con ClientHello dimostrativo.</td><td>Il dispositivo ha richiesto un nome e avviato una connessione verso una destinazione associata nel nome a un servizio media.</td><td>Non si può affermare che sia stato riprodotto un video o ascoltato audio: il nome è fittizio e non c'è prova di una riproduzione.</td></tr>
+<tr><td>17:30</td><td>Pacchetti 42–43: DNS <code>orientamento.lab.test</code>; pacchetto 47: <code>GET /annunci/stage-reti</code>; pacchetto 48: risposta HTTP 200.</td><td>La richiesta HTTP punta a una risorsa il cui percorso sembra riferirsi ad annunci di stage in ambito reti.</td><td>Non prova che l'utente abbia fatto domanda o abbia letto l'annuncio. La risposta 200 indica una risposta HTTP, non l'interpretazione umana del contenuto.</td></tr>
+<tr><td>21:15</td><td>Pacchetti 51–57: DNS <code>media.lab.test</code> e connessione verso <code>198.51.100.50:443</code>. Pacchetti 58–60 mostrano traffico successivo sulla stessa coppia di endpoint/porta.</td><td>Il servizio chiamato “media” compare nuovamente la sera; il traffico successivo mostra pacchetti associati alla connessione.</td><td>Non è corretto affermare che l'attività sia stata continua per tutta la fascia o che si tratti sicuramente della stessa sessione applicativa; la traccia è sintetica e i pacchetti sono costruiti a scopo didattico.</td></tr>
+</tbody></table>
+<h3>Che cosa dovrebbe emergere</h3>
+<ul>
+<li><b>Metadati:</b> orari, IP, porte, nomi DNS, frequenza e sequenza delle connessioni.</li>
+<li><b>Contenuto visibile:</b> le richieste HTTP in chiaro espongono Host e percorso URI; in questa traccia sintetica anche alcune risposte HTTP sono leggibili.</li>
+<li><b>Contenuto protetto o non ricostruibile:</b> i payload che sembrano TLS non consentono di leggere messaggi applicativi; in questo PCAP la parte TLS è soltanto dimostrativa, non una sessione completa.</li>
+<li><b>Principio chiave:</b> i metadati possono suggerire abitudini o interessi, ma non identificano da soli una persona e non giustificano conclusioni certe sulle sue azioni.</li>
+</ul>
+</div>
+</div>
+</section>
+<section class="section" id="materiali"><h2>Materiali per l'indagine</h2><p class="section-intro">Scarica la cattura da analizzare e la scheda da compilare. Apri il PCAP con Wireshark e usa la scheda per raccogliere le prove.</p><div class="downloads"><article class="download"><div class="fileicon">PCAP</div><div><h3>Cattura di rete</h3><p>Il file da aprire in Wireshark. Contiene comunicazioni sintetiche preparate per questo laboratorio.</p><a class="btn primary" href="materiali/laboratorio_metadati_wireshark_sincronizzato.pcap" download>Scarica il PCAP</a></div></article><article class="download"><div class="fileicon">DOCX</div><div><h3>Scheda studenti</h3><p>La scheda di lavoro con istruzioni, spazio per annotare le osservazioni e domande finali.</p><a class="btn" href="materiali/scheda_studenti_diario_metadati_wireshark.docx" download>Scarica la scheda</a></div></article></div></section>
+<section class="section" id="limiti"><h2>Prima di trarre conclusioni</h2><div class="note warning"><b>Trasparenza tecnica:</b> il PCAP è generato sinteticamente, non proviene da una cattura reale e non contiene dati personali. Gli indirizzi IP sono riservati alla documentazione e i domini <code>.lab.test</code> sono fittizi. La sequenza TLS è parziale e dimostrativa, non una sessione HTTPS completa. Usala per discutere quali metadati possono essere esposti, non come prova completa del funzionamento di TLS.</div><p class="section-intro" style="margin-top:18px">Un nome DNS non prova che una pagina sia stata aperta con successo; una richiesta HTTP non prova che la risposta sia stata letta; un indirizzo IP non identifica da solo una persona; pacchetti agli estremi di un intervallo non provano un'attività ininterrotta.</p><h3>Domande per la discussione finale</h3><ol><li>Quali informazioni siamo riusciti a ricavare senza leggere il contenuto delle comunicazioni?</li><li>Quali deduzioni erano ragionevoli e quali erano soltanto supposizioni?</li><li>Che differenza c'è tra le informazioni HTTP visibili in chiaro e i payload associati alle sessioni TCP/443?</li><li>Perché più metadati, combinati tra loro, possono essere più rivelatori di un singolo dato?</li></ol></section>
+</main>
+<footer class="footer"><div class="wrap"><div class="brand">Atlante della Rete</div><p>Laboratorio didattico di Sistemi e Reti · Il diario nascosto della rete</p><p class="small">Laboratorio per studenti · I materiali scaricabili sono disponibili nella cartella <code>materiali/</code>.</p></div></footer>
+
+<script>
+(function(){
+  const form = document.getElementById('metadataForm');
+  const status = document.getElementById('formStatus');
+  const passStatus = document.getElementById('passwordStatus');
+  const solution = document.getElementById('solutionBox');
+  const storageKey = 'atlante_diario_metadati_studenti_v1';
+  // Password usata come semplice barriera didattica. Non è un controllo di sicurezza:
+  // un segreto inserito in una pagina HTML client-side può essere scoperto dal sorgente.
+  const classroomPassword = 'metadati_snowden';
+
+  function collect(){
+    const data = {};
+    form.querySelectorAll('input, textarea, select').forEach(el => { data[el.name || el.id] = el.value; });
+    return data;
+  }
+  function apply(data){
+    form.querySelectorAll('input, textarea, select').forEach(el => {
+      const key = el.name || el.id;
+      if (Object.prototype.hasOwnProperty.call(data,key)) el.value = data[key];
+    });
+  }
+  document.getElementById('saveBtn').addEventListener('click',()=>{
+    try {
+      localStorage.setItem(storageKey, JSON.stringify(collect()));
+      status.textContent = 'Scheda salvata in questo browser.';
+    } catch(e) {
+      status.textContent = 'Salvataggio non disponibile in questo browser. Usa “Esporta la scheda in CSV”.';
+    }
+  });
+  try {
+    const saved = localStorage.getItem(storageKey);
+    if(saved) { apply(JSON.parse(saved)); status.textContent = 'È stata recuperata una compilazione salvata in questo browser.'; }
+  } catch(e) {}
+  document.getElementById('clearBtn').addEventListener('click',()=>{
+    if(!confirm('Vuoi svuotare tutti i campi della scheda?')) return;
+    form.reset();
+    try { localStorage.removeItem(storageKey); } catch(e) {}
+    status.textContent = 'Scheda svuotata.';
+  });
+  document.getElementById('exportBtn').addEventListener('click',()=>{
+    const data=collect();
+    const rows=[['Campo','Risposta']];
+    Object.entries(data).forEach(([k,v])=>rows.push([k,v]));
+    const csv=rows.map(row=>row.map(v=>'"'+String(v ?? '').replace(/"/g,'""')+'"').join(';')).join('\r\n');
+    const blob=new Blob(['\\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a'); a.href=url; a.download='diario_metadati_compilato.csv';
+    document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    status.textContent = 'CSV esportato. Puoi consegnarlo secondo le indicazioni del docente.';
+  });
+  document.getElementById('compareBtn').addEventListener('click',()=>{
+    const entered=document.getElementById('solutionPassword').value;
+    if(entered===classroomPassword){
+      solution.classList.add('visible');
+      passStatus.textContent='Password corretta. La soluzione è visibile qui sotto.';
+      solution.scrollIntoView({behavior:'smooth',block:'start'});
+    } else {
+      solution.classList.remove('visible');
+      passStatus.textContent='Password non corretta. Chiedi al docente la password.';
+    }
+  });
+  document.getElementById('hideSolutionBtn').addEventListener('click',()=>{
+    solution.classList.remove('visible');
+    document.getElementById('solutionPassword').value='';
+    passStatus.textContent='Soluzione nascosta.';
+  });
+})();
+</script>
+
+</body>
+</html>
