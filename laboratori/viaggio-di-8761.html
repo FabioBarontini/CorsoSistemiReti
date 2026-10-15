@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Il viaggio di 8761</title>
+<title>Il viaggio di 8761 · Atlante immersivo</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Martian+Mono:wght@400;600;800&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;600&display=swap">
@@ -56,7 +56,7 @@ button{font:600 .82rem var(--mono);color:var(--ink);background:var(--paper);bord
 button:hover:not(:disabled){border-color:var(--role)}
 button:disabled{opacity:.45;cursor:not-allowed}
 button:focus-visible,input:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid var(--role);outline-offset:2px}
-.layout{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:32px;padding-block:28px 64px;align-items:start}
+.layout{display:grid;grid-template-columns:310px minmax(0,1fr);gap:32px;padding-block:28px 64px;align-items:start}
 @media (max-width:920px){.layout{grid-template-columns:minmax(0,1fr)}}
 main{min-width:0}
 .meta{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
@@ -122,6 +122,9 @@ aside{position:sticky;top:16px;display:grid;gap:14px;min-width:0}
 .prog{font:600 .85rem var(--mono);margin:0 0 8px}
 .parts{display:grid;gap:6px}
 .parts button{text-align:left}
+.parts button:disabled{opacity:.42;cursor:not-allowed;border-style:dashed;color:var(--muted,#8a929d);background:rgba(255,255,255,.025)}
+.parts button:disabled::after{content:" · non ancora raggiunta";font-size:.78em;opacity:.9}
+.parts button:not(:disabled){cursor:pointer}
 details.panel summary{cursor:pointer;font:800 .74rem var(--display);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 /* widgets */
 .hdr{font:400 .82rem var(--mono);min-width:520px}
@@ -159,7 +162,6 @@ details.panel summary{cursor:pointer;font:800 .74rem var(--display);letter-spaci
 svg text{font-family:var(--mono)}
 @media (prefers-reduced-motion: no-preference){.story,.widget,.choices,.puzzle{animation:in .35s ease-out both}@keyframes in{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:none}}}
 </style>
-<link href="../assets/atlas.css" rel="stylesheet">
 <style>
 /* Integrazione con il tema dell'Atlante della Rete */
 :root{--bg:#070a0b;--surface:#0d1114;--paper:#0d1114;--sunk:#151c1d;--line:rgba(201,163,107,.28);--fg:#e9e5db;--ink:#e9e5db;--muted:#a7adb0;--cable:#8bbac3;--cable-soft:#15272a;--packet:#c9a36b;--packet-ink:#15110a;--ok:#a9cdb8;--ok-soft:#15251e;--bad:#d07b72;--bad-soft:#2b1716;--orange:#d99b66;--blue:#8bbac3;--blue-soft:#172528;--green:#a9cdb8;--green-soft:#15251e;--amber:#c9a36b;--amber-soft:#292216;--magenta:#d4a0c4;--magenta-soft:#291a26}
@@ -170,15 +172,88 @@ body{margin:0!important;background:radial-gradient(circle at 50% 0,#151b1c 0,#09
 .nav.atlas-global-nav a:hover,.nav.atlas-global-nav summary:hover{color:#c9a36b}
 .nav-group{position:relative}.nav-menu{position:absolute;top:100%;left:0;min-width:210px;padding:10px;background:#0d1114;border:1px solid rgba(201,163,107,.3);display:grid;gap:10px}
 @media(max-width:760px){.nav.atlas-global-nav{gap:10px}.nav-menu{position:static}}
-</style></head><body><nav class="nav atlas-global-nav atlas-main-nav">
-<a class="brand" href="../index.html">ATLANTE DELLA RETE</a>
-<a data-nav="home" href="../index.html">HOME</a>
-<details class="nav-group"><summary>ESPLORA</summary><div class="nav-menu">
-<a href="../storia-internet.html">Storia di Internet</a><a href="../comunicazione.html">Storia della comunicazione</a><a href="../timeline.html">Timeline</a><a href="../album.html">Album</a><a href="../maps-internet.html">Mappe</a></div></details>
-<details class="nav-group"><summary>IMPARA</summary><div class="nav-menu"><a href="../lezioni.html">Lezioni</a><a href="../web-architettura.html">Architettura del Web</a></div></details>
-<details class="nav-group"><summary>LABORATORI</summary><div class="nav-menu"><a href="../laboratori.html">Tutti i laboratori</a><a href="pacchetti-in-viaggio.html">Pacchetti in viaggio</a><a href="viaggio-di-8761.html">Il viaggio di 8761</a></div></details>
-<a href="../security.html">SICUREZZA</a><a href="../biblioteca.html">STORIE</a><details class="nav-group"><summary>STRUMENTI</summary><div class="nav-menu"><a href="../percorsi.html">Percorsi</a><a href="../search.html">Cerca</a></div></details><a href="../studio.html">IL MIO ATLANTE</a>
-</nav>
+</style>
+<style id="atlante-layout-fix">
+/* Correzione layout: la storia deve occupare tutta la larghezza disponibile. */
+html,body{width:100%;min-width:0;overflow-x:hidden}
+.wrap.layout{
+  display:grid!important;
+  width:100%!important;max-width:none!important;
+  margin:0!important;padding:0!important;
+  box-sizing:border-box;
+  grid-template-columns:minmax(290px,25vw) minmax(0,1fr)!important;
+  grid-template-areas:"sidebar content";
+  gap:0!important;align-items:stretch!important;
+}
+.wrap.layout > aside{grid-area:sidebar;min-width:0;box-sizing:border-box;padding:24px clamp(16px,2vw,32px)!important}
+.wrap.layout > #main{grid-area:content;width:100%;min-width:0;box-sizing:border-box;padding:clamp(28px,5vw,76px)!important}
+#main .story{max-width:72ch;font-size:clamp(1.08rem,1.3vw,1.3rem);line-height:1.78}
+#main .choices{
+  width:min(100%,980px);box-sizing:border-box;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:14px!important;padding:22px!important;
+}
+#main .choices:before{font-size:.76rem;color:#71440d;letter-spacing:.14em}
+#main .choice{
+  display:grid!important;grid-template-columns:42px minmax(0,1fr)!important;
+  align-items:start!important;gap:14px!important;
+  width:100%;min-width:0;min-height:112px;box-sizing:border-box;
+  padding:18px!important;border:1px solid #c9b79b!important;
+  border-radius:13px!important;background:#fffdf8!important;
+  color:#172b43!important;opacity:1!important;
+  font:600 1.08rem/1.55 system-ui,-apple-system,"Segoe UI",sans-serif!important;
+  text-align:left!important;text-shadow:none!important;
+}
+#main .choice *{opacity:1!important;text-shadow:none!important}
+#main .choice .k{
+  display:grid!important;place-items:center!important;
+  width:38px;height:38px;box-sizing:border-box;
+  border-radius:50%;background:#12395d!important;color:#fff!important;
+  font:800 1rem/1 system-ui,sans-serif!important;
+}
+#main .choice:hover,#main .choice:focus-visible{
+  background:#fff4d9!important;border-color:#9c681b!important;
+  color:#102640!important;box-shadow:0 8px 24px rgba(0,0,0,.16)!important;
+}
+#main .choice:focus-visible{outline:3px solid #e0a43c;outline-offset:3px}
+@media(max-width:920px){
+  .wrap.layout{grid-template-columns:minmax(0,1fr)!important;grid-template-areas:"content" "sidebar"}
+  .wrap.layout > #main{padding:28px 22px 36px!important}
+  #main .choices{grid-template-columns:minmax(0,1fr)!important;padding:15px!important}
+  .wrap.layout > aside{border-left:0!important;border-top:1px solid #d8c7a9;padding:18px!important}
+  #main .choice{min-height:0;font-size:1rem!important}
+}
+</style>
+
+<style id="atlante-story-art">
+body[data-scene]{
+  background-color:#07111e!important;
+  background-image:linear-gradient(90deg,rgba(4,10,20,.90) 0%,rgba(4,10,20,.72) 48%,rgba(4,10,20,.56) 100%),url("../assets/8761/scene-origin.webp")!important;
+  background-size:cover!important;background-position:center!important;background-attachment:fixed!important;
+}
+body[data-scene="dns"]{
+  background-image:linear-gradient(90deg,rgba(4,10,20,.92) 0%,rgba(4,10,20,.74) 48%,rgba(4,10,20,.52) 100%),url("../assets/8761/scene-dns.webp")!important;
+}
+body[data-scene="lan"]{
+  background-image:linear-gradient(90deg,rgba(4,10,20,.92) 0%,rgba(4,10,20,.72) 48%,rgba(4,10,20,.48) 100%),url("../assets/8761/scene-network.webp")!important;
+}
+body[data-scene="wan"]{
+  background-image:linear-gradient(90deg,rgba(4,10,20,.92) 0%,rgba(4,10,20,.72) 48%,rgba(4,10,20,.48) 100%),url("../assets/8761/scene-network.webp")!important;
+  background-position:center right!important;
+}
+#main .story{
+  background:rgba(5,13,25,.66);border:1px solid rgba(169,205,236,.15);
+  border-radius:12px;padding:clamp(16px,2vw,26px);box-shadow:0 14px 36px rgba(0,0,0,.15);
+}
+#main .widget,#main .learn,#main .puzzle{backdrop-filter:blur(5px)}
+#main .choices{background:#fffaf1!important;border:1px solid #dfc9a6!important;border-radius:16px!important;box-shadow:0 18px 45px rgba(0,0,0,.28)!important}
+#main .choice{cursor:pointer;transition:transform .16s ease,box-shadow .16s ease,background .16s ease}
+#main .choice:hover{transform:translateY(-2px)}
+#main .choice:focus-visible{outline:3px solid #e7a93e;outline-offset:3px}
+@media(max-width:920px){body[data-scene]{background-attachment:scroll!important;background-position:center top!important}#main .story{background:rgba(5,13,25,.82)}}
+@media(prefers-reduced-motion:reduce){#main .choice{transition:none}}
+</style>
+</head><body>
 
 <header class="top"><div class="wrap">
   <div class="logo">IL VIAGGIO DI <b>8761</b></div>
@@ -189,15 +264,19 @@ body{margin:0!important;background:radial-gradient(circle at 50% 0,#151b1c 0,#09
 </div></header>
 
 <div class="wrap layout">
-  <main id="main" aria-live="polite"></main>
   <aside>
+    <div class="panel">
+      <h2>Le tappe del viaggio</h2>
+      <p class="prog">Puoi esplorare le tappe già incontrate e orientarti nel percorso.</p>
+      <div class="parts" id="parts" style="margin-top:10px"></div>
+    </div>
     <div class="panel" id="p-state"></div>
     <div class="panel"><h2>Il tuo percorso</h2><div class="trail" id="trail"></div></div>
     <div class="panel"><h2>Concetti raccolti</h2><p class="prog" id="c-prog"></p><ul class="clist" id="c-list"></ul></div>
     <div class="panel"><h2>Trofei</h2><p class="prog" id="t-prog"></p><ul class="clist" id="t-list"></ul></div>
     <div class="panel"><h2>Finali scoperti</h2><p class="prog" id="e-prog"></p><ul class="clist" id="e-list"></ul></div>
-    <details class="panel"><summary>Capitoli (per il docente)</summary><div class="parts" id="parts" style="margin-top:10px"></div></details>
   </aside>
+  <main id="main" aria-live="polite"></main>
 </div>
 
 <script>
@@ -205,6 +284,15 @@ body{margin:0!important;background:radial-gradient(circle at 50% 0,#151b1c 0,#09
 "use strict";
 /* ===================== CONCETTI ===================== */
 const C={
+ osi:["Modello OSI","Una mappa in sette livelli che aiuta a distinguere le funzioni coinvolte nella comunicazione in rete."],
+ tcpip:["Modello TCP/IP","La mappa usata per descrivere le funzioni della comunicazione su Internet, raggruppate in meno livelli rispetto a OSI."],
+ encap:["Incapsulamento","Ogni livello aggiunge le informazioni necessarie al proprio compito, come etichette messe una dopo l'altra attorno ai dati."],
+ mac:["Indirizzo MAC","L'indirizzo usato per consegnare un frame sul collegamento locale, verso il dispositivo successivo."],
+ arp:["ARP","Protocollo della rete locale che permette di scoprire quale indirizzo MAC corrisponde a un indirizzo IPv4 vicino."],
+ gateway:["Gateway predefinito","Il router a cui un dispositivo consegna i dati quando la destinazione si trova fuori dalla rete locale."],
+ lan:["LAN","La rete locale che collega dispositivi vicini, per esempio quelli connessi allo stesso Wi-Fi o switch."],
+ router:["Router","Dispositivo che collega reti diverse e inoltra i pacchetti IP verso la rete successiva."],
+ switch:["Switch","Dispositivo che inoltra i frame nella rete locale usando gli indirizzi MAC."],
  dns:["DNS","Il sistema che traduce un nome come www.istituto-esempio.it nell'indirizzo IP del server."],
  resolver:["Resolver","Il server DNS che fa le domande al posto tuo, partendo dai server radice, e ricorda le risposte nella sua cache."],
  dnsttl:["TTL del DNS","Per quanti secondi una risposta DNS può restare in cache. Stesso nome del TTL di IP, ma tutt'altra cosa."],
@@ -212,16 +300,16 @@ const C={
  mtu:["MTU","Maximum Transmission Unit: la dimensione massima di un pacchetto su un collegamento. Su Ethernet e Wi-Fi è di solito 1500 byte."],
  mss:["MSS","Maximum Segment Size: quanti byte di dati porta al massimo un segmento TCP. Con MTU 1500 è di solito 1460."],
  seq:["Numero di sequenza","La posizione del primo byte del segmento nel flusso di dati. TCP conta i byte, non i segmenti."],
- port:["Porta","Numero che indica a quale programma consegnare i dati. 443 è la porta dei server web con HTTPS, 53 quella del DNS."],
- hs:["Three-way handshake","La stretta di mano in tre messaggi (SYN, SYN-ACK, ACK) con cui due computer aprono una connessione TCP."],
- sbuf:["Buffer di invio","Il mittente conserva una copia di ogni segmento finché non riceve l'ACK. Per questo un pacchetto perso si può rispedire."],
- hdr:["Intestazione","La parte iniziale di un pacchetto con le informazioni per gestirlo: indirizzi, porte, numeri di sequenza, controlli."],
- ttl:["TTL","Time To Live: contatore nell'intestazione IP che ogni router diminuisce di 1. A zero il pacchetto viene scartato."],
+ port:["Porta","Un numero che aiuta il computer a consegnare i dati al programma giusto. È come il numero di un ufficio dentro un edificio."],
+ hs:["La stretta di mano","Prima di scambiarsi dati, due computer si mandano tre brevi messaggi per controllare che il collegamento funzioni. I tecnici li chiamano SYN, SYN-ACK e ACK."],
+ sbuf:["Copia di sicurezza","Il telefono conserva una copia dei dati spediti finché il server non conferma di averli ricevuti. Se qualcosa si perde, può riprovare."],
+ hdr:["Intestazione","Le informazioni aggiunte davanti ai dati, un po’ come l’indirizzo e le indicazioni scritte su una busta."],
+ ttl:["TTL","Un contatore che i router abbassano a ogni passaggio. Se arriva a zero, il pacchetto viene fermato: così non gira per sempre."],
  csma:["CSMA/CA","Regola del Wi-Fi: prima di trasmettere si ascolta il canale e, se è occupato, si aspetta un tempo casuale."],
  crc:["CRC e checksum","Codici di controllo calcolati sui bit trasmessi. Se all'arrivo il calcolo non torna, il pacchetto viene scartato."],
  l2re:["Ritrasmissione Wi-Fi","Nel Wi-Fi ogni frame ricevuto bene viene confermato subito; se la conferma non arriva, il frame viene rispedito."],
- nat:["NAT","Il router di casa sostituisce l'indirizzo IP privato dei dispositivi con il proprio indirizzo pubblico e ricorda a chi riconsegnare le risposte."],
- rt:["Tabella di instradamento","L'elenco con cui un router decide, per ogni destinazione, a quale router vicino inoltrare un pacchetto."],
+ nat:["NAT","Spesso il router cambia l’indirizzo privato del dispositivo con il suo indirizzo pubblico e tiene un promemoria per riportare indietro le risposte."],
+ rt:["Tabella di instradamento","Una specie di mappa che aiuta il router a scegliere il prossimo collegamento per avvicinarsi alla destinazione."],
  indep:["Instradamento indipendente","Ogni pacchetto viene instradato da solo: pacchetti dello stesso messaggio possono prendere strade diverse."],
  queue:["Coda del router","La memoria in cui un router tiene i pacchetti in attesa di uscire. Più è piena, più aumenta il ritardo."],
  drop:["Drop-tail","Quando la coda di un router è piena, i pacchetti in arrivo vengono scartati, senza avvisare nessuno."],
@@ -301,7 +389,8 @@ ch:[["Comincia. Ma un momento: dove si trova, esattamente, il server della scuol
 
 /* ---------- CAPITOLO 0: DNS ---------- */
 d0:{part:"0 · Come si chiama il server?",role:"dns",title:"Una domanda di 40 byte",pos:"telefono di Giulia",
-body:`<p>Prima di te, prima ancora della foto, il telefono ha un problema: l'app conosce il nome del sito, <strong>www.istituto-esempio.it</strong>, ma i router non sanno che farsene dei nomi. Lavorano solo con gli indirizzi IP.</p>
+body:`<p>Il pulsante <em>Invia</em> è appena scomparso sotto il pollice di Giulia. La foto non si è ancora mossa: prima il telefono deve trovare la strada giusta per raggiungere la scuola.</p>
+<p>Prima di te, prima ancora della foto, il telefono ha un problema: l'app conosce il nome del sito, <strong>www.istituto-esempio.it</strong>, ma i router non sanno che farsene dei nomi. Lavorano solo con gli indirizzi IP.</p>
 <p>Per il momento sei un'altra cosa: una minuscola <strong>domanda DNS</strong>, quaranta byte in tutto, che chiede «qual è l'indirizzo IP di www.istituto-esempio.it?». Viaggi con UDP verso la porta 53: niente strette di mano, niente conferme. Si chiede e si spera.</p>
 <p>A chi vai a chiedere?</p>`,
 learn:["dns","port"],
@@ -312,11 +401,13 @@ ${D("Marco","«Giulia? Allora? Sono le 17:59.»")}
 <p>Gli indirizzi IP non si indovinano: ognuno identifica un solo dispositivo nella rete. Serve qualcuno che conosca davvero la risposta.</p>`,
 end:"guess",back:"d0"},
 d0b:{part:"0 · Come si chiama il server?",role:"dns",title:"Il centralino di Internet",pos:"verso un server radice",err:true,
-body:`<p>I server radice esistono davvero: sono tredici «nomi», da a.root-servers.net a m.root-servers.net, distribuiti in centinaia di copie in tutto il mondo. Ma non sanno l'indirizzo della tua scuola. Sanno soltanto a chi chiedere per i domini <strong>.it</strong>.</p>
+body:`<p>Ti ritrovi davanti a una fila di server che sembrano porte illuminate in una città notturna. La tentazione è bussare alla più grande, ma persino il centralino più importante non conosce ogni indirizzo: sa chi può saperlo.</p>
+<p>I server radice esistono davvero: sono tredici «nomi», da a.root-servers.net a m.root-servers.net, distribuiti in centinaia di copie in tutto il mondo. Ma non sanno l'indirizzo della tua scuola. Sanno soltanto a chi chiedere per i domini <strong>.it</strong>.</p>
 <p>E poi, se ogni telefono del pianeta chiedesse direttamente a loro, verrebbero sommersi. Per questo i telefoni chiedono a un intermediario, il <strong>resolver</strong>, che fa il giro delle domande e si ricorda le risposte.</p>`,
 ch:[["Torna alla scelta","d0"]]},
 d1:{part:"0 · Come si chiama il server?",role:"dns",title:"Il giro delle domande",pos:"resolver DNS",
-body:`<p>Il resolver dell'operatore portoghese ti legge e guarda nella sua memoria, la <strong>cache</strong>: niente. Nessuno a Lisbona ha cercato la tua scuola nell'ultima ora. Dovrà fare il giro delle domande, in un ordine preciso: dal generale al particolare, leggendo il nome da destra a sinistra.</p>`,
+body:`<p>Il resolver dell'operatore portoghese ti legge e consulta la sua memoria, la <strong>cache</strong>. Niente. Per un momento sembra quasi infastidito: il nome della scuola non gli dice dove si trovi il server, e il telefono di Giulia non può aspettare che qualcuno, da qualche parte, si ricordi la risposta.</p>
+<p>Il resolver apre allora una serie di richieste. Ogni risposta gli permetterà di restringere il campo, ma nessun server possiede da solo tutta la mappa. Sullo schermo di Giulia, intanto, la barra di caricamento è ancora ferma.</p>`,
 puzzle:{type:"order",id:"tdns",q:"In che ordine il resolver interroga i server? Clicca le tappe nell'ordine giusto.",
  items:[["server di istituto-esempio.it","c"],["server radice","a"],["server del dominio .it","b"]],correct:["a","b","c"],
  hint:"si parte dalla cima della gerarchia, quella che sa chi gestisce .it.",ok:"Esatto: radice, poi .it, poi il server della scuola. La risposta è 93.62.140.20."},
@@ -327,7 +418,8 @@ ch:[["Torna alla foto","p1"]]},
 
 /* ---------- PARTE I ---------- */
 p1:{part:"I · Nato da una foto",role:"pkt",title:"Troppo grande per viaggiare",pos:"telefono di Giulia",
-body:`<p>Tre megabyte sono tre milioni di byte. Nessuna rete li farebbe viaggiare tutti insieme: un solo errore a metà strada costringerebbe a rispedire tutto, e nel frattempo quel blocco enorme occuperebbe i collegamenti impedendo agli altri di usarli. Bisogna adattare i dati alla rete, non aspettare una rete migliore.</p>
+body:`<p>La foto si apre sullo schermo e, per un istante, ti sembra enorme: il cielo, i volti, il monumento. Poi una mano invisibile comincia a dividerla in fette regolari. Il viaggio non può partire finché ogni fetta non è abbastanza piccola da passare.</p>
+<p>Tre megabyte sono tre milioni di byte. Nessuna rete li farebbe viaggiare tutti insieme: un solo errore a metà strada costringerebbe a rispedire tutto, e nel frattempo quel blocco enorme occuperebbe i collegamenti impedendo agli altri di usarli. Bisogna adattare i dati alla rete, non aspettare una rete migliore.</p>
 <p>Così, dentro il telefono di Giulia, un programma silenzioso chiamato <strong>TCP</strong> prende la foto e la affetta. Ogni fetta deve stare in un pacchetto, e sul Wi-Fi dell'hotel un pacchetto non può superare 1500 byte: è la <strong>MTU</strong> del collegamento. Venti byte vanno all'intestazione IP, venti a quella TCP. Restano <strong>1460 byte</strong> di dati: è la <strong>MSS</strong>.</p>`,
 w:()=>W.calc(`foto                 3 000 000 byte
 dati per segmento        1 460 byte (MSS)
@@ -336,41 +428,106 @@ segmenti necessari   3 000 000 / 1 460 ≈ 2 055`,"Quante fette?"),
 learn:["seg","mtu","mss"],prob:["Il file è troppo grande per viaggiare in un blocco solo","Segmentazione in 2 055 segmenti da 1 460 byte"],
 ch:[["Scopri come ti chiami","p2"]]},
 p2:{part:"I · Nato da una foto",role:"pkt",title:"Il tuo nome è un numero",pos:"telefono di Giulia",
-body:`<p>Sei la settima fetta. Ti aspetteresti di chiamarti «7». Invece TCP non numera i segmenti: numera i <strong>byte</strong>. Il tuo nome è il numero del primo byte che porti. Per semplicità, in questa storia, il conteggio parte da 1: il primo segmento porta i byte da 1 a 1460, il secondo comincia dal 1461, e così via.</p>`,
+body:`<p>Nel laboratorio immaginario dentro il telefono, qualcuno incide un numero sulla tua etichetta. Non è il numero della fetta nella fila: è il punto esatto da cui dovrai ricominciare quando arriverai dall’altra parte.</p>
+<p>Sei la settima fetta. Ti aspetteresti di chiamarti «7». Invece TCP non numera i segmenti: numera i <strong>byte</strong>. Il tuo nome è il numero del primo byte che porti. Per semplicità, in questa storia, il conteggio parte da 1: il primo segmento porta i byte da 1 a 1460, il secondo comincia dal 1461, e così via.</p>`,
 puzzle:{type:"number",id:"tseq",q:"Qual è il numero di sequenza del settimo segmento?",a:[8761],hint:"prima di te ci sono 6 segmenti da 1460 byte. Il tuo primo byte viene subito dopo.",ok:"Esatto: 6 × 1460 + 1 = 8761. Piacere, 8761."},
 body2:`<p>Ottomilasettecentosessantuno è un nome lungo. Durante il viaggio gli altri finiranno per chiamarti Sette. Il segmento prima di te è Sei, quello dopo è Otto.</p>`,
 w:()=>W.seq([[1,"ok","1"],[2,"ok","1461"],[3,"ok","2921"],[4,"ok","4381"],[5,"ok","5841"],[6,"ok","7301"],[7,"fly you","8761"],[8,"wait","10221"],[9,"wait","11681"]],{cap:"Numero di sequenza di ogni segmento"}),
 learn:["seq"],prob:["Il destinatario deve sapere in che punto del file va ogni pezzo","Un numero di sequenza che indica la posizione dei byte"],
 ch:[["Che cosa è successo prima che tu nascessi?","p3"]]},
 p3:{part:"I · Nato da una foto",role:"pkt",title:"Prima di te, una stretta di mano",pos:"telefono di Giulia",
-body:`<p>Non si spedisce una foto a qualcuno che non sa che sta arrivando. Prima di te, il telefono e il server si sono scambiati tre messaggi brevissimi: <strong>SYN</strong>, <strong>SYN-ACK</strong>, <strong>ACK</strong>. Si sono presentati e si sono accordati sui numeri di sequenza iniziali. Nella realtà sono numeri enormi e casuali; noi facciamo finta che partano da 1.</p>
-<p>Sulla tua intestazione ci sono anche due <strong>porte</strong>: 51734, il numero che il telefono ha dato all'app di Giulia, e 443, quella del server web. Le porte dicono a quale programma vanno consegnati i dati.</p>
-<p>E c'è un dettaglio che ti rassicura. Il telefono non ti dimentica appena parti: tiene una copia di te nel suo <strong>buffer di invio</strong> e la cancellerà solo quando il server avrà confermato di averti ricevuto. Se ti succede qualcosa, c'è un gemello pronto a partire.</p>`,
-w:()=>W.hand(),learn:["hs","sbuf"],
-ch:[["Fatti impacchettare","p4"]]},
-p4:{part:"I · Nato da una foto",role:"pkt",title:"Tre buste, una dentro l'altra",pos:"telefono di Giulia",ttl:64,
-body:`<p>TCP ti consegna a IP, che ti avvolge con la sua intestazione: indirizzo del telefono, indirizzo del server e un piccolo numero, il <strong>TTL</strong>, che vale 64. Ogni router che attraverserai lo diminuirà di uno. Pensalo come le tue vite: a zero, sei finito.</p>
-<p>Poi il Wi-Fi ti chiude in un <strong>frame</strong>, con gli indirizzi fisici della scheda del telefono e dell'access point dell'hotel, e un codice di controllo in coda.</p>`,
-w:()=>W.header({l2:{t:"Wi-Fi",f:[["da","scheda Wi-Fi del telefono"],["a","access point dell'hotel"],["controllo","CRC-32"]]},ip:[["IP mittente","192.168.1.23"],["IP destinatario","93.62.140.20"],["TTL","64",1]],tcp:[["porta mitt.","51734"],["porta dest.","443"],["seq","8761",1],["ack","1"],["window","65535"],["checksum","0x3f1a"]],data:"1460 byte di foto: cielo, un cappello, mezzo sorriso"}),
-learn:["hdr","ttl"],prob:["La rete non sa dove mandare i dati","Un'intestazione con indirizzo del mittente e del destinatario"],
-ch:[["Lanciati nell'aria","p5"]]},
+body:`<p>La porta del server è ancora chiusa. Prima di affidargli la foto, il telefono vuole sapere che dall’altra parte ci sia qualcuno pronto ad ascoltare e che le risposte possano tornare indietro.</p>
+<p>Prima che la foto parta, il telefono di Giulia deve controllare che il server sia pronto a ricevere i dati. È un po’ come bussare prima di entrare: il telefono manda un messaggio, il server risponde e il telefono conferma di averlo sentito.</p>
+<p>I tecnici chiamano questi tre messaggi <strong>SYN, SYN-ACK e ACK</strong>. Non serve imparare le sigle a memoria: per ora ricorda che sono una breve <strong>stretta di mano</strong> che prepara la comunicazione.</p>
+<p>Sulla tua intestazione ci sono anche due <strong>porte</strong>. Immaginale come numeri di ufficio: una indica il programma che spedisce i dati, l’altra il programma del server che li deve ricevere. Per esempio, il numero 443 è usato comunemente dai siti web protetti.</p>
+<p>Il telefono conserva anche una copia dei dati che spedisce. Quando il server conferma che sono arrivati, può cancellarla; se qualcosa si perde, può riprovare. È una piccola rete di sicurezza.</p>`,
+w:()=>W.hand(),learn:["hs","sbuf","port"],
+ch:[["Guarda come si preparano i dati per il viaggio","p3b"]]},
+p3b:{part:"I · Nato da una foto",role:"pkt",title:"Le informazioni nella tua valigia",pos:"telefono di Giulia",
+body:`<p>Dentro il telefono, la foto riposa per un istante su un banco di preparazione. Davanti a te compaiono quattro buste trasparenti, una dentro l’altra: non sono scatole fisiche, ma strati di informazioni che accompagneranno i dati nei diversi tratti del viaggio.</p>
+<p>La foto è il contenuto che devi trasportare. Ma per arrivare a destinazione non basta mettere i dati in viaggio: servono anche alcune informazioni che dicano <strong>da dove parti, dove devi arrivare e a quale programma consegnare il contenuto</strong>.</p>
+<p>Immagina di preparare un pacco postale. Dentro c’è ciò che vuoi spedire; fuori ci sono l’indirizzo del destinatario e le indicazioni per chi lo trasporta. In rete succede qualcosa di simile: ogni livello aggiunge le informazioni che servono al suo compito.</p>
+<ul><li><strong>Applicazione:</strong> prepara ciò che vuoi inviare, per esempio la foto o una richiesta a un sito.</li><li><strong>Trasporto (TCP):</strong> organizza i dati in parti, usa i numeri di porta per indicare il programma giusto e aiuta a controllare che i dati arrivino nell’ordine corretto.</li><li><strong>Rete (IP):</strong> aggiunge l’indirizzo IP di partenza e quello di destinazione, utili per attraversare reti diverse.</li><li><strong>Collegamento:</strong> prepara una specie di busta per il tratto che stai per percorrere, con gli indirizzi MAC e un controllo per accorgersi di alcuni errori.</li></ul>
+<p>Questa aggiunta di informazioni, una dopo l’altra, si chiama <strong>incapsulamento</strong>. Non è necessario memorizzare subito tutti i dettagli: l’idea importante è che ogni livello aggiunge la propria “etichetta” e si occupa di un compito preciso.</p>
+<p>Forse hai sentito parlare del modello <strong>OSI</strong>: divide la comunicazione in sette livelli, come una mappa con sette caselle. È utile per studiare e capire le funzioni. Internet viene spesso spiegata anche con il modello <strong>TCP/IP</strong>, che raggruppa alcune funzioni in meno livelli. Sono due mappe diverse per descrivere lo stesso viaggio: non devi immaginare sette scatole fisiche dentro il computer.</p>
+<p>Adesso guarda la tua valigia: le informazioni non sono tutte uguali e non servono tutte allo stesso dispositivo.</p>`,
+w:()=>W.header({cap:"Le informazioni che viaggiano con te",l2:{t:"Busta del collegamento",f:[["MAC mittente","dispositivo vicino"],["MAC destinatario","prossimo punto della rete"],["Controllo","aiuta a rilevare errori"]]},ip:[["IP sorgente","indirizzo di partenza"],["IP destinazione","indirizzo del server"],["TTL","contatore del viaggio",1]],tcp:[["Porta sorgente","programma che spedisce"],["Porta destinazione","programma che riceve"],["Numero di sequenza","posizione di questa parte"]],data:"Il contenuto: una parte della fotografia"}),
+learn:["osi","tcpip","encap","hdr","port","mac","ttl"],
+ch:[["Apri le buste e guarda cosa cambia lungo il viaggio","p4"]]},
+p4:{part:"I · Nato da una foto",role:"pkt",title:"Una busta per ogni tratto",pos:"telefono di Giulia",ttl:64,
+body:`<p>La prima busta è pronta, ma appena immagini la strada fino alla scuola ti accorgi che non esiste un’unica etichetta buona per tutto il percorso. A ogni passaggio qualcuno deve sapere qual è la destinazione finale e, soprattutto, a chi consegnarti nel tratto successivo.</p>
+<p>Le informazioni che ti accompagnano hanno compiti diversi. L’indirizzo <strong>IP</strong> indica da quale dispositivo parti e verso quale server devi arrivare. Le <strong>porte</strong> aiutano a consegnare i dati al programma corretto. Gli indirizzi <strong>MAC</strong>, invece, servono per consegnare i dati sul collegamento locale che stai usando in quel momento.</p>
+<p>Quando passi da un collegamento al successivo, la busta esterna può cambiare. Per esempio, il router riceve una busta dal Wi-Fi, la apre, guarda l’indirizzo IP e prepara una nuova busta per il collegamento successivo. Il pacchetto quindi non attraversa tutto Internet dentro la stessa busta.</p>
+<p>C’è anche un contatore chiamato <strong>TTL</strong>: ogni router lo abbassa di uno. Se arrivasse a zero, il pacchetto verrebbe fermato. Serve a evitare che, a causa di un errore, continui a girare in tondo per sempre.</p>
+<p>Ora sei pronto a lasciare il telefono e raggiungere la rete locale dell’hotel.</p>`,
+w:()=>W.header({cap:"Le tue informazioni",l2:{t:"Busta del Wi-Fi",f:[["Da","telefono di Giulia"],["A","access point vicino"]]},ip:[["IP di partenza","rete del telefono"],["IP di destinazione","server della scuola"],["TTL","64",1]],tcp:[["Porta sorgente","programma di Giulia"],["Porta destinazione","programma web"]],data:"Una parte della foto"}),
+learn:["hdr","ttl"],prob:["La rete deve sapere dove mandare i dati","Indirizzi e informazioni aggiunti ai dati"],
+ch:[["Parti verso l'access point","arp0"]]},
 p5:{part:"I · Nato da una foto",role:"pkt",title:"La hall più affollata di Lisbona",pos:"Wi-Fi dell'hotel",ttl:64,ms:2,
-body:`<p>L'aria della hall è piena di onde radio. Venti ragazzi caricano storie, un signore al bar guarda una partita in streaming, il microonde della cucina disturba la banda dei 2,4 GHz. Il Wi-Fi è come una stanza in cui tutti parlano con la stessa voce: se due trasmettono insieme, nessuno si capisce.</p>
-<p>La regola è semplice: <strong>ascolta prima di parlare</strong>. Questa volta decidi tu quando partire. Guarda la spia del canale e premi il pulsante.</p>`,
+body:`<p>L'aria della hall è piena di onde radio. Venti ragazzi caricano storie, un signore al bar guarda una partita in streaming e dalla cucina arriva il ronzio intermittente del microonde. Il telefono di Giulia è collegato all'access point appeso vicino alla reception. Da lì, per te, comincia il viaggio vero e proprio.</p>
+<p>La spia dell'access point lampeggia. Sul canale passano segnali che non puoi vedere, e ogni tanto il piccolo indicatore cambia stato. Per un istante sembra esserci spazio; subito dopo, una nuova trasmissione attraversa l'aria. Hai davanti un solo pulsante e nessuna certezza su ciò che accadrà quando lo premi.</p>`,
 puzzle:{type:"csma",id:"tcsma",fail:"p6a",win:"p6b"},learn:["csma"]},
 p6a:{part:"I · Nato da una foto",role:"pkt",title:"Scontro frontale",pos:"Wi-Fi dell'hotel",ttl:64,ms:4,
 body:`<p>Parti mentre il telefono di Edo sta trasmettendo un video di gatti. I due segnali si sovrappongono. Quando arrivi all'access point, qualche bit si è capovolto: dove c'era uno 0 ora c'è un 1.</p>
 <p>L'access point ricalcola il codice di controllo, il <strong>CRC</strong>, e il risultato non torna. Non sa quali bit siano sbagliati: sa solo che qualcosa non va. Ti butta via e non manda la conferma.</p>
 <p>Il Wi-Fi però è previdente. Ogni frame ricevuto bene viene confermato subito, e il telefono, non vedendo la conferma, ti rispedisce da solo. La seconda volta ascolta, aspetta un tempo scelto a caso e parte nel silenzio. Arrivi intatto, con qualche millisecondo di ritardo e una certa antipatia per i video di gatti.</p>`,
 learn:["crc","l2re"],prob:["Un'interferenza altera alcuni bit","Codice di controllo CRC e ritrasmissione del frame"],
-ch:[["Prosegui verso il router dell'hotel","p7"]]},
+ch:[["Entra nella rete locale dell'hotel","sw0"]]},
 p6b:{part:"I · Nato da una foto",role:"pkt",title:"Nel silenzio",pos:"Wi-Fi dell'hotel",ttl:64,ms:1,
 body:`<p>Hai aspettato il momento giusto. Parti nel silenzio e arrivi all'access point intatto. Lui ricalcola il codice di controllo che porti in coda, il <strong>CRC</strong>: torna. Ti conferma la ricezione con un minuscolo frame di risposta. Se quella conferma non fosse arrivata, il telefono ti avrebbe rispedito da solo.</p>
 <p>Il trucco del Wi-Fi è che, quando il canale è occupato, ognuno aspetta un tempo <em>casuale</em> prima di riprovare. Se tutti aspettassero lo stesso tempo, ripartirebbero tutti insieme e si scontrerebbero di nuovo.</p>`,
 learn:["crc","l2re"],
-ch:[["Prosegui verso il router dell'hotel","p7"]]},
+ch:[["Entra nella rete locale dell'hotel","sw0"]]},
+arp0:{part:"I · La rete locale",role:"pkt",title:"A chi appartiene quell’indirizzo?",pos:"rete locale dell’hotel",ttl:64,ms:1,
+body:`<p>Il DNS ha finalmente risposto: il server della scuola si trova all’indirizzo IP <strong>93.62.140.20</strong>. Potresti pensare che basti scrivere quell’indirizzo sulla busta e partire. Ma c’è un dettaglio: per attraversare il primo tratto della rete, il tuo pacchetto deve essere inserito in un <strong>frame</strong>, e quel frame ha bisogno anche di un indirizzo MAC.</p>
+<p>L’indirizzo IP ti dice dove vuoi arrivare alla fine del viaggio. Il MAC serve invece per consegnare i dati sul collegamento locale, al prossimo dispositivo. Il server della scuola è lontano e il suo MAC non ti serve qui: devi prima raggiungere il <strong>gateway</strong>, cioè il router che ti permette di uscire dalla rete dell’hotel.</p>
+<p>Il telefono non conosce ancora il MAC del gateway. Per scoprirlo usa <strong>ARP</strong>: manda nella rete locale una domanda simile a «Chi possiede questo indirizzo IP? Rispondi con il tuo MAC». È come chiedere a voce in una stanza, prima di consegnare un pacco al corriere. Quale strada scegli?</p>`,
+learn:["arp","mac","gateway"],
+ch:[["Invia una richiesta ARP per conoscere il MAC del gateway","arp0ok"],["Usa il MAC del server della scuola: tanto conosci già il suo IP","arp0a"],["Chiedi al DNS il MAC del gateway","arp0c"]]},
+arp0a:{part:"I · La rete locale",role:"pkt",title:"Un indirizzo non è l’altro",pos:"telefono di Giulia",ttl:64,err:true,
+body:`<p>La risposta che hai scelto sembra plausibile, ma il dispositivo dall’altra parte non apre la porta. Sul piccolo schermo resta l’indirizzo IP; manca ancora il nome locale del prossimo vicino a cui affidarti.</p>
+<p>Hai confuso due informazioni diverse. Il DNS ti ha aiutato a trovare l’indirizzo IP del server, ma non ti ha dato il suo indirizzo MAC. Inoltre, il server si trova su un’altra rete: il primo frame deve raggiungere il gateway locale, non saltare direttamente fino alla scuola.</p>
+<p>Gli indirizzi IP guidano il pacchetto verso la destinazione finale; gli indirizzi MAC consegnano il frame sul singolo collegamento. Per il prossimo passo, devi scoprire il MAC del gateway.</p>`,
+ch:[["Riprova a cercare il MAC del gateway","arp0"]]},
+arp0c:{part:"I · La rete locale",role:"pkt",title:"Il centralino sbagliato",pos:"telefono di Giulia",ttl:64,err:true,
+body:`<p>La richiesta rimbalza sul servizio sbagliato e torna indietro senza una risposta utile. È come chiedere al centralino della città il numero della stanza accanto: la domanda riguarda un vicino, non un luogo lontano.</p>
+<p>Il DNS non gestisce questa domanda. Traduce nomi di dominio in indirizzi IP; non risolve gli indirizzi MAC dei dispositivi vicini. Per questo esiste ARP, che lavora nella rete locale e chiede quale dispositivo possiede un determinato indirizzo IP.</p>
+<p>La domanda è più vicina di quanto sembri: non devi cercare un altro server su Internet, ma riconoscere il prossimo dispositivo del tuo viaggio.</p>`,
+ch:[["Torna alla rete locale e usa ARP","arp0"]]},
+arp0ok:{part:"I · La rete locale",role:"pkt",title:"La risposta del gateway",pos:"gateway della rete dell’hotel",ttl:64,ms:1,
+body:`<p>Per un istante la rete locale sembra una stanza in cui tutti hanno sentito la tua domanda. Una sola macchina riconosce il proprio indirizzo, alza la mano e ti comunica il suo MAC: adesso sai a chi consegnare la busta per il primo tratto.</p>
+<p>La richiesta ARP viene ascoltata dai dispositivi della rete locale. Il gateway riconosce il proprio indirizzo IP e risponde con il suo MAC. Il telefono può finalmente costruire il frame e consegnarlo al prossimo tratto del viaggio.</p>
+<p>Attenzione: la richiesta ARP non ha attraversato Internet e non ha cercato il MAC del server della scuola. Ha risolto soltanto il problema immediato: trovare il dispositivo a cui affidare il pacchetto per uscire dalla LAN.</p>`,
+learn:["arp","mac","gateway"],
+ch:[["Ora puoi spedire il frame verso l’access point","p5"]]},
+sw0:{part:"I · La rete locale",role:"pkt",title:"Il custode della LAN",pos:"switch della rete dell'hotel",ttl:64,ms:1,
+body:`<p>Superato l’access point, entri in un corridoio pieno di porte: la rete locale dell’hotel. Non devi ancora attraversare l’Europa; prima devi trovare l’uscita giusta da questo edificio.</p>
+<p>L'access point ha ricevuto i dati dal telefono e li ha passati alla rete dell'hotel. Sei entrato in una <strong>LAN</strong>, cioè una rete locale: collega dispositivi che si trovano nello stesso luogo, come computer, stampanti e access point.</p>
+<p>Davanti a te c’è uno <strong>switch</strong>, una scatola con tante porte. Immaginalo come un centralinista: deve capire da quale porta raggiungere il dispositivo che deve ricevere i tuoi dati. Per farlo usa gli indirizzi <strong>MAC</strong>, identificativi delle schede di rete, e una tabella che associa i dispositivi alle porte.</p>
+<p>Lo switch impara osservando da quale porta arrivano i dati. Se sa dov’è il destinatario, li manda solo verso quella porta. Se ancora non lo sa, può distribuirli sulle altre porte adatte. Non sceglie il viaggio attraverso Internet: si occupa della rete locale. Quale regola scegli?</p>`,
+learn:["lan","switch","mac"],
+ch:[["Invia ogni frame a tutte le porte, così arriverà sicuramente","sw0a"],["Leggi la tabella MAC e inoltra il frame sulla porta associata al destinatario","sw0c"],["Usa lo switch per scegliere il percorso fino a Lisbona o Milano","sw0b"]]},
+sw0a:{part:"I · La rete locale",role:"pkt",title:"Troppe copie nella LAN",pos:"switch della rete dell'hotel",ttl:64,err:true,
+body:`<p>Per un attimo la tua busta viene recapitata a mezza hall: la stampante si sveglia, il PC della reception riceve un frame che non gli serve, il portatile del bar lo ignora. Hai raggiunto la rete, ma non hai ancora imparato a distinguere le porte.</p>
+<p>Il frame arriva a computer che non c'entrano nulla: il portatile della reception, la stampante, il PC del bar. Tutti devono ignorarlo, ma il traffico inutile aumenta.</p>
+<p>Uno switch non deve inviare sempre tutto ovunque. Quando conosce la porta associata all'indirizzo MAC di destinazione, può inoltrare il frame soltanto su quella porta. La diffusione su più porte serve, per esempio, quando la destinazione è ancora sconosciuta.</p>`,
+learn:["switch"],ch:[["Riprova con la tabella MAC","sw0"]]},
+sw0b:{part:"I · La rete locale",role:"pkt",title:"Lo switch non è un router",pos:"switch della rete dell'hotel",ttl:64,err:true,
+body:`<p>Indichi allo switch una strada verso la scuola e lui resta immobile, come un portiere a cui hai chiesto la mappa di tutta Europa. Non è il suo mestiere: conosce le porte di questo edificio, non le strade tra le reti.</p>
+<p>Lo switch non conosce la mappa di Internet e non sceglie quale rete attraversare per raggiungere il server della scuola. Si occupa di inoltrare frame dentro la rete locale, usando gli indirizzi MAC.</p>
+<p>Per uscire dalla LAN e raggiungere una rete diversa serve un altro apparato: il <strong>router</strong>. Di solito, per un dispositivo della rete, il router è il <strong>gateway predefinito</strong>, cioè la porta d'uscita verso le altre reti.</p>`,
+learn:["lan","router"],ch:[["Torna allo switch","sw0"]]},
+sw0c:{part:"I · La rete locale",role:"pkt",title:"La porta giusta",pos:"switch della rete dell'hotel",ttl:64,ms:1,
+body:`<p>Lo switch consulta la sua tabella come un addetto che riconosce un nome sul citofono. La porta 8 lampeggia: è quella collegata al router, l’uscita che cercavi.</p>
+<p>Lo switch consulta la tabella MAC. Il destinatario è raggiungibile dalla porta 8, quella collegata al router dell'hotel: inoltra il frame soltanto su quella porta. Niente copie inutili per gli altri dispositivi.</p>
+<p>Hai appena attraversato una parte della LAN. Ma la LAN dell'hotel non è la rete della scuola, e il server di Marco si trova molto più lontano. Per raggiungere una rete diversa, adesso serve il router.</p>`,
+learn:["switch","mac","lan"],ch:[["Raggiungi il router: la LAN finisce qui","p7"]]},
+
 p7:{part:"I · Nato da una foto",role:"pkt",title:"Un indirizzo in prestito",pos:"router dell'hotel",ttl:63,ms:1,
-body:`<p>Il router dell'hotel toglie il frame Wi-Fi, legge la tua intestazione IP e diminuisce il TTL: 63.</p>
+body:`<p>Oltre la porta 8, il corridoio finisce davanti a un incrocio di collegamenti. Il router dell’hotel prende in carico il pacchetto e guarda la destinazione lontana: per arrivare alla scuola dovrà affidarti a una rete diversa da quella in cui sei nato.</p>
+<p>Lo switch ti ha mandato verso il <strong>router dell’hotel</strong>. Hai attraversato la LAN, la rete locale. Ma il server della scuola si trova in un’altra rete, molto lontano.</p>
+<p>Qui entra in gioco il <strong>router</strong>: pensa a un incrocio con una mappa. Legge l’indirizzo IP di destinazione e sceglie quale collegamento usare per avvicinarti al server. Le reti che collegano città e Paesi sono chiamate <strong>WAN</strong>, cioè reti geografiche. Internet mette in comunicazione tante reti diverse: i router aiutano i dati a passare dall’una all’altra.</p>
+<p>Il router dell'hotel toglie il frame Ethernet, legge la tua intestazione IP e diminuisce il TTL: 63.</p>
 <p>Poi fa una cosa che non ti aspettavi: ti cambia l'indirizzo di partenza. 192.168.1.23 è un indirizzo <em>privato</em>: lo usano milioni di reti di casa e d'albergo e su Internet non significa niente. Il router lo sostituisce con il proprio indirizzo pubblico, 85.240.17.9, e annota su un registro che le risposte per la porta 51734 vanno girate al telefono di Giulia. Si chiama <strong>NAT</strong>.</p>`,
 w:()=>W.header({cap:"Che cosa è cambiato",ip:[["IP mittente","85.240.17.9",1],["IP destinatario","93.62.140.20"],["TTL","63",1]],tcp:[["porta mitt.","51734"],["porta dest.","443"],["seq","8761"]],data:"1460 byte di foto"}),
 learn:["nat"],
@@ -387,8 +544,9 @@ ch:[["Arriva al primo router dell'operatore","p8"]]},
 
 /* ---------- PARTE II ---------- */
 p8:{part:"II · Il viaggio",role:"pkt",title:"Il primo bivio",pos:"router dell'operatore, Lisbona",ttl:62,ms:1,
-body:`<p>Il router dell'operatore a Lisbona è un armadio pieno di luci che smista milioni di pacchetti al secondo. Per ognuno guarda l'indirizzo di destinazione e consulta la sua <strong>tabella di instradamento</strong>. Per la rete della scuola propone due uscite, ugualmente buone sulla carta: una verso <strong>Madrid</strong>, via terra; una verso il <strong>cavo sottomarino</strong> che risale fino a Marsiglia.</p>
-<p>Sei è appena partito verso Madrid. Otto ti tira per l'intestazione: «Andiamo con lui!»</p>`,
+body:`<p>Il router dell'operatore a Lisbona è un armadio pieno di luci, installato in una stanza dove l'aria condizionata non si spegne mai. Ogni secondo arrivano milioni di pacchetti: ognuno porta un indirizzo, ognuno aspetta di essere inoltrato. Il router non vede foto, compagni di classe o cappelli; vede righe di numeri e una tabella che viene aggiornata di continuo.</p>
+<p>Per la rete della scuola risultano disponibili due uscite. La prima va verso <strong>Madrid</strong>, attraverso la rete terrestre. La seconda raggiunge un <strong>cavo sottomarino</strong> che risale fino a Marsiglia. Entrambe compaiono nella tabella, entrambe sembrano praticabili. Sul pannello le luci continuano a lampeggiare, indifferenti alla tua indecisione.</p>
+<p>Sei è già partito verso Madrid. Otto ti raggiunge e ti tira per l'intestazione: «Ehi, aspetta! Non possiamo andare tutti dalla stessa parte?»</p>`,
 w:()=>W.route(["Lisbona","Madrid / cavo","…","Milano","server"],0,{cap:"Dove sei"}),
 learn:["rt"],
 ch:[["Verso Madrid, via terra","p9"],["Verso il cavo sottomarino","p12"],["Seguite Sei: meglio restare uniti","p8x"]]},
@@ -401,11 +559,13 @@ ch:[["Torna al bivio","p8"]]},
 p9:{part:"II · Il viaggio",role:"pkt",title:"Lo sportello di Madrid",pos:"router di Madrid",ttl:61,ms:31,
 body:`<p>A Madrid c'è traffico: è l'ora in cui mezza Spagna esce dal lavoro e accende lo streaming. Il collegamento verso Barcellona è saturo e il router mette in fila i pacchetti in attesa di uscire. Ha i modi di un impiegato allo sportello il venerdì alle cinque meno un quarto.</p>
 ${D("Router di Madrid","«Numero? Mettetevi in coda. No, non mi interessa che siete una foto. Sono tutti qualcosa.»")}
-<p>Entri in coda. Davanti a te ce ne sono sei, tra cui Sei che ricontrolla il suo checksum per la quarta volta. Dietro di te i posti liberi finiscono in fretta.</p>`,
+<p>Entri in coda. Davanti a te ce ne sono sei, tra cui Sei che ricontrolla il suo checksum per la quarta volta. Ogni tanto la fila avanza di qualche posizione, poi si blocca di nuovo. Dal pannello del router vedi arrivare altri pacchetti: video, chiamate, aggiornamenti, richieste che non sai nemmeno immaginare.</p>
+<p>Dietro di te, il posto libero si restringe. Non sai quanto durerà l'attesa e non puoi vedere che cosa accade a Barcellona. Sai soltanto che il tuo numero è nella fila e che il router, per ora, non ti ha chiesto altro.</p>`,
 w:()=>W.queue(7,8,6),learn:["queue"],
 ch:[["Aspetta il tuo turno","p10"],["Chiedi di passare avanti: Marco vi aspetta","p9x"]]},
 p9x:{part:"II · Il viaggio",role:"pkt",title:"Nessuna corsia preferenziale",pos:"router di Madrid",ttl:61,err:true,
-body:`${D("Router di Madrid","«Marco chi?»")}
+body:`<p>Provi a farti notare allo sportello, ma il router non sente la tua storia: per lui sei una riga di numeri in mezzo a tante altre. Il fatto che tu porti una fotografia importante per Marco non compare nella tabella delle priorità.</p>
+${D("Router di Madrid","«Marco chi?»")}
 <p>Il router non legge i dati e non sa che sei un pezzo di una foto. La coda è servita nell'ordine di arrivo. Esistono regole di priorità, la <strong>QoS</strong>, che le reti usano per far passare prima, per esempio, le telefonate via Internet. Ma le decidono gli amministratori della rete, non i singoli pacchetti.</p>
 ${D("Streamy","«Nemmeno io ho la precedenza, se è per questo. E sono un episodio molto atteso.»")}`,
 learn:["qos"],ch:[["Torna in coda","p9"]]},
@@ -414,11 +574,12 @@ body:`<p>L'ultimo posto libero della coda viene occupato da un pacchetto di Stre
 ${D("Otto","«Fatemi spazio, ho la faccia di Edo!»")}
 ${D("Router di Madrid","«Pieno.»")}
 <p>E Otto non c'è più. Nessun avviso, nessuna eccezione, nessun messaggio a Lisbona. Quando la coda è piena, il router scarta semplicemente ciò che arriva: si chiama <strong>drop-tail</strong>. Per un istante resti a fissare il posto vuoto dietro di te.</p>
-<p>Poi tocca a Sei, che esce dopo trenta lunghi millisecondi di coda, e subito dopo a te.</p>`,
+<p>Poi tocca a Sei, che esce dopo trenta lunghi millisecondi di coda, e subito dopo a te. Il collegamento verso Barcellona si libera, il tuo pacchetto riprende a muoversi e il router torna a guardare la fila successiva. Nessuno si accorge che manca Otto. Nessuno, tranne te.</p>`,
 w:()=>W.queue(8,8,6,"Coda piena: Otto arriva e viene scartato"),learn:["drop"],prob:["La coda di un router è piena e un pacchetto viene scartato","Il segmento verrà rispedito: il mittente ne conserva una copia"],
 ch:[["Riparti verso Barcellona","p11"],["Che fine ha fatto Otto?","o0"],["Mettiti per un momento nei panni del router di Madrid","m0"]]},
 o0:{part:"II · Il viaggio",role:"pkt",title:"Dove vanno i pacchetti scartati",pos:"memoria del router di Madrid",
-body:`<p>La verità è meno drammatica di quanto pensi. Non esiste un cimitero dei pacchetti, né un limbo. Otto era una sequenza di bit in una piccola area di memoria del router. Il router ha deciso di non tenerla, e un attimo dopo quella memoria è stata riempita dai bit di qualcun altro. Fine.</p>
+body:`<p>Per un istante cerchi Otto nella coda, come si cerca un compagno dopo una folla che si richiude. Non c’è più. Il router non conserva ricordi dei pacchetti scartati: la memoria è già stata occupata da altri dati.</p>
+<p>La verità è meno drammatica di quanto pensi. Non esiste un cimitero dei pacchetti, né un limbo. Otto era una sequenza di bit in una piccola area di memoria del router. Il router ha deciso di non tenerla, e un attimo dopo quella memoria è stata riempita dai bit di qualcun altro. Fine.</p>
 <p>Ma Otto non è perduto per sempre. Ricordi il <strong>buffer di invio</strong>? Nel telefono di Giulia c'è ancora la sua copia, che verrà cancellata solo quando il server confermerà di averla ricevuta. Il problema è un altro: a Lisbona nessuno sa che Otto è stato scartato. Lo capiranno da un indizio, e ci vorrà un po'.</p>
 <p class="say">Quale indizio? Lo scoprirai nella Parte IV, quando sarai il telefono di Giulia.</p>`,
 learn:["sbuf"],ch:[["Riprendi il viaggio verso Barcellona","p11"]]},
@@ -430,32 +591,37 @@ body:`<p>Per qualche minuto sei tu il <strong>router di Madrid</strong>. Ricevi 
 w:()=>W.queue(8,8,-1,"La tua coda adesso: piena"),
 ch:[["Compro memoria: una coda enorme, così non scarto mai nessuno","m0a"],["Faccio come sempre: quando la coda è piena, scarto chi arriva","m0b"],["Quando la coda comincia a riempirsi, avviso i mittenti prima che sia piena","m0c"]]},
 m0a:{part:"II-bis · Sei il router di Madrid",role:"router",title:"Il router che non butta niente",pos:"router di Madrid",
-body:`<p>Ora hai una coda da centomila posti. Non scarti più nessuno. I mittenti non vedono perdite e quindi non rallentano. La coda si allunga, e si allunga, e si allunga.</p>
+body:`<p>All’inizio sei fiero: nessuno viene lasciato indietro. Poi la coda cresce fino a diventare un corridoio interminabile. I pacchetti arrivati dopo di te invecchiano lì dentro, mentre le videochiamate perdono il ritmo e le pagine restano sospese.</p>
+<p>Ora hai una coda da centomila posti. Non scarti più nessuno. I mittenti non vedono perdite e quindi non rallentano. La coda si allunga, e si allunga, e si allunga.</p>
 <p>Un pacchetto che entra in fondo esce dopo due secondi. Le videochiamate diventano un dialogo tra sordi, i giochi online impazziscono, le pagine web restano bianche. Nessun dato perso, ma la rete è diventata inutilizzabile.</p>
 <p>Questo problema esiste davvero e ha un nome: <strong>bufferbloat</strong>, «code gonfiate». Paradossalmente, scartare qualche pacchetto è un servizio che il router rende a tutti: è il modo con cui i mittenti capiscono che devono rallentare.</p>`,
 learn:["bloat"],end:"bloat",back:"m0"},
 m0b:{part:"II-bis · Sei il router di Madrid",role:"router",title:"Il metodo classico",pos:"router di Madrid",
-body:`<p>È quello che hai fatto con Otto: <strong>drop-tail</strong>, si scarta chi arriva in coda. È semplice e funziona, ed è il metodo storico di Internet. Ha però due difetti. Quando la coda si riempie scarti tutti i pacchetti che arrivano in quell'istante, magari di molte connessioni insieme, che rallentano tutte nello stesso momento e poi riaccelerano tutte insieme. E finché la coda è quasi piena, chi ci passa subisce un bel ritardo.</p>`,
+body:`<p>Rivedi la scena di Otto: un frame arriva quando la coda è piena e viene scartato senza cerimonie. È una regola semplice, ma quando molte connessioni inciampano insieme può farle rallentare tutte nello stesso momento.</p>
+<p>È quello che hai fatto con Otto: <strong>drop-tail</strong>, si scarta chi arriva in coda. È semplice e funziona, ed è il metodo storico di Internet. Ha però due difetti. Quando la coda si riempie scarti tutti i pacchetti che arrivano in quell'istante, magari di molte connessioni insieme, che rallentano tutte nello stesso momento e poi riaccelerano tutte insieme. E finché la coda è quasi piena, chi ci passa subisce un bel ritardo.</p>`,
 learn:["drop"],ch:[["Prova l'altra strategia","m0c"],["Torna a essere il pacchetto 8761","p11"]]},
 m0c:{part:"II-bis · Sei il router di Madrid",role:"router",title:"Avvisare prima",pos:"router di Madrid",
-body:`<p>Quando la coda comincia a riempirsi scarti <em>qualche</em> pacchetto a caso, prima di essere pieno. Oppure, se mittente e destinatario lo supportano, non scarti nulla: metti nell'intestazione IP un piccolo segnale, <strong>ECN</strong>, che significa «attenzione, qui c'è congestione». Il destinatario lo riferisce al mittente, che rallenta senza aver perso niente.</p>
+body:`<p>Questa volta il router non aspetta che la coda sia sul punto di esplodere. Alza una piccola bandierina prima che sia troppo tardi: non urla, non blocca il traffico, ma avverte chi spedisce che è il momento di rallentare.</p>
+<p>Quando la coda comincia a riempirsi scarti <em>qualche</em> pacchetto a caso, prima di essere pieno. Oppure, se mittente e destinatario lo supportano, non scarti nulla: metti nell'intestazione IP un piccolo segnale, <strong>ECN</strong>, che significa «attenzione, qui c'è congestione». Il destinatario lo riferisce al mittente, che rallenta senza aver perso niente.</p>
 <p>È la <strong>gestione attiva della coda</strong>, di cui la versione più famosa si chiama RED. La coda resta corta, il ritardo basso, e i mittenti si accorgono per tempo che devono andare più piano.</p>
 ${D("Router di Madrid","«Visto? Non sono cattivo. Sono previdente.»")}`,
 learn:["red"],prob:["Il router congestionato deve decidere chi scartare","Gestione attiva della coda (RED, ECN) prima che sia piena"],
 ch:[["Torna a essere il pacchetto 8761","p11"]]},
 
 p11:{part:"II · Il viaggio",role:"pkt",title:"Una scorciatoia sospetta",pos:"router di Barcellona",ttl:60,ms:6,
-body:`<p>A Barcellona il router ha due informazioni contraddittorie. La sua tabella di sempre dice: per l'Italia, verso Milano. Ma un router vicino, a Valencia, appena riavviato dopo un aggiornamento, ha annunciato una nuova strada più corta per la rete della scuola, che passa da lui.</p>
-${D("Sei","«Una scorciatoia annunciata da uno che si è appena svegliato? Io non mi fiderei.»")}`,
+body:`<p>A Barcellona l'aria è più fresca e il traffico scorre senza intoppi. Il router consulta la tabella e si ferma su due righe diverse. La prima è lì da tempo: per raggiungere la rete della scuola, inoltrare verso Milano. La seconda è arrivata da poco da Valencia, dopo un aggiornamento. Promette una strada più corta e passa proprio dal router che l'ha appena annunciata.</p>
+<p>Per qualche millisecondo nessuno si muove. Le due indicazioni sono presenti nella tabella; una è familiare, l'altra è nuova. Sei legge la schermata sopra la tua spalla, ma non dice niente. Anche Otto, che di solito ha un'opinione su tutto, resta zitto.</p>`,
 w:()=>W.route(ROUTE_A,4),
 ch:[["Segui la strada di sempre, verso Milano","p14"],["Prova la scorciatoia appena annunciata","p11L"]]},
 p11L:{part:"II · Il viaggio",role:"pkt",title:"Il girotondo",pos:"tra Barcellona e Valencia",ttl:0,
-body:`<p>Il router di Valencia ha un'informazione sbagliata: pensa che la strada migliore per la scuola sia tornare a Barcellona. E Barcellona, convinta dall'annuncio, ti rimanda da lui. Barcellona, Valencia, Barcellona, Valencia. Un <strong>routing loop</strong>.</p>
+body:`<p>La prima volta che torni a Barcellona pensi di aver sbagliato uscita. La seconda ti sembra una coincidenza. Alla terza riconosci il pannello di Valencia: stai tornando sempre negli stessi due posti, e ogni passaggio ti consuma un altro tratto del viaggio.</p>
+<p>Il router di Valencia ha un'informazione sbagliata: pensa che la strada migliore per la scuola sia tornare a Barcellona. E Barcellona, convinta dall'annuncio, ti rimanda da lui. Barcellona, Valencia, Barcellona, Valencia. Un <strong>routing loop</strong>.</p>
 <p>A ogni passaggio il TTL scende: 59, 58, 57… 3, 2, 1. Quando arriva a zero, il router ti scarta e manda all'indirizzo del mittente un breve messaggio <strong>ICMP</strong>: «tempo scaduto». Senza il TTL saresti rimasto a girare in tondo per sempre, insieme a migliaia di altri pacchetti, fino a intasare la rete.</p>
 <p>A Lisbona il telefono di Giulia ha ancora la tua copia, e prima o poi la rispedirà. Ma questo viaggio, per te, finisce qui.</p>`,
 learn:["loop","icmp"],end:"ttl0",back:"p11"},
 p12:{part:"II · Il viaggio",role:"pkt",title:"Sotto il mare",pos:"cavo sottomarino",ttl:61,ms:10,
-body:`<p>Diventi luce. Dentro una fibra di vetro sottile come un capello, protetta da strati di acciaio e plastica e posata sul fondo dell'oceano, viaggi a circa duecentomila chilometri al secondo. Ogni qualche decina di chilometri un <strong>ripetitore</strong>, alimentato da una corrente che corre lungo il cavo stesso, rinforza il segnale.</p>
+body:`<p>La luce si stringe in un filo sottile e il rumore della rete scompare. Sopra di te c’è l’oceano; intorno, il buio del fondale. Non vedi le città, ma il segnale continua a correre dentro il vetro.</p>
+<p>Diventi luce. Dentro una fibra di vetro sottile come un capello, protetta da strati di acciaio e plastica e posata sul fondo dell'oceano, viaggi a circa duecentomila chilometri al secondo. Ogni qualche decina di chilometri un <strong>ripetitore</strong>, alimentato da una corrente che corre lungo il cavo stesso, rinforza il segnale.</p>
 <p>Duemila chilometri fino a Marsiglia: dieci millesimi di secondo. Nessuna coda, nessun impiegato allo sportello. È la parte più bella del viaggio.</p>
 <p>Poi, nel buio, qualcosa di grosso si avvicina al cavo.</p>`,
 w:()=>W.calc(`distanza ≈ 2 000 km
@@ -463,15 +629,18 @@ velocità della luce nella fibra ≈ 200 000 km/s
 tempo = 2 000 / 200 000 = 0,010 s = 10 ms`,"Quanto ci metti?"),
 learn:["lat"],ch:[["È uno squalo!","p12s"],["Ignoralo e prosegui","p13"]]},
 p12s:{part:"II · Il viaggio",role:"pkt",title:"La leggenda dello squalo",pos:"cavo sottomarino",ttl:61,
-body:`<p>Lo squalo annusa il cavo, ci pensa, e se ne va. Esistono davvero video di squali che mordicchiano i cavi, e qualche azienda li ha rivestiti con materiali più resistenti. Ma i colpevoli veri sono altri.</p>
+body:`<p>Una sagoma scivola accanto al cavo e la tua immaginazione la trasforma subito in un mostro. Ma il fondale nasconde pericoli molto meno cinematografici: una nave che cala l’ancora, una rete trascinata troppo in basso, un cavo che si piega dove non dovrebbe.</p>
+<p>Lo squalo annusa il cavo, ci pensa, e se ne va. Esistono davvero video di squali che mordicchiano i cavi, e qualche azienda li ha rivestiti con materiali più resistenti. Ma i colpevoli veri sono altri.</p>
 <p>Ogni anno nel mondo si contano più di cento guasti ai cavi sottomarini, e la grande maggioranza è causata da <strong>ancore delle navi</strong> e <strong>reti da pesca</strong> trascinate sul fondale. Le riparazioni le fanno navi specializzate, che recuperano il cavo, lo tagliano, lo giuntano e lo riposano. Nel frattempo il traffico viene instradato su altri cavi: la stessa robustezza della commutazione di pacchetto, su scala oceanica.</p>`,
 learn:["cable"],ch:[["Approda a Marsiglia","p13"]]},
 p13:{part:"II · Il viaggio",role:"pkt",title:"Il tunnel stretto",pos:"router di Marsiglia",ttl:60,ms:2,
-body:`<p>Il router di Marsiglia ha due uscite verso l'Italia. Una è il percorso normale verso Milano. L'altra è un collegamento più corto che l'operatore ha configurato da poco come <strong>tunnel</strong>: i pacchetti vengono chiusi in un'ulteriore busta, e per via di quella busta in più lì dentro non possono superare 1400 byte. Tu ne pesi 1500.</p>
-<p>Sulla tua intestazione IP c'è un piccolo flag acceso: <strong>DF</strong>, <em>Don't Fragment</em>, non frammentare.</p>`,
+body:`<p>La luce riemerge a Marsiglia e incontra un nuovo passaggio, più stretto del precedente. Il router controlla le dimensioni della tua busta e scopre che, con l’involucro aggiunto dal tunnel, rischi di non passare.</p>
+<p>Il router di Marsiglia è un nodo di passaggio importante: da una parte arrivano i collegamenti che attraversano il Mediterraneo, dall'altra partono diverse strade verso l'Italia. Una è il percorso consueto per Milano. L'altra è un collegamento più corto, attivato da poco, che l'operatore chiama <strong>tunnel</strong>.</p>
+<p>Il tunnel aggiunge una seconda intestazione attorno al pacchetto. È una protezione utile per certi collegamenti, ma occupa spazio: qui ogni pacchetto può essere lungo al massimo 1400 byte. Tu, con le tue intestazioni e i dati che porti, sei più grande. Sul tuo header c'è inoltre un flag, <strong>DF</strong>, che qualcuno ha impostato prima della partenza. Il router controlla le informazioni una seconda volta e aspetta la tua decisione.</p>`,
 ch:[["Prendi il tunnel: in qualche modo ci entrerai","p13a"],["Prendi il percorso normale","p14"]]},
 p13a:{part:"II · Il viaggio",role:"pkt",title:"Troppo grosso",pos:"ingresso del tunnel",ttl:59,
-body:`<p>Il router potrebbe dividerti in due frammenti più piccoli: IP lo permetterebbe. Ma il flag DF lo vieta. Il telefono di Giulia lo ha acceso apposta, perché frammentare costa e, se un solo frammento si perde, va rispedito tutto.</p>
+body:`<p>Ti fermi davanti al limite come un pacco troppo grande per lo sportello. Il router potrebbe provare a tagliarti in due, ma sulla tua intestazione c’è un divieto: nessun frammento può partire al posto tuo.</p>
+<p>Il router potrebbe dividerti in due frammenti più piccoli: IP lo permetterebbe. Ma il flag DF lo vieta. Il telefono di Giulia lo ha acceso apposta, perché frammentare costa e, se un solo frammento si perde, va rispedito tutto.</p>
 <p>Così il router ti scarta e manda al mittente un messaggio ICMP: «serve frammentazione, ma DF è acceso; qui il massimo è 1400». Il telefono di Giulia, ricevuto l'avviso, ridurrà la dimensione dei segmenti successivi. È la <strong>Path MTU Discovery</strong>: si scopre l'MTU più piccola del percorso a forza di avvisi.</p>
 <p>Gli altri segmenti viaggeranno più leggeri. Tu no.</p>`,
 learn:["frag","pmtud","icmp"],end:"mtu",back:"p13"},
@@ -482,16 +651,19 @@ body:`<p>Arrivi a Milano, in un edificio senza insegne pieno di armadi, cavi col
 w:()=>W.route(ROUTE_A,5),learn:["ixp","bgp"],
 ch:[["Ultimi chilometri verso la scuola","p15"]]},
 p15:{part:"II · Il viaggio",role:"pkt",title:"Il buttafuori",pos:"firewall della scuola",ttl:56,ms:4,
-body:`<p>Due router dopo, la fibra entra nell'armadio di rete della scuola. Prima del server c'è il <strong>firewall</strong>, un buttafuori con una lista di regole e nessun senso dell'umorismo.</p>
+body:`<p>La scuola è vicina: riconosci la rete del laboratorio e immagini già il server di Marco. Ma prima dell’ultima porta c’è qualcuno che controlla ogni arrivo e non si lascia convincere dalle buone intenzioni.</p>
+<p>Due router dopo, la fibra entra nell'armadio di rete della scuola. Prima del server c'è il <strong>firewall</strong>, un buttafuori con una lista di regole e nessun senso dell'umorismo.</p>
 ${D("Firewall","«Destinazione? Porta? Connessione aperta regolarmente?»")}`,
 ch:[["Mostra la tua intestazione: server web, porta 443, connessione già aperta","p16"],["Fai il furbo: «sono diretto alla porta 22, quella per amministrare il server»","p15x"]]},
 p15x:{part:"II · Il viaggio",role:"pkt",title:"Non sei sulla lista",pos:"firewall della scuola",ttl:56,err:true,
-body:`${D("Firewall","«Porta 22 dall'esterno? Regola 3: vietato. Fuori.»")}
+body:`<p>Il firewall non alza nemmeno gli occhi. La regola è scritta, la porta non è autorizzata e la tua storia non cambia il verdetto. Per un pacchetto, essere respinto è molto meno personale di quanto sembri.</p>
+${D("Firewall","«Porta 22 dall'esterno? Regola 3: vietato. Fuori.»")}
 <p>La porta 22 serve ad amministrare i server da remoto, e un firewall ben configurato la apre solo agli indirizzi dei tecnici. Gli attaccanti la provano in continuazione, migliaia di volte al giorno. Un pacchetto che dice di andare lì senza autorizzazione viene scartato senza discussioni.</p>
 <p>Per fortuna era solo uno scherzo: sulla tua intestazione la porta è 443.</p>`,
 learn:["fw"],ch:[["Torna dal buttafuori, seriamente","p15"]]},
 p16:{part:"II · Il viaggio",role:"pkt",title:"Arrivo",pos:"server della scuola",ttl:55,ms:1,
-body:`${D("Firewall","«Regola 12: traffico HTTPS verso il server web. Passa.»")}
+body:`<p>Finalmente senti il ronzio delle ventole del server. Hai attraversato reti, code e un tunnel troppo stretto; ora sei davanti al computer che deve ricomporre la fotografia. Ma il posto riservato al tuo vicino è vuoto.</p>
+${D("Firewall","«Regola 12: traffico HTTPS verso il server web. Passa.»")}
 <p>Un ultimo frame Ethernet, un ultimo cavo, e raggiungi la scheda di rete del server. Sei arrivato.</p>
 <p>Ma qualcosa non va. Ti guardi intorno nella memoria del server: ci sono i segmenti da 1 a 5. Non c'è Sei. Non c'è Otto. Sei arrivato nel momento sbagliato.</p>`,
 w:()=>W.route(ROUTE_A,7),learn:["fw"],
@@ -499,15 +671,17 @@ ch:[["Guarda la scena con gli occhi del server","r0"]]},
 
 /* ---------- PARTE III ---------- */
 r0:{part:"III · Dall'altra parte",role:"dest",title:"Cambio di prospettiva",pos:"server della scuola",
-body:`<p>Ora non sei più un pacchetto. Sei il <strong>TCP del server della scuola</strong>: il programma che riceve i segmenti, li controlla e consegna i byte all'applicazione del sito che salverà la foto.</p>
-<p>Hai già consegnato i segmenti dall'1 al 5. È appena arrivato l'8761. Prima di tutto, che cosa fai?</p>`,
+body:`<p>Il viaggio ti ha portato dall'altra parte. Non sei più un pacchetto: sei il <strong>TCP del server della scuola</strong>, incaricato di ricevere i segmenti e consegnare i byte al programma che salverà la fotografia. Nella sala macchine non c'è nessuno; senti soltanto le ventole e il ticchettio regolare dei dischi.</p>
+<p>Nel buffer sono già arrivati i segmenti dall'1 al 5. Ora compare l'8761, fuori dall'ordine che ti aspettavi. Sullo schermo c'è la sua intestazione, poi i dati, poi il checksum. Hai pochi istanti per decidere come trattarlo: il mittente aspetta una risposta, ma tu non puoi sapere a colpo d'occhio che cosa sia successo lungo la strada.</p>`,
 ch:[["Mando subito l'ACK, così il mittente non si preoccupa","r0v"],["Prima ricalcolo il checksum TCP, poi decido","r0c"]]},
 r0v:{part:"III · Dall'altra parte",role:"dest",title:"La conferma bugiarda",pos:"server della scuola",
-body:`<p>Confermi a scatola chiusa. Peccato che, questa volta, un bit del segmento sia stato alterato da un apparato difettoso lungo la strada. Il mittente riceve la conferma, cancella la sua copia dal buffer di invio e passa oltre. Quando l'applicazione apre la foto, in mezzo al cielo c'è una macchia viola.</p>
+body:`<p>La fretta ti fa saltare il controllo. Per un istante tutto sembra andare bene: l’ACK parte, il mittente si tranquillizza e il server torna a lavorare. Il guaio è nascosto in un bit, piccolo abbastanza da passare inosservato.</p>
+<p>Confermi a scatola chiusa. Peccato che, questa volta, un bit del segmento sia stato alterato da un apparato difettoso lungo la strada. Il mittente riceve la conferma, cancella la sua copia dal buffer di invio e passa oltre. Quando l'applicazione apre la foto, in mezzo al cielo c'è una macchia viola.</p>
 <p>La conferma va inviata solo dopo aver verificato che i dati siano arrivati integri. Un ACK è una promessa, e una promessa non si fa a scatola chiusa.</p>`,
 learn:["vcheck"],end:"liar",back:"r0"},
 r0c:{part:"III · Dall'altra parte",role:"dest",title:"Il buco",pos:"server della scuola",
-body:`<p>Il checksum torna: i 1460 byte sono integri. Ma guardando i numeri di sequenza noti il problema: dopo il segmento che finisce al byte 7300 dovrebbe arrivare il 7301. Invece è arrivato l'8761. Il segmento 6 manca.</p>`,
+body:`<p>Appoggi il segmento accanto agli altri e confronti le etichette. I dati sono integri, ma la sequenza si interrompe: dopo il byte 7300 c’è un vuoto, e il numero che hai davanti appartiene a un pezzo successivo.</p>
+<p>Il checksum torna: i 1460 byte sono integri. Ma guardando i numeri di sequenza noti il problema: dopo il segmento che finisce al byte 7300 dovrebbe arrivare il 7301. Invece è arrivato l'8761. Il segmento 6 manca.</p>`,
 w:()=>W.seq([[1,"ok"],[2,"ok"],[3,"ok"],[4,"ok"],[5,"ok","fino a 7300"],[6,"miss","7301?"],[7,"buf","8761"],[8,"wait"],[9,"wait"]]),
 learn:["vcheck"],prob:["Un segmento potrebbe essere arrivato rovinato","Il checksum si verifica prima di confermare"],
 ch:[["Consegna subito l'8761 all'applicazione: i dati sono dati","r0a"],["Butta l'8761: aspetterai che arrivino tutti nell'ordine giusto","r0b"],["Tieni l'8761 da parte e aspetta il 6","r1"]]},
@@ -518,12 +692,14 @@ ${D("Marco","«Ragazzi, perché la prof ha la faccia verde?»")}
 <p>Una delle promesse di TCP è proprio la <strong>consegna in ordine</strong>: l'applicazione riceve i byte nella stessa sequenza in cui sono partiti, qualunque sia l'ordine di arrivo dei segmenti.</p>`,
 learn:["order"],end:"stripes",back:"r0c"},
 r0b:{part:"III · Dall'altra parte",role:"dest",title:"Il grande spreco",pos:"server della scuola",
-body:`<p>Butti l'8761, e con lo stesso criterio butterai anche il 9 e il 10 se arrivano prima del 6. Il mittente, non vedendoli confermati, dovrà rispedirli tutti, dal 6 in poi.</p>
+body:`<p>Cominci a buttare via i segmenti fuori ordine, uno dopo l’altro. Ogni volta ti sembra di semplificare il lavoro; ogni volta, però, stai chiedendo al telefono di Giulia di rifare una strada già percorsa.</p>
+<p>Butti l'8761, e con lo stesso criterio butterai anche il 9 e il 10 se arrivano prima del 6. Il mittente, non vedendoli confermati, dovrà rispedirli tutti, dal 6 in poi.</p>
 <p>Funziona: alla fine la foto arriva. Ma hai sprecato banda per rispedire segmenti che avevi già ricevuto intatti. Questa strategia si chiama <strong>Go-Back-N</strong>; TCP oggi preferisce tenere da parte i segmenti fuori ordine e far rispedire solo quelli mancanti.</p>`,
 learn:["gbn"],end:"waste",back:"r0c"},
 r1:{part:"III · Dall'altra parte",role:"dest",title:"Che cosa rispondi?",pos:"server della scuola",
-body:`<p>Tieni l'8761 nel <strong>buffer di ricezione</strong>, la memoria in cui i segmenti fuori ordine aspettano i compagni mancanti. Non lo consegnerai all'applicazione finché non arriverà il 6.</p>
-<p>Ora devi rispondere al mittente con un <strong>ACK</strong>. In TCP l'ACK è <strong>cumulativo</strong>: il numero che scrivi è il prossimo byte che ti aspetti, e significa «ho ricevuto tutto fino al byte prima di questo».</p>`,
+body:`<p>Il segmento 8761 aspetta nel buffer, come un passeggero arrivato alla stazione mentre il treno precedente non si è ancora presentato. Devi dire al mittente qual è il primo byte che ti manca, non fare l’elenco di quelli che hai visto.</p>
+<p>Metti l'8761 nel <strong>buffer di ricezione</strong>, dove i segmenti fuori ordine possono aspettare quelli che mancano. Non lo consegni ancora all'applicazione: tra i byte ricevuti c'è un intervallo vuoto, e il programma che deve salvare la foto ha bisogno di un flusso continuo.</p>
+<p>Ora devi rispondere al mittente con un <strong>ACK</strong>. Sullo schermo puoi scegliere un numero. Non è un semplice resoconto di ciò che hai visto arrivare: è un messaggio che il telefono di Giulia userà per decidere come proseguire. Se lo scrivi male, il mittente potrebbe farsi un'idea sbagliata di quello che hai ricevuto.</p>`,
 puzzle:{type:"number",id:"tack",q:"Hai tutto fino al byte 7300 e l'8761 nel buffer. Che numero scrivi nell'ACK?",a:[7301],hint:"l'ACK indica il primo byte che ti manca, non l'ultimo che hai ricevuto.",ok:"Giusto: ACK 7301. «Mi manca ancora il 7301», cioè il segmento 6."},
 learn:["rbuf","ack"],prob:["I segmenti arrivano in disordine","Buffer di ricezione e ACK cumulativo"],
 ch:[["Continua","r2"]]},
@@ -543,30 +719,34 @@ ${D("Prof di informatica","«Che i pacchetti hanno preso strade diverse. Tranqui
 ${D("Marco","«Sto facendo esercizi di sistemi. Pratici.»")}`,
 ch:[["Torna al server","r3"]]},
 r3:{part:"III · Dall'altra parte",role:"dest",title:"Il ritardatario",pos:"server della scuola",
-body:`<p>Eccolo. Il segmento 6 arriva con trenta millisecondi di ritardo: è rimasto a lungo in coda a Madrid. Il checksum torna. Ora hai i segmenti dall'1 al 7 senza buchi, più il 9 e il 10 nel buffer. Consegni il 6 e il 7 all'applicazione, in ordine.</p>`,
+body:`<p>Finalmente il pezzo mancante appare sul monitor. Lo riconosci dal numero di sequenza, ricontrolli che sia integro e lo infili nello spazio lasciato vuoto: per la prima volta da un po’, il flusso torna continuo.</p>
+<p>Eccolo. Il segmento 6 arriva con trenta millisecondi di ritardo: è rimasto a lungo in coda a Madrid. Il checksum torna. Ora hai i segmenti dall'1 al 7 senza buchi, più il 9 e il 10 nel buffer. Consegni il 6 e il 7 all'applicazione, in ordine.</p>`,
 puzzle:{type:"number",id:"tack2",q:"Che numero scrivi adesso nell'ACK?",a:[10221],hint:"il 6 ha riempito il buco: ora hai tutto fino alla fine del 7. Ma l'8 manca ancora.",ok:"Esatto: ACK 10221. L'ACK fa un salto in avanti e si ferma al prossimo buco: l'8."},
 w:()=>W.seq([[5,"ok"],[6,"ok","arrivato"],[7,"ok"],[8,"miss","10221?"],[9,"buf"],[10,"buf"]]),
 ch:[["Continua","r4"]]},
 r4:{part:"III · Dall'altra parte",role:"dest",title:"Il buffer si riempie",pos:"server della scuola",
 body:`<p>«ACK 10221». Il mittente capirà che il 6 e il 7 sono arrivati e che manca l'8. Lo rispedirà presto; quella parte di storia la vivrai dal suo lato.</p>
-<p>Intanto c'è un altro problema. L'applicazione del sito è lenta: per ogni foto crea una miniatura e una versione ridotta, e il server sta servendo altre trenta persone. I byte si accumulano nel buffer di ricezione più in fretta di quanto l'applicazione li prelevi. Il buffer è di 64 KB ed è quasi pieno.</p>
-<p>In ogni ACK c'è un campo chiamato <strong>window</strong>: lì dici al mittente quanti byte sei ancora in grado di ricevere.</p>`,
+<p>Intanto, nel server, la foto non è l'unico lavoro in corso. L'applicazione crea una miniatura e una versione ridotta per ogni immagine ricevuta, mentre il sito serve altre trenta persone. I byte entrano più in fretta di quanto l'applicazione riesca a prelevarli. Nel buffer restano sempre meno posti liberi, e il contatore si avvicina al limite di 64 KB.</p>
+<p>Ogni conferma che invii contiene anche un campo chiamato <strong>window</strong>. È un numero che il telefono legge e usa per decidere quanti altri dati mandarti. Guardi lo spazio rimasto e pensi che la prossima risposta dovrà essere scelta con attenzione.</p>`,
 w:()=>W.calc(`buffer di ricezione     65 535 byte
 occupato                57 000 byte
 ───────────────────────────────────
 ancora libero      ≈     8 500 byte  (meno di 6 segmenti)`,"Il buffer del server"),
 ch:[["Annuncia window 65 535, come sempre: l'applicazione si arrangerà","r4a"],["Annuncia la finestra reale: 8 500 byte, e 0 se si riempie","r5"]]},
 r4a:{part:"III · Dall'altra parte",role:"dest",title:"Buffer traboccato",pos:"server della scuola",
-body:`<p>Il mittente crede che tu abbia 64 KB liberi e ti manda una raffica di 44 segmenti. Ne entrano sei. Gli altri trentotto non trovano posto e li scarti. Il mittente non riceve gli ACK, aspetta, rispedisce. Tu sei ancora pieno, e scarti di nuovo.</p>
+body:`<p>La coda del server è ormai piena fino all’orlo. Arrivano altri segmenti e non c’è spazio nemmeno per appoggiarli: ogni nuovo arrivo costringe a scartare qualcosa, e il mittente continua a bussare senza sapere che la stanza è piena.</p>
+<p>Il mittente crede che tu abbia 64 KB liberi e ti manda una raffica di 44 segmenti. Ne entrano sei. Gli altri trentotto non trovano posto e li scarti. Il mittente non riceve gli ACK, aspetta, rispedisce. Tu sei ancora pieno, e scarti di nuovo.</p>
 <p>Il campo window serve proprio a evitarlo: è il <strong>controllo di flusso</strong>. È il destinatario a dire quanto può ricevere, e il mittente si adegua. Non è il mittente a dover indovinare.</p>`,
 learn:["rwnd"],end:"overflow",back:"r4"},
 r5:{part:"III · Dall'altra parte",role:"dest",title:"Finestra zero",pos:"server della scuola",
-body:`<p>Nell'ACK successivo scrivi «window 8500». Il mittente invia al massimo 8500 byte e si ferma. L'applicazione è ancora lenta e il buffer si riempie del tutto: nel nuovo ACK scrivi «window 0».</p>
+body:`<p>Il contatore dello spazio libero scende fino a zero. Non puoi promettere al telefono un posto che non esiste: scrivi la finestra reale, poi chiudi la porta finché l’applicazione non avrà liberato un po’ di memoria.</p>
+<p>Nell'ACK successivo scrivi «window 8500». Il mittente invia al massimo 8500 byte e si ferma. L'applicazione è ancora lenta e il buffer si riempie del tutto: nel nuovo ACK scrivi «window 0».</p>
 <p>Il mittente si ferma, ma non sparisce: ogni tanto ti manda un segmento minuscolo, un <strong>sondaggio</strong>, per chiederti se la finestra si è riaperta. Dopo mezzo secondo l'applicazione si rimette in pari e svuota il buffer. Al sondaggio successivo rispondi «window 65535». Si riparte.</p>`,
 learn:["rwnd","zero"],prob:["Il destinatario non riesce a stare al passo","Controllo di flusso: il campo window, fino alla finestra zero"],
 ch:[["Arrivano altri segmenti","r6"]]},
 r6:{part:"III · Dall'altra parte",role:"dest",title:"Rimettere in fila",pos:"server della scuola",
-body:`<p>Arriva finalmente anche Otto, rispedito dal telefono di Giulia, insieme a una manciata di segmenti successivi che hanno preso strade diverse. Nel buffer ora c'è un po' di confusione. Il tuo compito è consegnare all'applicazione i byte nell'ordine giusto.</p>`,
+body:`<p>Otto torna finalmente dalla strada di ritorno, accompagnato da altri segmenti che hanno preso percorsi diversi. Nel buffer le etichette sono mescolate, ma i numeri raccontano l’ordine: devi ricostruire il flusso senza lasciare buchi.</p>
+<p>Arriva finalmente anche Otto, rispedito dal telefono di Giulia, insieme a una manciata di segmenti successivi che hanno preso strade diverse. Nel buffer ora c'è un po' di confusione. Il tuo compito è consegnare all'applicazione i byte nell'ordine giusto.</p>`,
 puzzle:{type:"order",id:"tord",q:"Consegna i segmenti all'applicazione nell'ordine corretto: clicca i numeri di sequenza dal più piccolo al più grande.",
  items:[["13141","d"],["10221","a"],["16061","f"],["11681","b"],["14601","e"],["17521","g"]],correct:["a","b","d","e","f","g"],
  hint:"ordina i numeri in modo crescente: ognuno è il precedente più 1460.",ok:"Perfetto: 10221, 11681, 13141, 14601, 16061, 17521. La faccia di Edo è al suo posto."},
@@ -577,24 +757,27 @@ ch:[["Ora diventa il TCP del telefono di Giulia","s0"]]},
 
 /* ---------- PARTE IV ---------- */
 s0:{part:"IV · Al comando",role:"mitt",title:"Indietro nel tempo, a Lisbona",pos:"telefono di Giulia",
-body:`<p>Ora sei il <strong>TCP del telefono di Giulia</strong>. Torniamo all'istante in cui la stretta di mano con il server si è appena conclusa. Hai 2055 segmenti da spedire.</p>
-<p>Il server è a 25 millisecondi: un segmento impiega 25 ms ad arrivare e il suo ACK altri 25 a tornare. Il tempo di andata e ritorno, l'<strong>RTT</strong>, è di circa 50 ms. E il server ha detto, nel SYN-ACK, che può ricevere al massimo 64 KB alla volta: circa 44 segmenti.</p>
-<p>Prima decisione, la più importante: quanti segmenti mandi prima di fermarti ad aspettare una conferma?</p>`,
+body:`<p>Ora sei il <strong>TCP del telefono di Giulia</strong>. Torniamo all'istante in cui la stretta di mano con il server si è appena conclusa. Davanti a te ci sono 2055 segmenti da spedire e una barra di caricamento che non si muoverà da sola.</p>
+<p>Il server è a circa 25 millisecondi: un segmento impiega 25 ms ad arrivare e il suo ACK altrettanti a tornare. Il tempo di andata e ritorno, l'<strong>RTT</strong>, è dunque di circa 50 ms. Nel SYN-ACK il server ha dichiarato di poter ricevere al massimo 64 KB alla volta, circa 44 segmenti. Ma questo dice quanto spazio ha lui; non dice quanta strada riuscirà a sostenere la rete tra voi.</p>
+<p>Il telefono ha già tutto pronto. Se invii poco, rischi di aspettare a lungo. Se invii troppo, potresti riempire le code di router che non conosci. La barra è ancora all'inizio. Quanti segmenti fai partire prima di fermarti ad aspettare?</p>`,
 learn:["rtt"],
 ch:[["Uno alla volta: mando un segmento, aspetto l'ACK, mando il successivo","s1a"],["Tutti e 2055 subito: il 5G è velocissimo","s1b"],["Fammi fare due conti prima di decidere","s1c"]]},
 s1a:{part:"IV · Al comando",role:"mitt",title:"Un minuto e quaranta",pos:"telefono di Giulia",
-body:`<p>Mandi il segmento 1. Aspetti 50 ms. Arriva l'ACK. Mandi il 2. Aspetti 50 ms. È il metodo <strong>stop-and-wait</strong>: semplicissimo, sicurissimo e lentissimo.</p>`,
+body:`<p>Invii il primo segmento e ti fermi ad ascoltare. Il telefono resta immobile per un intero giro di andata e ritorno; quando arriva l’ACK, riparti con il secondo. È rassicurante, ma la barra di caricamento sembra non muoversi.</p>
+<p>Mandi il segmento 1. Aspetti 50 ms. Arriva l'ACK. Mandi il 2. Aspetti 50 ms. È il metodo <strong>stop-and-wait</strong>: semplicissimo, sicurissimo e lentissimo.</p>`,
 w:()=>W.calc(`2 055 segmenti × 50 ms = 102 750 ms ≈ 1 minuto e 43 secondi
 velocità ≈ 1 460 byte / 0,05 s ≈ 29 KB/s`,"Stop-and-wait"),
 body2:`<p>Giulia guarda la barra di caricamento che non si muove, sbuffa e chiude l'app. Alle 18:00 Marco pubblica la foto con Edo che sbadiglia.</p>
 <p>Per quasi tutto il tempo il collegamento resta vuoto mentre aspetti. La soluzione è avere più segmenti <em>in volo</em> insieme: la <strong>finestra scorrevole</strong>.</p>`,
 learn:["sw","win"],end:"slow",back:"s0"},
 s1b:{part:"IV · Al comando",role:"mitt",title:"La rete intasata",pos:"telefono di Giulia",
-body:`<p>Tre megabyte partono in un colpo solo. Al primo router più lento si forma una coda gigantesca, la coda si riempie, i router scartano. Tu non ricevi gli ACK e rispedisci, aggiungendo traffico a una rete già intasata. E il server, che ne accetta 44 alla volta, butta via il resto.</p>
+body:`<p>Apri tutte le porte insieme e lanci i dati sulla rete come acqua da un tubo troppo pieno. Al primo collo di bottiglia la fila si gonfia, i pacchetti si perdono e i mittenti ricominciano a spedire: il rumore aumenta proprio quando servirebbe calma.</p>
+<p>Tre megabyte partono in un colpo solo. Al primo router più lento si forma una coda gigantesca, la coda si riempie, i router scartano. Tu non ricevi gli ACK e rispedisci, aggiungendo traffico a una rete già intasata. E il server, che ne accetta 44 alla volta, butta via il resto.</p>
 <p>Se tutti facessero così, la rete passerebbe il tempo a scartare e rispedire. Nell'ottobre 1986 Internet visse proprio questo, un <strong>collasso da congestione</strong>: su alcuni collegamenti la velocità utile crollò a meno di un millesimo del normale. Da lì nacquero le regole che vedrai tra poco.</p>`,
 learn:["coll"],end:"collapse",back:"s0"},
 s1c:{part:"IV · Al comando",role:"mitt",title:"La finestra giusta",pos:"telefono di Giulia",
-body:`<p>Con una <strong>finestra</strong> di W segmenti puoi averne W in volo senza conferma. In ogni RTT spedisci al massimo una finestra: velocità ≈ finestra / RTT. Muovi il cursore e guarda quanto tempo serve per spedire la foto.</p>`,
+body:`<p>Il cursore cambia numero e la barra di avanzamento accelera o rallenta sotto i tuoi occhi. Questa volta non stai scegliendo una strada, ma quanta parte del viaggio tentare prima di fermarti ad ascoltare la rete.</p>
+<p>Con una <strong>finestra</strong> di W segmenti puoi averne W in volo senza conferma. In ogni RTT spedisci al massimo una finestra: velocità ≈ finestra / RTT. Muovi il cursore e guarda quanto tempo serve per spedire la foto.</p>`,
 puzzle:{type:"slider",id:"twin"},
 learn:["win","thr"],
 ch:[["Ho capito. Ma la rete reggerà 44 segmenti tutti insieme?","s2"]]},
@@ -605,17 +788,19 @@ w:()=>W.bars([1,2,4,8,16,32],{cap:"Slow start · segmenti in volo a ogni RTT",ma
 learn:["cwnd","ss"],prob:["Il mittente non sa quanto traffico regge la rete","Finestra di congestione e slow start"],
 ch:[["Continua a spedire","s3"]]},
 s3:{part:"IV · Al comando",role:"mitt",title:"Tre ACK uguali",pos:"telefono di Giulia",
-body:`<p>La finestra è a 32 segmenti e i dati scorrono. Per il segmento 5 arriva «ACK 7301». Normale. Poi un altro «ACK 7301». E un altro. E un altro.</p>
-<p>Tre ACK duplicati. Il server sta ricevendo segmenti successivi, ma gli manca qualcosa a partire dal byte 7301: il segmento 6.</p>`,
+body:`<p>La finestra è arrivata a 32 segmenti e per un po' tutto sembra funzionare. Le conferme scorrono sullo schermo; i numeri avanzano, i dati lasciano il telefono e attraversano la rete. Poi, per il segmento 5, compare «ACK 7301». Fin qui è normale. Dopo qualche istante compare di nuovo lo stesso numero. E poi ancora.</p>
+<p>Le conferme successive continuano a fermarsi tutte lì, sullo stesso valore. Non hai un messaggio che spieghi il motivo, soltanto una ripetizione che si fa notare sempre di più. La rete è ancora attiva: qualcosa sta arrivando al server, ma qualcosa non torna. Il timer non è ancora scaduto.</p>`,
 w:()=>W.seq([[5,"ok","ACK"],[6,"fly","?"],[7,"fly"],[8,"fly"],[9,"fly"],[10,"fly"]],{cap:"Segmenti in volo · ACK ricevuti: 7301 ×4"}),
 learn:["dupack"],
 ch:[["Aspetta il timeout: se il 6 non viene confermato, lo rispedirai","s3a"],["Rispedisci subito il 6","s4"],["Rispedisci subito tutto, dal 6 in poi","s3b"]]},
 s3a:{part:"IV · Al comando",role:"mitt",title:"Hai già un indizio",pos:"telefono di Giulia",err:true,
-body:`<p>Il <strong>timeout di ritrasmissione</strong> esiste ed è l'ultima rete di sicurezza: se un ACK non arriva entro un certo tempo, si rispedisce. Ma è lento, almeno 200 millisecondi e spesso un secondo, ben più di un RTT. E quando scatta, TCP lo interpreta come un segnale molto grave e riporta la finestra a 1.</p>
+body:`<p>Il timer ti invita ad aspettare, ma tre conferme identiche sono già arrivate. Non sono una spiegazione completa: sono impronte lasciate dai segmenti successivi, una traccia che puoi usare prima che il cronometro arrivi a zero.</p>
+<p>Il <strong>timeout di ritrasmissione</strong> esiste ed è l'ultima rete di sicurezza: se un ACK non arriva entro un certo tempo, si rispedisce. Ma è lento, almeno 200 millisecondi e spesso un secondo, ben più di un RTT. E quando scatta, TCP lo interpreta come un segnale molto grave e riporta la finestra a 1.</p>
 <p>Qui però hai un indizio: tre ACK duplicati vogliono dire che i segmenti dopo il 6 arrivano. La rete funziona; manca un pezzo solo. Conviene usarlo.</p>`,
 learn:["rto"],ch:[["Torna alla scelta","s3"]]},
 s3b:{part:"IV · Al comando",role:"mitt",title:"Troppa grazia",pos:"telefono di Giulia",err:true,
-body:`<p>Gli ACK duplicati dicono che il server sta ricevendo i segmenti <em>successivi</em> al 6: è probabile che li abbia già nel buffer. Rispedirli tutti significa occupare la rete con dati già arrivati. È il Go-Back-N: funziona, ma spreca.</p>`,
+body:`<p>La tentazione è semplice: ricominciare da capo e rispedire tutto ciò che viene dopo il buco. Ma sul monitor vedi gli ACK ripetersi, e ogni ripetizione dice che altri pezzi sono già arrivati al server.</p>
+<p>Gli ACK duplicati dicono che il server sta ricevendo i segmenti <em>successivi</em> al 6: è probabile che li abbia già nel buffer. Rispedirli tutti significa occupare la rete con dati già arrivati. È il Go-Back-N: funziona, ma spreca.</p>`,
 learn:["gbn"],ch:[["Torna alla scelta","s3"]]},
 s4:{part:"IV · Al comando",role:"mitt",title:"Il doppione",pos:"telefono di Giulia",
 body:`<p>Rispedisci il 6 al terzo ACK duplicato, senza aspettare il timeout. È il <strong>fast retransmit</strong>.</p>
@@ -625,7 +810,8 @@ body:`<p>Rispedisci il 6 al terzo ACK duplicato, senza aspettare il timeout. È 
 learn:["fr","dup"],prob:["Un pacchetto si perde davvero","Tre ACK duplicati e fast retransmit del solo segmento mancante"],
 ch:[["Rispedisci Otto e continua alla stessa velocità","s4a"],["Rispedisci Otto e dimezza la finestra di congestione","s5"]]},
 s4a:{part:"IV · Al comando",role:"mitt",title:"Sempre a tutta velocità",pos:"telefono di Giulia",
-body:`<p>Continui con 32 segmenti in volo. Ma la coda di Madrid era piena perché lì passava più traffico di quanto il collegamento reggesse. Tu continui ad aggiungerne: si perde un altro segmento, poi altri due, poi il timeout scatta e la finestra crolla a 1.</p>
+body:`<p>Ignori l’avvertimento e continui a spingere. Per qualche istante i numeri restano alti, poi la coda di Madrid si riempie di nuovo e la rete comincia a perdere anche i pacchetti degli altri: la tua fretta non resta confinata al tuo viaggio.</p>
+<p>Continui con 32 segmenti in volo. Ma la coda di Madrid era piena perché lì passava più traffico di quanto il collegamento reggesse. Tu continui ad aggiungerne: si perde un altro segmento, poi altri due, poi il timeout scatta e la finestra crolla a 1.</p>
 <p>E danneggi gli altri: chi condivide quel collegamento vede anche lui perdite e ritardi. Per TCP la perdita di un pacchetto è il <strong>segnale</strong> che la rete è congestionata, e la risposta corretta è rallentare. Se tutti rallentano un po', la coda si svuota e tutti ne guadagnano.</p>`,
 learn:["coll"],end:"sawless",back:"s4"},
 s5:{part:"IV · Al comando",role:"mitt",title:"La sega",pos:"telefono di Giulia",
@@ -635,19 +821,22 @@ w:()=>W.bars([1,2,4,8,16,32,16,17,18,19,20,21,22,11,12,13],{cap:"Finestra di con
 learn:["aimd"],prob:["La rete è congestionata","Dimezzare la finestra e farla ricrescere piano (AIMD)"],
 ch:[["Continua","s5b"]]},
 s5b:{part:"IV · Al comando",role:"mitt",title:"Il silenzio del 1203",pos:"telefono di Giulia",
-body:`<p>Più di mille segmenti dopo, tutto fila liscio. Poi un silenzio: hai inviato il segmento 1203 e la sua conferma non arriva. Non arriva nemmeno un ACK duplicato: semplicemente, niente.</p>
-<p>Le possibilità sono tre. Il 1203 si è perso. Oppure il 1203 è arrivato, ma il suo <strong>ACK</strong> si è perso tornando indietro. Oppure tutto è solo in ritardo. Da Lisbona non puoi sapere quale.</p>`,
+body:`<p>Più di mille segmenti dopo, il viaggio ha trovato il suo ritmo. I numeri scorrono, il server risponde, la finestra si allarga e si restringe senza che tu debba pensarci a ogni istante. Giulia ha appoggiato il telefono sul tavolino della hall e sta cercando la chiave della camera nella borsa. Il caricamento continua in sottofondo.</p>
+<p>Poi invii il segmento 1203. Aspetti una conferma. Non arriva. Controlli la schermata: nessun nuovo ACK, nessuna ripetizione, nessun segnale che ti permetta di capire se il segmento è arrivato a destinazione. La rete non è ferma, ma per te, in questo momento, è muta. Il timer continua a contare.</p>`,
 ch:[["Rispedisci subito il 1203: meglio non rischiare","s5c"],["Aspetta il timeout; se scade, rispedisci solo il 1203","s5d"],["Chiudi la connessione: evidentemente qualcosa si è rotto","s5q"]]},
 s5c:{part:"IV · Al comando",role:"mitt",title:"Troppa fretta",pos:"telefono di Giulia",err:true,
-body:`<p>Rispedisci subito. Ma il 1203 era arrivato benissimo: era il suo ACK a essere solo in ritardo. Ora il server riceve due copie e tu hai occupato la rete per niente. Se tutti rispedissero a ogni minimo ritardo, la rete si riempirebbe di doppioni.</p>
+body:`<p>Il dito parte prima che il timer abbia finito. La copia del segmento attraversa la rete e raggiunge un server che aveva già ricevuto l’originale: hai risolto un dubbio che non era ancora maturo, pagando con traffico inutile.</p>
+<p>Rispedisci subito. Ma il 1203 era arrivato benissimo: era il suo ACK a essere solo in ritardo. Ora il server riceve due copie e tu hai occupato la rete per niente. Se tutti rispedissero a ogni minimo ritardo, la rete si riempirebbe di doppioni.</p>
 <p>Prima di concludere che un segmento è perso, il mittente deve aspettare un <strong>timeout</strong> ben definito, calcolato in base agli RTT misurati.</p>`,
 learn:["dup"],ch:[["Torna alla scelta","s5b"]]},
 s5q:{part:"IV · Al comando",role:"mitt",title:"Chi si arrende",pos:"telefono di Giulia",
-body:`<p>Chiudi la connessione. Sullo schermo di Giulia compare «Caricamento non riuscito». Ma non era successo niente di grave: un ACK si era perso, come succede di continuo.</p>
+body:`<p>Premi per chiudere la connessione. La barra si spegne e Giulia resta a guardare il messaggio di errore, proprio mentre la foto era quasi arrivata. Non è stata la rete a dichiararsi impossibile: sei stato tu ad arrenderti prima che il meccanismo di recupero finisse il suo lavoro.</p>
+<p>Chiudi la connessione. Sullo schermo di Giulia compare «Caricamento non riuscito». Ma non era successo niente di grave: un ACK si era perso, come succede di continuo.</p>
 <p>Una rete fatta di milioni di apparati ha sempre qualche pezzo che perde qualcosa. Un protocollo affidabile non pretende una rete perfetta: si organizza per funzionare su una rete imperfetta.</p>`,
 end:"quit",back:"s5b"},
 s5d:{part:"IV · Al comando",role:"mitt",title:"L'ACK perduto",pos:"telefono di Giulia",
-body:`<p>Aspetti il <strong>timeout di ritrasmissione</strong>. Scade. Rispedisci solo il 1203.</p>
+body:`<p>Il timer finalmente scade. Non sai se è sparito il dato o soltanto la sua conferma, quindi ripeti l’invio una volta sola e lasci che il numero di sequenza faccia da memoria al destinatario.</p>
+<p>Aspetti il <strong>timeout di ritrasmissione</strong>. Scade. Rispedisci solo il 1203.</p>
 <p>Al server arriva una seconda copia del 1203. Il server la riconosce dal numero di sequenza: l'aveva già. La butta via e ti rimanda l'ACK, che questa volta arriva. Era l'ACK a essersi perso, non il dato.</p>
 <p>È per questo che il destinatario deve saper riconoscere i <strong>duplicati</strong>: il mittente non può distinguere un dato perso da una conferma persa, e nel dubbio rispedisce.</p>`,
 learn:["rto","ackloss","dup"],prob:["La conferma non arriva: dato perso o ACK perso?","Timeout di ritrasmissione e scarto dei duplicati"],
@@ -657,23 +846,28 @@ body:`<p>Proprio adesso Giulia entra nell'ascensore dell'hotel per salire in cam
 ${D("Giulia","«Dai, dai, dai…»")}`,
 ch:[["Riprova ogni 200 millisecondi, finché la rete torna","s5h"],["Raddoppia l'attesa a ogni tentativo: 1 secondo, poi 2, poi 4","s5f"]]},
 s5h:{part:"IV · Al comando",role:"mitt",title:"Il martello",pos:"telefono di Giulia",
-body:`<p>Bussi, bussi, bussi. Nell'ascensore non cambia niente, ma pensa se il problema fosse una rete congestionata: migliaia di mittenti che ritrasmettono ogni 200 millisecondi la intaserebbero ancora di più, proprio quando avrebbe bisogno di respiro. E il telefono di Giulia consumerebbe la batteria per niente.</p>`,
+body:`<p>Continui a bussare con intervalli identici, ma dall’altra parte della porta metallica non può rispondere nessuno. Se tutta la rete facesse lo stesso durante un sovraccarico, ogni tentativo aggiungerebbe altro rumore al problema.</p>
+<p>Bussi, bussi, bussi. Nell'ascensore non cambia niente, ma pensa se il problema fosse una rete congestionata: migliaia di mittenti che ritrasmettono ogni 200 millisecondi la intaserebbero ancora di più, proprio quando avrebbe bisogno di respiro. E il telefono di Giulia consumerebbe la batteria per niente.</p>`,
 learn:["backoff"],end:"hammer",back:"s5e"},
 s5f:{part:"IV · Al comando",role:"mitt",title:"Pazienza esponenziale",pos:"telefono di Giulia",
-body:`<p>Uno, due, quattro secondi. È il <strong>backoff esponenziale</strong>: se una ritrasmissione resta senza risposta, l'attesa raddoppia. Si disturba sempre meno una rete in difficoltà, e si continua comunque a provare.</p>
+body:`<p>Invece di martellare, allunghi l’attesa: un secondo, poi due, poi quattro. L’ascensore sale piano; tu impari a lasciare spazio alla rete, finché le porte si aprono e il segnale torna a raggiungerti.</p>
+<p>Uno, due, quattro secondi. È il <strong>backoff esponenziale</strong>: se una ritrasmissione resta senza risposta, l'attesa raddoppia. Si disturba sempre meno una rete in difficoltà, e si continua comunque a provare.</p>
 <p>Al quarto piano le porte si aprono, il Wi-Fi torna, il segmento parte, l'ACK arriva. Riprendi da dove eri, con prudenza: dopo un timeout la finestra di congestione torna piccola e ricomincia a crescere.</p>`,
 learn:["backoff"],prob:["La rete sparisce per qualche secondo","Backoff esponenziale del timeout"],
 ch:[["Continua: in camera il Wi-Fi è ottimo","s6"]]},
 s6:{part:"IV · Al comando",role:"mitt",title:"«Window 0»",pos:"telefono di Giulia",
-body:`<p>I dati scorrono. Poi un ACK porta una novità: «window 8500». Il server ha poco spazio. Mandi meno di sei segmenti. L'ACK successivo dice: «window 0».</p>
+body:`<p>Il server ti manda un messaggio sempre più urgente: «window 0». Non è la rete a essere bloccata; è il destinatario che non ha più spazio per accogliere altri dati. Devi distinguere il limite della strada da quello della stanza in cui vuoi entrare.</p>
+<p>I dati scorrono. Poi un ACK porta una novità: «window 8500». Il server ha poco spazio. Mandi meno di sei segmenti. L'ACK successivo dice: «window 0».</p>
 <p>La tua finestra di congestione dice che la rete potrebbe reggere 22 segmenti. Ma il server non può riceverne nemmeno uno.</p>`,
 ch:[["Continua a spedire: la rete regge, il server si arrangerà","s6a"],["Fermati e manda ogni tanto un piccolo sondaggio","s7"]]},
 s6a:{part:"IV · Al comando",role:"mitt",title:"Il mittente sordo",pos:"telefono di Giulia",
-body:`<p>I tuoi segmenti arrivano a un server che non ha spazio. Li scarta, uno dopo l'altro. Tu non ricevi gli ACK, scatta il timeout, rispedisci, e il server scarta di nuovo.</p>
+body:`<p>Continui a inviare anche dopo il segnale di stop. Ogni segmento trova il buffer pieno e cade a terra; ogni ritrasmissione ripete la stessa scena. La rete potrebbe essere libera, ma il server resta incapace di ricevere.</p>
+<p>I tuoi segmenti arrivano a un server che non ha spazio. Li scarta, uno dopo l'altro. Tu non ricevi gli ACK, scatta il timeout, rispedisci, e il server scarta di nuovo.</p>
 <p>La finestra di congestione protegge la <em>rete</em>; la finestra di ricezione protegge il <em>destinatario</em>. Sono due limiti diversi e vanno rispettati entrambi: si invia al massimo il più piccolo dei due.</p>`,
 learn:["rwnd"],end:"deaf",back:"s6"},
 s7:{part:"IV · Al comando",role:"mitt",title:"Ultimo segmento",pos:"telefono di Giulia",
-body:`<p>Ti fermi. Ogni tanto mandi un sondaggio di un solo byte: «window 0», poi ancora «window 0», poi finalmente «window 65535». Riparti.</p>
+body:`<p>La finestra si riapre. Dopo tanti tentativi, il segmento finale attraversa l’ultima tratta e porta con sé l’angolo di selciato che mancava alla fotografia. Per la prima volta, sullo schermo, tutti i numeri tornano al loro posto.</p>
+<p>Ti fermi. Ogni tanto mandi un sondaggio di un solo byte: «window 0», poi ancora «window 0», poi finalmente «window 65535». Riparti.</p>
 <p>Il segmento 2055, l'ultimo, porta gli ultimi 1160 byte della foto: l'angolo in basso a destra, un pezzo di selciato portoghese. Arriva l'ACK 3000001: tutto confermato. Il buffer di invio si svuota.</p>
 <p>Non resta che salutarsi. Mandi un segmento con il flag <strong>FIN</strong>: «io ho finito». Il server conferma, manda il suo FIN, e tu confermi. La connessione è chiusa.</p>`,
 w:()=>W.calc(`segmenti inviati          2 055
@@ -703,11 +897,13 @@ body:`<p>La sera, in camera, Giulia videochiama la mamma. Ora sei un pacchetto d
 learn:["udp"],
 ch:[["L'app dovrebbe chiedere di rispedire il pacchetto mancante","u0a"],["L'app dovrebbe andare avanti con il pacchetto successivo","u1"]]},
 u0a:{part:"Intermezzo · La videochiamata",role:"udp",title:"La videochiamata congelata",pos:"telefono della mamma",
-body:`<p>La richiesta parte, attraversa l'Europa, il telefono di Giulia rispedisce, il pacchetto torna. Sono passati 80 millisecondi. Nel frattempo l'audio si è fermato ad aspettarti, e l'immagine si è congelata con Giulia a bocca aperta e un occhio chiuso.</p>
+body:`<p>Il pacchetto torna indietro con la risposta, ma la conversazione è già andata avanti. La mamma aspetta di sentire il resto della frase e invece vede il volto di Giulia congelato in un’espressione involontariamente buffa.</p>
+<p>La richiesta parte, attraversa l'Europa, il telefono di Giulia rispedisce, il pacchetto torna. Sono passati 80 millisecondi. Nel frattempo l'audio si è fermato ad aspettarti, e l'immagine si è congelata con Giulia a bocca aperta e un occhio chiuso.</p>
 <p>In una conversazione dal vivo un dato in ritardo è inutile: quel pezzetto di «ciao» doveva essere suonato 80 millisecondi fa. Meglio perdere un ventesimo di secondo, che l'orecchio quasi non nota, che bloccare tutto per recuperarlo.</p>`,
 end:"frozen",back:"u0"},
 u1:{part:"Intermezzo · La videochiamata",role:"udp",title:"Un'impercettibile imperfezione",pos:"telefono della mamma",
-body:`<p>L'app va avanti. Al posto dei venti millisecondi mancanti inventa qualcosa di simile all'audio appena sentito, e la mamma sente «ciao mmamma» con un'imperfezione che non nota nemmeno.</p>
+body:`<p>Il suono non torna perfetto, ma la voce continua. La mamma sente una piccola sbavatura e poi ride; nessuna delle due si accorge che l’app ha preferito inventare un pezzetto plausibile invece di fermare la conversazione.</p>
+<p>L'app va avanti. Al posto dei venti millisecondi mancanti inventa qualcosa di simile all'audio appena sentito, e la mamma sente «ciao mmamma» con un'imperfezione che non nota nemmeno.</p>
 <p>I pacchetti successivi arrivano a intervalli irregolari: uno dopo 18 ms, uno dopo 31, uno dopo 22. Questa variazione del ritardo si chiama <strong>jitter</strong>. Per non far sentire la voce a scatti, l'app tiene sempre qualche pacchetto da parte in un piccolo buffer e lo riproduce a ritmo costante.</p>
 <p>Per questo videochiamate, giochi online e dirette usano spesso UDP: preferiscono la tempestività alla completezza. La foto della gita aveva bisogno di TCP; il «ciao mamma», no.</p>`,
 learn:["jit"],ch:[["Torna al finale","f1"],["Epilogo: il giorno dopo","e0"]]},
@@ -738,6 +934,8 @@ const KEY="viaggio8761v2";
 const ROLE={pkt:["Sei il pacchetto 8761","r-pkt"],dns:["Sei una domanda DNS","r-dns"],dest:["Sei il TCP del server","r-dest"],mitt:["Sei il TCP del telefono","r-mitt"],udp:["Sei un pacchetto UDP","r-udp"],router:["Sei il router di Madrid","r-router"],marco:["Intanto, a scuola","r-marco"]};
 let S={node:"p0",trail:[],c:[],e:[],t:[],log:[],solved:{}};
 try{const v=JSON.parse(localStorage.getItem(KEY)||"null");if(v&&N[v.node])S=Object.assign(S,v);}catch(e){}
+if(!Array.isArray(S.visited))S.visited=[];
+[...(Array.isArray(S.trail)?S.trail:[]),S.node].forEach(id=>{if(N[id]&&!S.visited.includes(id))S.visited.push(id);});
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}};
 const $=s=>document.querySelector(s);
 let timer=null;
@@ -746,12 +944,20 @@ function logTable(){if(!S.log.length)return `<div class="cap">Registro di bordo<
  return `<div class="cap">Il tuo registro di bordo · i problemi che hai incontrato e come li hai risolti</div><div style="overflow-x:auto"><table class="t"><tr><th>Problema incontrato</th><th>Soluzione</th></tr>${S.log.filter(k=>PROB[k]).map(k=>`<tr><td>${PROB[k][0]}</td><td>${PROB[k][1]}</td></tr>`).join("")}</table></div>`;}
 function clockMs(){let ms=0;[...S.trail,S.node].forEach(k=>{const n=N[k];if(n&&n.ms)ms+=n.ms;});return ms;}
 function stop(){if(timer){clearInterval(timer);timer=null;}}
-function go(id,push=true){if(!N[id])return;stop();if(id==="p0"){S.trail=[];S.log=[];}else if(push&&S.node!==id)S.trail.push(S.node);S.node=id;render();save();window.scrollTo({top:0,behavior:"auto"});}
+function go(id,push=true){if(!N[id])return;stop();if(id==="p0"){S.trail=[];S.log=[];S.visited=[];}else if(push&&S.node!==id)S.trail.push(S.node);S.node=id;render();save();window.scrollTo({top:0,behavior:"auto"});}
 function kindChip(n){if(n.end)return n.good?"Finale principale":"✗ Finale";if(n.err)return "✗ Non proprio";if(n.puzzle&&n.puzzle.type!=="csma"&&!S.solved[n.puzzle.id])return "Enigma";if(n.puzzle&&n.puzzle.type==="csma")return "Minigioco";if(n.ch&&n.ch.length>1)return "❓ Bivio";return "✓ Avanti";}
 function trophy(id){const tid=id.replace(/2$/,"");if(TR[tid]&&!S.t.includes(tid))S.t.push(tid);}
 function render(){
+ if(!Array.isArray(S.visited))S.visited=[];
+ if(!S.visited.includes(S.node))S.visited.push(S.node);
  const n=N[S.node];const r=ROLE[n.role]||ROLE.pkt;
  document.body.className=r[1];
+ const sceneText=(n.part+" "+n.title+" "+n.pos).toLowerCase();
+ let scene="origin";
+ if(n.role==="dns" || /dns|resolver|server radice|dominio|cache/.test(sceneText)) scene="dns";
+ else if(/rete locale|lan|wi-fi|wifi|access point|switch|arp|mac del gateway/.test(sceneText)) scene="lan";
+ else if(/router|internet|wan|madrid|milano|sotto il mare|ixp|instrad/.test(sceneText) || n.role==="router") scene="wan";
+ document.body.dataset.scene=scene;
  (n.learn||[]).forEach(k=>{if(!S.c.includes(k))S.c.push(k);});
  if(n.end&&!S.e.includes(n.end))S.e.push(n.end);
  if(n.prob&&!S.log.includes(S.node))S.log.push(S.node);
@@ -764,9 +970,10 @@ function render(){
  if(n.end)h+=`<div class="ending ${n.good?"good":""}"><div class="h">${n.good?"Finale principale":"Finale"} · ${S.e.length} di ${Object.keys(EN).length} scoperti</div><div class="t">${EN[n.end]}</div>${n.back?`<div class="row"><button type="button" data-go="${n.back}">↩ Torna al bivio</button><button type="button" data-go="p0">Ricomincia dall'inizio</button></div>`:""}</div>`;
  if(n.ch){if(!open)h+=`<p class="locked">Risolvi l'enigma per andare avanti.</p>`;else h+=`<div class="choices">${n.ch.map((c,i)=>`<button class="choice" type="button" data-go="${c[1]}"><span class="k">${String.fromCharCode(65+i)}</span><span>${c[0]}</span></button>`).join("")}</div>`;}
  $("#main").innerHTML=h;
- $("#main").querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
+ 
  if(pz)renderPuzzle(pz);
  side(n,r);
+ renderParts();
 }
 function solve(pz){S.solved[pz.id]=true;trophy(pz.id);save();render();}
 function renderPuzzle(pz){
@@ -816,13 +1023,44 @@ function side(n,r){
  $("#e-list").innerHTML=ek.map(k=>`<li class="${S.e.includes(k)?"on":""}">${S.e.includes(k)?EN[k]:"???"}</li>`).join("");
  $("#b-back").disabled=!S.trail.length;
 }
-$("#parts").innerHTML=PARTS.map(p=>`<button type="button" data-p="${p[0]}">${p[1]}</button>`).join("");
-$("#parts").querySelectorAll("button").forEach(b=>b.addEventListener("click",()=>go(b.dataset.p)));
+function renderParts(){
+ const box=$("#parts");
+ box.innerHTML=PARTS.map(p=>{
+  const unlocked=p[0]==="p0"||S.visited.includes(p[0]);
+  return `<button type="button" data-p="${p[0]}" ${unlocked?"":"disabled aria-disabled=\"true\" title=\"Raggiungi questa tappa seguendo la storia\""}>${p[1]}</button>`;
+ }).join("");
+ box.querySelectorAll("button:not(:disabled)").forEach(b=>b.addEventListener("click",()=>go(b.dataset.p)));
+}
 $("#b-back").addEventListener("click",()=>{if(S.trail.length){stop();S.node=S.trail.pop();render();save();window.scrollTo(0,0);}});
 let armed=false;
 $("#b-restart").addEventListener("click",function(){
  if(!armed){armed=true;this.textContent="Confermi? Concetti, trofei e finali restano";setTimeout(()=>{armed=false;this.textContent="Ricomincia";},3000);return;}
  armed=false;this.textContent="Ricomincia";go("p0",false);});
+// Navigazione robusta: intercetta le scelte in fase capture, prima degli altri gestori.
+window.__8761Navigate = function(id){
+ if (!Object.prototype.hasOwnProperty.call(N,id)) {
+  let note=document.getElementById("navigation-error");
+  if(!note){note=document.createElement("p");note.id="navigation-error";note.setAttribute("role","alert");note.style.cssText="margin:12px 0;padding:12px;border:1px solid #e7a93e;border-radius:8px;color:#fff;background:#3b2412";$("#main").prepend(note);}
+  note.textContent="Questa tappa non è disponibile ("+id+"). Torna al bivio precedente e scegli un'altra strada.";
+  return false;
+ }
+ try { go(id); return true; }
+ catch(err) {
+  console.error("Errore durante l'apertura della tappa",id,err);
+  let note=document.getElementById("navigation-error");
+  if(!note){note=document.createElement("p");note.id="navigation-error";note.setAttribute("role","alert");note.style.cssText="margin:12px 0;padding:12px;border:1px solid #e7a93e;border-radius:8px;color:#fff;background:#3b2412";$("#main").prepend(note);}
+  note.textContent="Si è verificato un errore nel caricamento di questa tappa. Torna indietro e riprova.";
+  return false;
+ }
+};
+$("#main").addEventListener("click",function(e){
+ const target=e.target;
+ const b=target && target.closest ? target.closest("button[data-go]") : null;
+ if(!b || !this.contains(b)) return;
+ e.preventDefault();
+ const destination=b.getAttribute("data-go");
+ window.__8761Navigate(destination);
+});
 render();
 })();
 </script>
