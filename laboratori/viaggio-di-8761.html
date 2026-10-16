@@ -284,6 +284,11 @@ body[data-scene="wan"]{
 "use strict";
 /* ===================== CONCETTI ===================== */
 const C={
+ phy:["Livello fisico","Trasforma la sequenza di bit in segnali adatti al mezzo: elettrici nei cavi di rame, luminosi nella fibra, onde radio nel Wi-Fi."],
+ bit:["Bit","L'unità minima d'informazione, 0 oppure 1. Nella rete non viaggia come un simbolo astratto: viene codificato in un segnale fisico."],
+ copper:["Segnali elettrici","Nei cavi di rame, circuiti e tensioni che cambiano secondo una codifica rappresentano i bit. Non significa semplicemente «corrente accesa per 1 e spenta per 0»."],
+ fiber:["Fibra ottica","Un mezzo che trasporta informazioni usando impulsi o variazioni di luce guidati dentro sottili fibre di vetro."],
+ radio:["Onde radio","Nel Wi-Fi, trasmettitori e antenne codificano i bit in variazioni controllate di un'onda elettromagnetica. Le onde attraversano l'aria, ma possono interferire."],
  osi:["Modello OSI","Una mappa in sette livelli che aiuta a distinguere le funzioni coinvolte nella comunicazione in rete."],
  tcpip:["Modello TCP/IP","La mappa usata per descrivere le funzioni della comunicazione su Internet, raggruppate in meno livelli rispetto a OSI."],
  encap:["Incapsulamento","Ogni livello aggiunge le informazioni necessarie al proprio compito, come etichette messe una dopo l'altra attorno ai dati."],
@@ -375,7 +380,7 @@ const ROUTE_A=["telefono","hotel","Lisbona","Madrid","Barcellona","Milano MIX","
 const D=(who,t)=>`<p class="d"><b>${who}</b>${t}</p>`;
 
 /* ===================== STORIA ===================== */
-const PARTS=[["p0","Prologo · Lisbona"],["d0","0 · Come si chiama il server?"],["p1","I · Nato da una foto"],["p8","II · Il viaggio"],["m0","II-bis · Sei il router di Madrid"],["r0","III · Dall'altra parte"],["s0","IV · Al comando"],["u0","Intermezzo · La videochiamata"],["e0","Epilogo · Il giorno dopo"]];
+const PARTS=[["p0","Prologo · Lisbona"],["d0","0 · Come si chiama il server?"],["p1","I · Nato da una foto"],["phy0","I-bis · Il linguaggio dei segnali"],["p8","II · Il viaggio"],["m0","II-bis · Sei il router di Madrid"],["r0","III · Dall'altra parte"],["s0","IV · Al comando"],["u0","Intermezzo · La videochiamata"],["e0","Epilogo · Il giorno dopo"]];
 const N={
 /* ---------- PROLOGO ---------- */
 p0:{part:"Prologo",role:"pkt",title:"Lisbona, ore 17:42",pos:"telefono di Giulia",
@@ -453,7 +458,33 @@ body:`<p>Dentro il telefono, la foto riposa per un istante su un banco di prepar
 <p>Adesso guarda la tua valigia: le informazioni non sono tutte uguali e non servono tutte allo stesso dispositivo.</p>`,
 w:()=>W.header({cap:"Le informazioni che viaggiano con te",l2:{t:"Busta del collegamento",f:[["MAC mittente","dispositivo vicino"],["MAC destinatario","prossimo punto della rete"],["Controllo","aiuta a rilevare errori"]]},ip:[["IP sorgente","indirizzo di partenza"],["IP destinazione","indirizzo del server"],["TTL","contatore del viaggio",1]],tcp:[["Porta sorgente","programma che spedisce"],["Porta destinazione","programma che riceve"],["Numero di sequenza","posizione di questa parte"]],data:"Il contenuto: una parte della fotografia"}),
 learn:["osi","tcpip","encap","hdr","port","mac","ttl"],
-ch:[["Apri le buste e guarda cosa cambia lungo il viaggio","p4"]]},
+ch:[["Scopri come i bit diventano segnali","phy0"]]},
+/* ---------- INTERMEZZO: LIVELLO FISICO ---------- */
+phy0:{part:"I-bis · Il linguaggio dei segnali",role:"pkt",title:"Prima del viaggio, una vibrazione",pos:"memoria del telefono di Giulia",
+body:`<p>Hai le tue buste, gli indirizzi e il numero che ti distingue dagli altri segmenti. Ma c'è una domanda che nessuna etichetta può risolvere: <strong>come fanno gli 0 e gli 1 a uscire davvero dal telefono?</strong></p>
+<p>Nella memoria sei una sequenza di bit, una lunga fila di zeri e uni. Però un bit è un'idea, non un piccolo cartellino che può attraversare l'aria. Per raggiungere l'access point, la tua sequenza deve diventare qualcosa che esiste nel mondo fisico: un segnale che un dispositivo possa trasmettere e un altro possa riconoscere.</p>
+<p>È il compito del <strong>livello fisico</strong>, il primo livello del modello OSI. Non decide a quale sito devi arrivare e non legge gli indirizzi IP: si occupa di trasportare i bit attraverso un mezzo concreto. A seconda del collegamento, il segnale può essere elettrico, luminoso oppure un'onda radio. E non immaginare una regola ingenua come «corrente accesa uguale 1»: i dispositivi usano codifiche e variazioni precise per distinguere i bit.</p>
+<p>Per capire che cosa ti aspetta, puoi sbirciare tre strade. Il tuo viaggio, però, comincerà davvero via Wi-Fi: Giulia è nella hall dell'hotel e l'access point è lì, sopra la reception.</p>`,
+learn:["phy","bit"],
+ch:[["Nel Wi-Fi: diventi un segnale radio","phy-radio"],["In un cavo di rame: viaggi come segnale elettrico","phy-copper"],["Nella fibra ottica: viaggi come luce","phy-fiber"]]},
+"phy-radio":{part:"I-bis · Il linguaggio dei segnali",role:"pkt",title:"Il salto nell'aria",pos:"antenna Wi-Fi del telefono",
+body:`<p>Il bordo del telefono si illumina appena. Dentro, un circuito prepara il segnale e l'antenna lo irradia nella hall: non una pallina che vola verso l'access point, ma un'onda elettromagnetica che si propaga nello spazio.</p>
+<p>I bit vengono codificati in variazioni controllate del segnale radio. L'access point riceve l'onda con la propria antenna e interpreta quelle variazioni per ricostruire la sequenza trasmessa. Se altre trasmissioni si sovrappongono, se il segnale è debole o se un ostacolo lo attenua, alcuni bit possono essere letti male: per questo il Wi-Fi ascolta il canale, controlla i dati e, quando serve, ritenta.</p>
+<p>È il mezzo che userai tra il telefono di Giulia e l'access point dell'hotel. Le onde radio non sono visibili, ma il loro viaggio è reale: energia che si propaga, codificata per trasportare informazione.</p>`,
+learn:["radio","phy","bit"],
+ch:[["Confronta anche gli altri mezzi","phy0"],["Ora segui il segnale Wi-Fi verso l'access point","p4"]]},
+"phy-copper":{part:"I-bis · Il linguaggio dei segnali",role:"pkt",title:"Il corridoio di rame",pos:"cavo Ethernet",
+body:`<p>Immagina di entrare in un cavo Ethernet: quattro coppie di fili di rame corrono sotto una guaina, strette come binari in un tunnel. Qui non c'è un'onda radio libera nella stanza. I circuiti alle due estremità generano e riconoscono segnali elettrici lungo i conduttori.</p>
+<p>Le variazioni di tensione seguono una codifica stabilita: il ricevitore misura il segnale e ricostruisce i bit. Non basta pensare a un interruttore che accende la corrente per uno 1 e la spegne per uno 0; i sistemi reali usano schemi più raffinati, proprio per distinguere i dati dal rumore e mantenere la trasmissione affidabile.</p>
+<p>Il rame è comune nelle reti locali, per esempio tra un computer e uno switch. Ma tu sei ancora nella hall e il telefono di Giulia sta usando il Wi-Fi: questa è una strada alternativa, non il mezzo del tuo prossimo salto.</p>`,
+learn:["copper","phy","bit"],
+ch:[["Confronta gli altri mezzi","phy0"],["Torna al viaggio: il tuo primo tratto sarà via Wi-Fi","p4"]]},
+"phy-fiber":{part:"I-bis · Il linguaggio dei segnali",role:"pkt",title:"Una strada fatta di luce",pos:"fibra ottica",
+body:`<p>La stanza si allunga in un filo trasparente, sottile come un capello. Non è vuoto: è vetro purissimo, progettato per guidare la luce lungo il percorso. Alle estremità, dispositivi speciali trasformano i bit in segnali luminosi e poi di nuovo in bit.</p>
+<p>La luce non deve lampeggiare in modo ingenuo, uno spegnimento per ogni zero e un'accensione per ogni uno: anche qui esistono codifiche e modulazioni precise. La fibra può trasportare enormi quantità di dati su grandi distanze, con poche perdite; per questo molti collegamenti tra città e i cavi che attraversano gli oceani usano fibre ottiche.</p>
+<p>Quando più avanti incontrerai il cavo sottomarino, ricorda questa scena: sotto il mare non corre una corrente elettrica lungo tutto l'oceano. Nei cavi in fibra, l'informazione attraversa le distanze come luce guidata dentro fibre sottilissime.</p>`,
+learn:["fiber","phy","bit"],
+ch:[["Confronta gli altri mezzi","phy0"],["Torna al viaggio: il tuo primo tratto sarà via Wi-Fi","p4"]]},
 p4:{part:"I · Nato da una foto",role:"pkt",title:"Una busta per ogni tratto",pos:"telefono di Giulia",ttl:64,
 body:`<p>La prima busta è pronta, ma appena immagini la strada fino alla scuola ti accorgi che non esiste un’unica etichetta buona per tutto il percorso. A ogni passaggio qualcuno deve sapere qual è la destinazione finale e, soprattutto, a chi consegnarti nel tratto successivo.</p>
 <p>Le informazioni che ti accompagnano hanno compiti diversi. L’indirizzo <strong>IP</strong> indica da quale dispositivo parti e verso quale server devi arrivare. Le <strong>porte</strong> aiutano a consegnare i dati al programma corretto. Gli indirizzi <strong>MAC</strong>, invece, servono per consegnare i dati sul collegamento locale che stai usando in quel momento.</p>
@@ -955,8 +986,9 @@ function render(){
  const sceneText=(n.part+" "+n.title+" "+n.pos).toLowerCase();
  let scene="origin";
  if(n.role==="dns" || /dns|resolver|server radice|dominio|cache/.test(sceneText)) scene="dns";
- else if(/rete locale|lan|wi-fi|wifi|access point|switch|arp|mac del gateway/.test(sceneText)) scene="lan";
- else if(/router|internet|wan|madrid|milano|sotto il mare|ixp|instrad/.test(sceneText) || n.role==="router") scene="wan";
+ else if(/fibra|luce|sotto il mare|cavo sottomarino/.test(sceneText)) scene="wan";
+ else if(/rete locale|lan|wi-fi|wifi|access point|switch|arp|mac del gateway|rame|radio|antenna/.test(sceneText)) scene="lan";
+ else if(/router|internet|wan|madrid|milano|ixp|instrad/.test(sceneText) || n.role==="router") scene="wan";
  document.body.dataset.scene=scene;
  (n.learn||[]).forEach(k=>{if(!S.c.includes(k))S.c.push(k);});
  if(n.end&&!S.e.includes(n.end))S.e.push(n.end);
