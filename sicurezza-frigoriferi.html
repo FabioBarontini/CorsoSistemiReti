@@ -282,6 +282,15 @@ figcaption b{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;col
 .video-embed{position:relative;aspect-ratio:16/9;max-width:760px;margin:12px 0;border-radius:6px;overflow:hidden;background:#080506}
 .video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
+
+.iot-flow{display:flex;align-items:center;justify-content:space-between;gap:9px;margin:18px 0;padding:14px;background:#211014;border:1px solid var(--rule);border-radius:8px}
+.iot-flow div{flex:1;min-width:0;padding:12px 8px;text-align:center;border:1px solid var(--heat);border-radius:6px}
+.iot-flow b,.iot-flow span{display:block}
+.iot-flow b{color:var(--heat);font:12px var(--f-ui);text-transform:uppercase}
+.iot-flow span{font-size:12px;color:var(--ink2);margin-top:5px}
+.iot-flow i{color:var(--heat);font-style:normal}
+@media(max-width:650px){.iot-flow{flex-wrap:wrap}.iot-flow div{flex-basis:27%}}
+
 </style>
 </head><body>
 <nav class="snav"><a class="brand" href="index.html">ATLANTE DELLA RETE</a><div class="links"><a href="index.html">HOME</a><a href="storia-internet.html">STORIA</a><a class="active" href="lezioni.html">LEZIONI</a><a href="timeline.html">TIMELINE</a><a href="album.html">ALBUM</a><a href="security.html">SICUREZZA</a><a href="maps-internet.html">MAPPE</a><a href="comunicazione.html">COMUNICAZIONE</a><a href="biblioteca.html">STORIE</a><a href="percorsi.html">PERCORSI</a><a href="search.html">CERCA</a></div></nav>
@@ -344,56 +353,6 @@ figcaption b{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;col
   <div class="box"><h4>Fonti della sezione</h4><p class="src">Reuters, ABC News, BleepingComputer, Help Net Security, Al Jazeera, Sky TG24, Il Fatto Quotidiano, Wikipedia. Link completi in fondo.</p></div>
 </aside>
 </section>
-<section class="video-insert">
-<div class="video-kicker">ATTUALITÀ · IL CASO FRANCESE</div><div class="video-meta">SKY TG24 · 1:02</div>
-<h3>Francia: attacco hacker ai frigoriferi dei supermercati</h3><p>Servizio di Sky TG24 (circa 1 minuto). Racconta l’attacco che ha colpito centinaia di supermercati francesi e i sistemi di refrigerazione gestiti tramite tecnologia Danfoss.</p>
-<p><a href="https://video.sky.it/news/mondo/video/attacco-hacker-supermercati-francia-1131383" target="_blank" rel="noopener">Guarda il servizio di Sky TG24 ↗</a></p>
-<div class="video-task"><b>Fermati e rifletti</b><p>Quale elemento dell’impianto è stato colpito? Qual è stata la conseguenza concreta per i supermercati?</p></div>
-</section>
-
-<section id="freddo" class="split">
-<div>
-  <h2><span class="num">02</span>Dentro il freddo</h2>
-  <p>Un supermercato non ha "tanti frigoriferi": ha <b>un unico grande impianto</b> governato da decine di piccoli computer, coordinati da una centralina collegata alla rete.</p>
-  <h3>2.1 Spostare il calore</h3>
-  <p>Un frigorifero non produce freddo: <b>sposta calore</b> da dentro a fuori, grazie a un fluido refrigerante che gira in un circuito chiuso.</p>
-  <ol>
-    <li><b>Compressore</b>: comprime il refrigerante gassoso, che si scalda.</li>
-    <li><b>Condensatore</b>: il gas caldo cede calore all'esterno e diventa liquido.</li>
-    <li><b>Valvola di espansione</b>: il liquido perde pressione e si raffredda di colpo.</li>
-    <li><b>Evaporatore</b>: dentro il banco, il refrigerante assorbe calore dall'aria ed evapora, poi torna al compressore.</li>
-  </ol>
-  <p>Nei supermercati i compressori non stanno nei banchi: sono riuniti in una <b>centrale frigorifera</b>, in un locale tecnico, che serve tutto il negozio attraverso tubazioni.</p>
-  <h3>2.2 Il regolatore</h3>
-  <p>Ogni banco, cella o isola ha un <b>regolatore elettronico</b>: un microcontrollore che legge le sonde e comanda ventole, valvole e resistenze secondo alcuni parametri.</p>
-  <div class="tw"><table>
-    <thead><tr><th>Parametro</th><th>A cosa serve</th><th>Valori tipici</th></tr></thead>
-    <tbody>
-      <tr><td>Setpoint</td><td>Temperatura da mantenere</td><td>+2/+4 °C freschi; da −18 a −25 °C surgelati</td></tr>
-      <tr><td>Differenziale</td><td>Oscillazione tollerata</td><td>1–3 °C</td></tr>
-      <tr><td>Intervallo sbrinamento</td><td>Ogni quanto sciogliere il ghiaccio</td><td>Ogni 6–12 ore</td></tr>
-      <tr><td>Fine sbrinamento</td><td>Quando spegnere le resistenze</td><td>+8/+12 °C sull'evaporatore, o 20–40 min</td></tr>
-      <tr><td>Soglie e ritardi allarme</td><td>Quando e dopo quanto avvisare</td><td>Es. sopra −15 °C per i surgelati, dopo 30–60 min</td></tr>
-    </tbody>
-  </table></div>
-  <h3>2.3 Lo sbrinamento, usato come arma</h3>
-  <p>L'umidità dell'aria si deposita sull'evaporatore come <b>brina</b>. A intervalli regolari il regolatore ferma il freddo e accende delle <b>resistenze elettriche</b> per scioglierla; quando l'evaporatore raggiunge la temperatura di fine sbrinamento, le spegne.</p>
-  <p>Se qualcuno imposta la fine sbrinamento a <b>+50 °C</b> o la forza di continuo, le resistenze restano accese e il banco diventa un forno. Gli attaccanti non hanno rotto niente: hanno <b>usato una funzione legittima con parametri folli</b>.</p>
-  <h3>2.4 La centralina di supervisione</h3>
-  <p>Tutti i regolatori sono collegati con un bus di campo a una <b>centralina di supervisione</b>, che registra le temperature per i controlli igienici (HACCP), invia allarmi, cambia i parametri di qualunque banco e offre un <b>server web</b> per il controllo a distanza. Spesso la gestisce un'<b>azienda esterna</b>, non il supermercato.</p>
-</div>
-<aside>
-  <div class="box"><h4>Collegamento</h4><p>Il ciclo frigorifero è lo stesso del frigorifero di casa e del condizionatore. Cambiano scala e controllo: a casa un termostato, al supermercato una rete di computer.</p></div>
-</aside>
-</section>
-<section class="video-insert">
-<div class="video-kicker">SPIEGAZIONE · COME NASCE IL FREDDO</div><div class="video-meta">TECNOLOGIA DUEPUNTOZERO · VIDEO DIDATTICO</div>
-<h3>Come funziona un frigorifero</h3><p>Video didattico in italiano, accompagnato da uno schema: mostra il ciclo frigorifero, il compressore, la serpentina e il trasferimento di calore. È una base utile per capire che cosa viene controllato nei banchi frigo.</p>
-<p><a href="https://www.tecnologiaduepuntozero.it/2021/12/29/come-funziona-un-frigorifero/" target="_blank" rel="noopener">Guarda il video e consulta lo schema ↗</a></p>
-<div class="video-task"><b>Fermati e rifletti</b><p>Nel ciclo frigorifero, quale componente comprime il fluido e quale componente assorbe calore dall’interno?</p></div>
-</section>
-
-
 <figure class="col">
   <div class="fw">
   <svg viewBox="0 0 760 552" role="img" aria-label="Una sola pagina web esposta comanda tutti i banchi del negozio" font-family="Barlow, system-ui, sans-serif" font-size="13">
@@ -440,6 +399,49 @@ figcaption b{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;col
   <p>Un impianto frigorifero connesso è a tutti gli effetti un sistema dell'<b>Internet delle cose</b> (IoT, <i>Internet of Things</i>): oggetti fisici dotati di sensori, attuatori e capacità di comunicare in rete. Guardarlo con questi occhi aiuta a capire dove può essere attaccato.</p>
   <h3>3.1 Un'architettura a livelli</h3>
   <p>Ogni sistema IoT si può descrivere a strati. Ogni livello parla solo con quelli vicini, e ognuno ha i suoi punti deboli.</p>
+  <h3>3.2 Sensori: ascoltare l'impianto</h3>
+  <p>I <strong>sensori</strong> misurano una grandezza fisica e la trasformano in un segnale che il regolatore può leggere. Nel supermercato sono gli occhi e le orecchie dell'impianto.</p>
+  <ul>
+    <li><strong>Son­de di temperatura:</strong> misurano la temperatura dell'aria nel banco o quella dell'evaporatore.</li>
+    <li><strong>Sensori di pressione:</strong> controllano la pressione del refrigerante nel circuito.</li>
+    <li><strong>Sensori di porta:</strong> segnalano se una cella frigorifera è rimasta aperta.</li>
+    <li><strong>Sensori di corrente o stato:</strong> aiutano a capire se compressori e ventole sono in funzione.</li>
+  </ul>
+  <p><strong>Esempio:</strong> la sonda rileva −12 °C in un banco per surgelati, mentre il valore desiderato è −20 °C. Il regolatore riceve la misura e decide come intervenire.</p>
+
+  <h3>3.3 Attuatori: agire sull'impianto</h3>
+  <p>Gli <strong>attuatori</strong> ricevono un comando elettrico o elettronico e producono un'azione fisica. Sono le mani del sistema.</p>
+  <ul>
+    <li><strong>Compressori:</strong> fanno circolare il refrigerante nel circuito frigorifero.</li>
+    <li><strong>Ventole:</strong> muovono l'aria attraverso l'evaporatore e nel banco.</li>
+    <li><strong>Valvole:</strong> regolano il passaggio del refrigerante.</li>
+    <li><strong>Resistenze di sbrinamento:</strong> scaldano l'evaporatore per sciogliere la brina.</li>
+    <li><strong>Relè e contattori:</strong> permettono al regolatore di comandare carichi elettrici.</li>
+  </ul>
+  <p><strong>Esempio:</strong> se la temperatura è troppo alta, il regolatore può attivare il raffreddamento; durante lo sbrinamento, invece, può comandare le resistenze. Un comando non autorizzato può quindi modificare davvero la temperatura del cibo.</p>
+
+  <h3>3.4 Il regolatore: il piccolo computer che decide</h3>
+  <p>Il <strong>regolatore elettronico</strong> legge continuamente i sensori, confronta le misure con i parametri impostati (per esempio il setpoint) e invia comandi agli attuatori. In questo modo realizza un ciclo di controllo:</p>
+  <div class="iot-flow" aria-label="Ciclo di controllo del sistema frigorifero">
+    <div><b>1 · Sensori</b><span>misurano la temperatura</span></div>
+    <i>→</i>
+    <div><b>2 · Regolatore</b><span>confronta misura e setpoint</span></div>
+    <i>→</i>
+    <div><b>3 · Attuatori</b><span>agiscono sul raffreddamento</span></div>
+    <i>↺</i>
+  </div>
+  <p>Il ciclo si ripete molte volte: il sistema misura, decide e interviene. Se qualcuno modifica da remoto i parametri del regolatore, può alterare il comportamento dell'intero impianto.</p>
+
+  <h3>3.5 Comunicazione e supervisione</h3>
+  <p>I regolatori non lavorano necessariamente isolati. Possono comunicare con una <strong>centralina di supervisione</strong> attraverso un bus di campo o una rete Ethernet. La centralina raccoglie temperature e allarmi, registra gli eventi e permette al personale tecnico di controllare più banchi da un'unica interfaccia.</p>
+  <ul>
+    <li><strong>Modbus RTU:</strong> protocollo seriale usato spesso nei sistemi di automazione.</li>
+    <li><strong>Modbus TCP:</strong> variante che trasporta i messaggi Modbus su reti TCP/IP.</li>
+    <li><strong>Ethernet:</strong> tecnologia di rete che collega regolatori, supervisore e altri dispositivi.</li>
+    <li><strong>HTTP/HTTPS:</strong> può essere usato dall'interfaccia web per la supervisione e la configurazione remota.</li>
+  </ul>
+  <p>Non tutti gli impianti usano gli stessi protocolli: dipende dal costruttore e dalla generazione dei dispositivi. Il punto importante è che un collegamento utile per la manutenzione può diventare un punto di ingresso se è esposto o protetto male.</p>
+
 </div>
 <aside>
   <div class="box"><h4>Ricorda</h4><p>"IoT" non significa solo oggetti di casa come lampadine e assistenti vocali. Gli impianti industriali connessi si chiamano anche <b>IIoT</b>, <i>Industrial IoT</i>.</p></div>
