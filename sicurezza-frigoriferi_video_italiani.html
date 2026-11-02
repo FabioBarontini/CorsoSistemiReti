@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Frigoriferi sotto attacco · Sicurezza</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="assets/security-lessons.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap">
+<style>
+/* Layout: pagina di libro a colonna singola (~70ch) con box a margine sugli schermi larghi; il laboratorio è un "pannello di controllo" scuro dentro la pagina */
+:root{
+  --paper:#16090c; --ink:#eadfd6; --ink2:#b39d99; --rule:#5b3438; --tint:#281318;
+  --ice:#d28c82; --heat:#caa36b; --bad:#e16f70; --good:#75b995;
+  --box:#210f13;
+  --f-display:"Libre Baskerville",Georgia,serif;
+  --f-body:"Libre Baskerville",Georgia,serif;
+  --f-ui:"DM Mono",ui-monospace,monospace;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--paper:#16090c;--ink:#eadfd6;--ink2:#b39d99;--rule:#5b3438;--tint:#281318;--ice:#d28c82;--heat:#caa36b;--bad:#e16f70;--good:#75b995;--box:#210f13;color-scheme:dark}}
+:root[data-theme="dark"]{--paper:#16090c;--ink:#eadfd6;--ink2:#b39d99;--rule:#5b3438;--tint:#281318;--ice:#d28c82;--heat:#caa36b;--bad:#e16f70;--good:#75b995;--box:#210f13;color-scheme:dark}
+body{margin:0;background:radial-gradient(circle at 75% 5%,#35171c 0,#1a0a0d 38%,#0d0708 100%);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.65;padding-top:116px}
+.snav{position:fixed;z-index:100;top:0;left:0;right:0;height:62px;padding:0 4vw;display:flex;align-items:center;justify-content:space-between;background:#10070ae8;border-bottom:1px solid #fff1;backdrop-filter:blur(14px);font:10px "DM Mono",monospace;letter-spacing:.12em}
+.snav a{color:#a99591;text-decoration:none;margin-left:16px}.snav .brand{color:#d9bd97;letter-spacing:.22em}
+.snav .links{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px}
+.snav .links a{margin-left:10px}
+.security-navline{position:fixed;z-index:90;top:62px;left:0;right:0;display:flex;gap:18px;overflow-x:auto;white-space:nowrap;padding:12px 4vw;background:#16090cf2;border-bottom:1px solid #d18a762b;font:10px "DM Mono",monospace;letter-spacing:.08em}
+.security-navline a{color:#b39d99;text-decoration:none}.security-navline a.active{color:#d28c82;border-bottom:1px solid #d28c82;padding-bottom:5px}
+.page{padding-top:34px}
+.page{max-width:1120px;margin:0 auto;padding-block:32px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.col{max-width:70ch}
+.ch h1,.ch h2,.ch h3{font-family:var(--f-display);text-wrap:balance;line-height:1.08;margin:0}
+.ch h2{font-size:34px;text-transform:uppercase;letter-spacing:.01em;margin-top:56px;padding-top:20px;border-top:2px solid var(--ink);display:flex;gap:14px;align-items:baseline}
+.ch h2 .num{font-family:var(--f-mono);font-size:15px;color:var(--ice);font-weight:600}
+.ch h3{font-size:22px;margin-top:30px;color:var(--ink)}
+.ch p{margin:12px 0 0}
+.ch ul,.ch ol{margin:12px 0 0;padding-left:1.3em}
+.ch li{margin:4px 0}
+.ch a{color:var(--ice);text-underline-offset:2px}
+.ch code{font-family:var(--f-mono);font-size:.85em;background:var(--tint);padding:1px 5px;border-radius:3px}
+.src{font-family:var(--f-ui);font-size:13px;color:var(--ink2)}
+
+/* testata */
+.mast{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:end;border-bottom:1px solid var(--rule);padding-bottom:24px}
+@media (max-width:700px){.mast{grid-template-columns:minmax(0,1fr)}}
+.kick{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ice)}
+.mast h1{font-size:clamp(44px,8vw,88px);text-transform:uppercase;letter-spacing:-.005em;margin-top:8px}
+.mast h1 .heat{color:var(--heat)}
+.mast .deck{font-family:var(--f-body);font-style:italic;font-size:21px;color:var(--ink2);margin-top:10px}
+.thermo{font-family:var(--f-mono);text-align:right;line-height:1}
+.thermo .v{font-size:56px;font-weight:600;color:var(--heat);font-variant-numeric:tabular-nums}
+.thermo .l{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin-top:6px}
+@media (max-width:700px){.thermo{text-align:left}}
+
+/* indice */
+.toc{font-family:var(--f-ui);display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:18px;font-size:14px}
+.toc a{color:var(--ink2);text-decoration:none;border-bottom:1px solid transparent}
+.toc a:hover{color:var(--ink);border-bottom-color:var(--ice)}
+.toc b{font-family:var(--f-mono);font-weight:500;color:var(--ice);margin-right:4px}
+
+/* blocchi didattici */
+.goals{font-family:var(--f-ui);background:var(--tint);border-radius:6px;padding:16px 20px;margin-top:20px}
+.goals h4,.box h4{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ice);margin:0 0 4px}
+.goals ol{margin-top:6px}
+.box{font-family:var(--f-ui);font-size:15.5px;line-height:1.55;border:1px solid var(--rule);background:var(--box);border-radius:6px;padding:14px 16px;margin-top:20px}
+.box.heat{border-color:var(--heat)} .box.heat h4{color:var(--heat)}
+.box.warn h4{color:var(--bad)}
+.box p:first-of-type{margin-top:0}
+.split{display:grid;grid-template-columns:minmax(0,70ch) minmax(0,1fr);gap:40px;align-items:start}
+.split aside .box:first-child{margin-top:12px}
+@media (max-width:980px){.split{grid-template-columns:minmax(0,1fr);gap:0}}
+.tw{overflow-x:auto;margin-top:18px}
+.ch table{border-collapse:collapse;width:100%;font-family:var(--f-ui);font-size:14.5px;line-height:1.45}
+.ch th{text-align:left;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);font-weight:500;border-bottom:2px solid var(--ink);padding:8px 10px 6px}
+.ch td{border-bottom:1px solid var(--rule);padding:8px 10px;vertical-align:top}
+.ch td:first-child{font-weight:600}
+figure{margin:24px 0 0}
+figure .fw{overflow-x:auto;border:1px solid var(--rule);border-radius:6px;background:var(--box);padding:12px}
+figure svg{display:block;width:100%;min-width:560px;height:auto}
+figcaption{font-family:var(--f-ui);font-size:13.5px;color:var(--ink2);margin-top:8px}
+figcaption b{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;color:var(--ice);text-transform:uppercase}
+
+/* livelli IoT */
+.layers{display:flex;flex-direction:column;gap:6px;font-family:var(--f-ui)}
+.layer{display:grid;grid-template-columns:150px minmax(0,1fr) auto;gap:14px;align-items:center;border:1px solid var(--rule);border-radius:6px;padding:10px 14px;background:var(--box)}
+.layer .n{font-family:var(--f-display);font-size:19px;font-weight:600;text-transform:uppercase;line-height:1.1}
+.layer .n small{display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;color:var(--ink2);font-weight:400}
+.layer .e{font-size:14.5px;color:var(--ink2)}
+.layer .flag{font-family:var(--f-mono);font-size:11px;color:var(--bad);border:1px solid var(--bad);border-radius:999px;padding:1px 8px;white-space:nowrap}
+.layer.hit{border-color:var(--bad);box-shadow:inset 3px 0 0 var(--bad)}
+@media (max-width:640px){.layer{grid-template-columns:minmax(0,1fr)}}
+
+/* kill chain */
+.chainbar{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:4px;margin-top:20px;font-family:var(--f-ui)}
+.chainbar div{background:var(--tint);padding:10px;border-radius:4px;min-width:0}
+.chainbar div:last-child{background:var(--heat);color:#fff}
+.chainbar b{display:block;font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;opacity:.8}
+.chainbar span{font-family:var(--f-display);font-size:18px;font-weight:600;text-transform:uppercase}
+@media (max-width:640px){.chainbar{grid-template-columns:minmax(0,1fr)}}
+
+/* lab cornice */
+.labframe{margin-top:24px;border-radius:10px;overflow:hidden;border:1px solid var(--rule)}
+
+/* soluzioni */
+.lock{font-family:var(--f-ui);border:2px dashed var(--rule);border-radius:8px;padding:20px;margin-top:20px}
+.lock form{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.lock input{flex:1 1 240px;min-width:0;font:inherit;font-family:var(--f-mono);padding:9px 12px;border:1px solid var(--rule);border-radius:6px;background:var(--box);color:var(--ink)}
+.lock button{font:inherit;font-weight:600;padding:9px 16px;border-radius:6px;border:1px solid var(--ink);background:var(--ink);color:var(--paper);cursor:pointer}
+.lock .err{color:var(--bad);font-size:14px;min-height:20px;margin-top:6px}
+#solBody{font-family:var(--f-ui);font-size:15.5px;line-height:1.55}
+#solBody h3{font-family:var(--f-display);font-size:21px;text-transform:uppercase;margin-top:28px;color:var(--good)}
+.unlocked{border:2px solid var(--good);border-radius:8px;padding:4px 20px 20px;margin-top:20px}
+.ch :focus-visible{outline:2px solid var(--ice);outline-offset:2px}
+.sources{font-family:var(--f-ui);font-size:14px;columns:2 260px;column-gap:28px}
+.sources li{break-inside:avoid}
+#lab{
+  --bg:#141a21; --panel:#1c242d; --panel2:#232d38; --line:#33414f;
+  --fg:#e3e9ef; --muted:#93a3b3;
+  --ice:#6fd3f0; --ice-dim:#1f4656;
+  --heat:#ff9a3c; --heat-dim:#4a2d14;
+  --bad:#ff5d5d; --good:#5fd39a; --warn:#f2c94c;
+  --f-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"Barlow",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+  color-scheme:dark;
+}
+#lab *{box-sizing:border-box}
+#lab{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.5}
+#lab .wrap{max-width:1180px;margin:0 auto;padding-block:20px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+#lab h1,#lab h2,#lab h3{font-family:var(--f-display);font-weight:700;letter-spacing:.01em;text-wrap:balance;margin:0}
+#lab h1{font-size:clamp(30px,5vw,46px);line-height:1.02;text-transform:uppercase}
+#lab h2{font-size:26px;text-transform:uppercase}
+#lab h3{font-size:19px;text-transform:uppercase;letter-spacing:.04em}
+#lab p{margin:0}
+#lab .mono{font-family:var(--f-mono)}
+#lab .muted{color:var(--muted)}
+#lab .tab-nums{font-variant-numeric:tabular-nums}
+#lab button,#lab input,#lab select{font:inherit;color:inherit}
+#lab button{cursor:pointer}
+#lab :focus-visible{outline:2px solid var(--ice);outline-offset:2px}
+#lab .top{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:flex-end;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:16px}
+#lab .top .kicker{font-family:var(--f-mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--ice)}
+#lab .top .sub{max-width:62ch;color:var(--muted);margin-top:8px}
+#lab .clock{font-family:var(--f-mono);text-align:right;min-width:0}
+#lab .clock .t{font-size:30px;font-weight:600;font-variant-numeric:tabular-nums}
+#lab .clock .d{font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}
+#lab .legal{margin-top:14px;font-size:13px;color:var(--muted);border:1px dashed var(--line);border-radius:6px;padding:8px 12px}
+#lab .legal b{color:var(--warn)}
+#lab .phases{display:flex;gap:6px;margin:20px 0;overflow-x:auto;padding-bottom:4px}
+#lab .phase{flex:1 0 150px;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:10px 12px;display:flex;flex-direction:column;gap:2px}
+#lab .phase .n{font-family:var(--f-mono);font-size:11px;color:var(--muted);letter-spacing:.1em}
+#lab .phase .l{font-family:var(--f-display);font-size:18px;font-weight:600;text-transform:uppercase}
+#lab .phase[aria-selected="true"]{border-color:var(--ice);background:var(--ice-dim)}
+#lab .phase.blue[aria-selected="true"]{border-color:var(--good);background:#173a2c}
+#lab .phase:disabled{opacity:.4;cursor:not-allowed}
+#lab .phase.done .n::after{content:" ✓";color:var(--good)}
+#lab .panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:20px}
+#lab .grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+@media (max-width:820px){#lab .grid2{grid-template-columns:minmax(0,1fr)}}
+#lab .stack{display:flex;flex-direction:column;gap:14px}
+#lab .btn{background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:8px 14px;font-weight:600}
+#lab .btn:hover{border-color:var(--muted)}
+#lab .btn.primary{background:var(--ice);border-color:var(--ice);color:#0c1a20}
+#lab .btn.heat{background:var(--heat);border-color:var(--heat);color:#231004}
+#lab .btn.green{background:var(--good);border-color:var(--good);color:#0b2318}
+#lab .btn.small{padding:4px 10px;font-size:13px}
+#lab .mission{border-left:3px solid var(--ice);padding:2px 0 2px 14px}
+#lab .mission .lbl{font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;color:var(--ice);text-transform:uppercase}
+#lab .q{background:var(--panel2);border-radius:6px;padding:12px 14px;font-size:14px}
+#lab .q b{font-family:var(--f-mono);font-size:11px;letter-spacing:.1em;color:var(--warn);display:block;margin-bottom:2px}
+#lab .searchbar{display:flex;gap:8px;flex-wrap:wrap}
+#lab .searchbar input{flex:1 1 220px;min-width:0;background:#0f1419;border:1px solid var(--line);border-radius:6px;padding:9px 12px;font-family:var(--f-mono);font-size:14px}
+#lab .results{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+#lab .hit{background:#0f1419;border:1px solid var(--line);border-radius:6px;padding:10px 12px;font-family:var(--f-mono);font-size:12.5px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center}
+#lab .hit .ip{color:var(--ice);font-weight:600}
+#lab .hit .ban{grid-column:1/-1;color:var(--muted);white-space:pre-wrap;word-break:break-word}
+#lab .hit.target{border-color:var(--heat)}
+#lab .tag{font-family:var(--f-mono);font-size:11px;border:1px solid var(--line);border-radius:999px;padding:1px 8px;color:var(--muted)}
+#lab .tag.hot{border-color:var(--heat);color:var(--heat)}
+#lab .doc{background:#efe9dc;color:#2a2620;border-radius:4px;padding:16px 18px;font-family:var(--f-mono);font-size:12.5px;line-height:1.55}
+#lab .doc h4{font-family:var(--f-display);font-size:17px;margin:0 0 6px;text-transform:uppercase}
+#lab .doc mark{background:#f6d77a;color:inherit}
+#lab .device{background:linear-gradient(#2a3440,#20282f);border:1px solid var(--line);border-radius:10px;padding:18px;max-width:440px;margin:0 auto;width:100%}
+#lab .device .brand{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+#lab .device .brand b{font-family:var(--f-display);font-size:22px;letter-spacing:.06em}
+#lab .field{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+#lab .field label{font-size:12px;color:var(--muted);font-family:var(--f-mono);letter-spacing:.06em;text-transform:uppercase}
+#lab .field input{background:#0f1419;border:1px solid var(--line);border-radius:5px;padding:8px 10px;font-family:var(--f-mono)}
+#lab .devfoot{margin-top:12px;font-family:var(--f-mono);font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+#lab .msg{font-family:var(--f-mono);font-size:13px;min-height:20px;margin-top:8px}
+#lab .msg.err{color:var(--bad)}
+#lab .msg.ok{color:var(--good)}
+#lab .hmi-head{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;justify-content:space-between;margin-bottom:14px}
+#lab .kpis{display:flex;gap:10px;flex-wrap:wrap}
+#lab .kpi{background:#0f1419;border:1px solid var(--line);border-radius:6px;padding:6px 12px;min-width:120px}
+#lab .kpi .k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;color:var(--muted);text-transform:uppercase}
+#lab .kpi .v{font-family:var(--f-mono);font-size:20px;font-weight:600;font-variant-numeric:tabular-nums}
+#lab .kpi.loss .v{color:var(--bad)}
+#lab .speed{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+#lab .speed .btn[aria-pressed="true"]{border-color:var(--ice);color:var(--ice)}
+#lab .cases{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+#lab .case{background:#10161c;border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:8px;position:relative}
+#lab .case.defrost{border-color:var(--heat)}
+#lab .case.alarm{border-color:var(--bad);box-shadow:0 0 0 1px var(--bad) inset}
+#lab .case .name{font-family:var(--f-display);font-size:18px;font-weight:600;text-transform:uppercase;line-height:1.1}
+#lab .case .addr{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+#lab .temp{display:flex;align-items:baseline;gap:8px}
+#lab .temp .big{font-family:var(--f-mono);font-size:34px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1}
+#lab .state{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;padding:2px 8px;border-radius:4px;text-transform:uppercase}
+#lab .state.cool{background:var(--ice-dim);color:var(--ice)}
+#lab .state.def{background:var(--heat-dim);color:var(--heat)}
+#lab .state.off{background:#2b333c;color:var(--muted)}
+#lab .spark{width:100%;height:46px;display:block}
+#lab .params{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 8px;align-items:center;font-family:var(--f-mono);font-size:12px}
+#lab .params label{color:var(--muted)}
+#lab .params input{width:100%;background:#0f1419;border:1px solid var(--line);border-radius:4px;padding:3px 6px;font-family:var(--f-mono);font-size:12px}
+#lab .prod{font-size:12.5px;display:flex;justify-content:space-between;gap:8px;font-family:var(--f-mono)}
+#lab .prod .ok{color:var(--good)}
+#lab .prod .ko{color:var(--bad);font-weight:600}
+#lab .case .row{display:flex;gap:6px;flex-wrap:wrap}
+#lab .log{background:#0b0f13;border:1px solid var(--line);border-radius:6px;font-family:var(--f-mono);font-size:12px;padding:10px 12px;height:180px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+#lab .log .a{color:var(--heat)}
+#lab .log .s{color:var(--muted)}
+#lab .log .r{color:var(--bad)}
+#lab .log .g{color:var(--good)}
+#lab .log .i{color:var(--ice)}
+#lab .budget{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+#lab .bar{flex:1 1 200px;height:10px;background:#0f1419;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+#lab .bar i{display:block;height:100%;background:var(--good);width:0;transition:width .25s}
+#lab .bar.over i{background:var(--bad)}
+#lab .ctr{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:10px}
+#lab .cm{display:flex;gap:10px;align-items:flex-start;background:#10161c;border:1px solid var(--line);border-radius:8px;padding:10px 12px;cursor:pointer}
+#lab .cm input{margin-top:4px;accent-color:var(--good);width:18px;height:18px;flex:none}
+#lab .cm .t{font-weight:600}
+#lab .cm .c{font-family:var(--f-mono);font-size:12px;color:var(--warn)}
+#lab .cm .d{font-size:13px;color:var(--muted)}
+#lab .cm:has(input:checked){border-color:var(--good)}
+#lab .chain{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px;margin:6px 0}
+@media (max-width:640px){#lab .chain{grid-template-columns:minmax(0,1fr)}}
+#lab .link{border:1px solid var(--line);border-radius:6px;padding:8px 10px;background:#10161c;min-width:0}
+#lab .link .s{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;color:var(--muted)}
+#lab .link .t{font-family:var(--f-display);font-size:16px;font-weight:600;text-transform:uppercase}
+#lab .link .o{font-family:var(--f-mono);font-size:12px;margin-top:2px;min-height:18px}
+#lab .link.pass{border-color:var(--bad)}
+#lab .link.pass .o{color:var(--bad)}
+#lab .link.block{border-color:var(--good);background:#13291f}
+#lab .link.block .o{color:var(--good)}
+#lab .verdict{border-radius:8px;padding:14px 16px;border:1px solid var(--line);background:var(--panel2)}
+#lab .verdict .big{font-family:var(--f-display);font-size:28px;font-weight:700;text-transform:uppercase}
+#lab .hidden{display:none}
+@media (prefers-reduced-motion:reduce){#lab *{transition:none!important;animation:none!important}}
+#lab .blink{animation:bl 1s steps(2) infinite}
+@keyframes bl{50%{opacity:.35}}
+#lab h1,#lab h2,#lab h3{margin:0;padding:0;border:0;display:block;color:inherit}
+#lab{font-size:15px}
+
+/* Raccolta video */
+.video-hub{margin:34px 0 46px;padding:24px;border:1px solid var(--rule);background:linear-gradient(145deg,#241116,#170a0d);border-radius:10px}
+.video-hub>h2{margin-top:10px!important}
+.video-kicker,.video-label{font:11px var(--f-ui);letter-spacing:.13em;color:var(--heat);text-transform:uppercase}
+.video-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:22px}
+.video-card{padding:18px;border:1px solid var(--rule);background:#1b0c10;border-radius:8px;min-width:0}
+.video-card h3{margin:9px 0;color:var(--ink);font-size:20px}
+.video-card p{font-size:14px;color:var(--ink2)}
+.video-frame{position:relative;width:100%;aspect-ratio:16/9;margin:12px 0;border-radius:6px;overflow:hidden;background:#080506}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-link{display:inline-block;margin-top:8px;color:var(--ice);font:12px var(--f-ui);text-decoration:underline;text-underline-offset:3px}
+.video-note{border-left:2px solid var(--heat);padding-left:10px}
+.video-task{margin-top:16px;padding:16px 18px;background:#2a1718;border-left:3px solid var(--heat)}
+.video-task p{margin:6px 0 0;font-size:14px}
+@media(max-width:720px){.video-grid{grid-template-columns:1fr}.video-hub{padding:16px}}
+
+
+.video-insert{margin:24px 0 32px;padding:18px 20px;border:1px solid var(--rule);border-left:3px solid var(--heat);background:#211014;border-radius:7px}
+.video-insert .video-kicker{font:11px var(--f-ui);letter-spacing:.13em;color:var(--heat);text-transform:uppercase;margin-bottom:10px}
+.video-insert h3{margin:5px 0 8px;color:var(--ink);font-size:19px}
+.video-insert p{font-size:14px;color:var(--ink2)}
+.video-insert a{color:var(--ice);text-decoration:underline;text-underline-offset:3px}
+.video-insert .video-task{margin-top:12px;padding:12px 14px;background:#2a1718;border-left:2px solid var(--heat)}
+.video-insert .video-task p{margin:5px 0 0}
+.video-insert .video-meta{font:11px var(--f-ui);letter-spacing:.08em;color:var(--heat);text-transform:uppercase}
+.video-embed{position:relative;aspect-ratio:16/9;max-width:760px;margin:12px 0;border-radius:6px;overflow:hidden;background:#080506}
+.video-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+</style>
+</head><body>
+<nav class="snav"><a class="brand" href="index.html">ATLANTE DELLA RETE</a><div class="links"><a href="index.html">HOME</a><a href="storia-internet.html">STORIA</a><a class="active" href="lezioni.html">LEZIONI</a><a href="timeline.html">TIMELINE</a><a href="album.html">ALBUM</a><a href="security.html">SICUREZZA</a><a href="maps-internet.html">MAPPE</a><a href="comunicazione.html">COMUNICAZIONE</a><a href="biblioteca.html">STORIE</a><a href="percorsi.html">PERCORSI</a><a href="search.html">CERCA</a></div></nav>
+<div class="security-navline" aria-label="Navigazione lezioni sicurezza">
+<a href="sicurezza-fondamenti.html">01 FONDAMENTI</a><a href="sicurezza-attori.html">02 ATTORI</a><a href="sicurezza-classificazione.html">03 CLASSIFICARE</a><a href="sicurezza_privacy.html">04 PRIVACY</a><a href="sicurezza-malware.html">05 MALWARE</a><a class="active" href="sicurezza-frigoriferi.html">06 CASO IoT</a><a href="sicurezza-phishing.html">07 PHISHING</a><a href="sicurezza-reti.html">08 RETI</a><a href="sicurezza-web.html">09 WEB</a><a href="sicurezza-password.html">10 PASSWORD</a><a href="sicurezza-avanzati.html">11 AVANZATI</a><a href="sicurezza-timeline.html">TIMELINE</a><a href="sicurezza-killchain.html">KILL CHAIN</a><a href="sicurezza-difese.html">DIFESE</a><a href="sicurezza-laboratorio.html">LAB</a>
+</div>
+
+
+<div class="ch page">
+<header class="mast">
+  <div>
+    <div class="kick">Cybersicurezza · Classe quinta · Caso di studio</div>
+    <h1>Frigoriferi<br>sotto <span class="heat">attacco</span></h1>
+    <p class="deck">Quando un hacker scongela l'Europa: IoT, impianti fisici e la notte del 2 novembre 2026</p>
+  </div>
+  <div class="thermo" aria-label="Temperatura raggiunta dai congelatori: più 50 gradi">
+    <div class="v">+50 °C</div><div class="l">congelatori, Sjöbo (SE)<br>2 novembre 2026</div>
+  </div>
+</header>
+<nav class="toc" aria-label="Indice">
+  <a href="#apertura"><b>00</b>Apertura</a><a href="#cronaca"><b>01</b>Cronaca</a><a href="#freddo"><b>02</b>Dentro il freddo</a><a href="#iot"><b>03</b>Il negozio come sistema IoT</a><a href="#attacco"><b>04</b>Anatomia dell'attacco</a><a href="#storico"><b>05</b>Perché è storico</a><a href="#difesa"><b>06</b>Difendersi</a><a href="#laboratorio"><b>07</b>Laboratorio</a><a href="#glossario"><b>08</b>Glossario</a><a href="#verifica"><b>09</b>Verifica</a><a href="#soluzioni"><b>10</b>Soluzioni</a>
+</nav>
+
+<section id="apertura" class="split">
+<div>
+  
+<h2><span class="num">00</span>Il freezer che diventò un forno</h2>
+  <p><i>Immagina di essere a Sjöbo, nel sud della Svezia, lunedì 2 novembre 2026, all'apertura.</i> I banchi dei surgelati sono tiepidi, il gelato è liquido, il display del congelatore segna <b>+50 °C</b>. Nessun guasto meccanico, nessun blackout: durante la notte qualcuno, da qualche parte nel mondo, ha cambiato un numero dentro un computer collegato a Internet.</p>
+  <p>La stessa scena, nelle stesse ore, si ripete in Belgio, Lussemburgo, Irlanda, Estonia, Finlandia, Paesi Bassi e in alcuni negozi in Sicilia. Tre settimane prima era successo in Francia, in centinaia di punti vendita.</p>
+</div>
+<aside>
+  <div class="box"><h4>Nota per chi legge</h4><p>I fatti sono aggiornati alla sera del 2 novembre 2026. Le indagini sono in corso e alcuni dettagli potrebbero cambiare. Nessun autore è stato identificato.</p></div>
+</aside>
+</section>
+<section id="cronaca" class="split">
+<div>
+  <h2><span class="num">01</span>Due ondate in tre settimane</h2>
+  <p>Tra ottobre e novembre 2026 due ondate di attacchi hanno trasformato i frigoriferi di centinaia di supermercati europei in forni, costringendo a distruggere tonnellate di alimenti.</p>
+  <h3>Francia, notte tra l'11 e il 12 ottobre</h3>
+  <p>Qualcuno ha preso il controllo remoto dei sistemi di refrigerazione di centinaia di supermercati francesi: oltre 300 Intermarché e Netto, 80 Carrefour, 80 Coopérative U, circa 30 Monoprix e diversi E.Leclerc. Il governo ha poi parlato di circa 700 punti vendita coinvolti.</p>
+  <p>Gli aggressori hanno forzato un <b>ciclo di sbrinamento</b> impostando 50 °C. In un negozio della Normandia alcuni frigoriferi sono arrivati a 80 °C e in diversi punti vendita sono scattati allarmi antincendio. Intermarché ha stimato perdite per milioni di euro. L'agenzia francese per la cybersicurezza (ANSSI) ha indicato i sistemi coinvolti: centraline <b>Danfoss AK-SM e AK-SC</b> e sistemi <b>Copeland XWEB e Dixell XWEB</b>.</p>
+  <h3>Europa, notte tra il 1° e il 2 novembre</h3>
+  <p>Tre settimane dopo lo stesso schema ha colpito oltre 115 negozi in sei Paesi, più segnalazioni dalla Finlandia. L'attacco è partito intorno all'una di notte (ora di Greenwich) ed è stato scoperto solo all'apertura.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Paese</th><th>Catene</th><th>Che cosa sappiamo</th></tr></thead>
+    <tbody>
+      <tr><td>Svezia</td><td>ICA, Coop, un IKEA</td><td>Freezer a 50 °C; Coop: 7 negozi su 800</td></tr>
+      <tr><td>Belgio</td><td>Delhaize, Carrefour, Spar</td><td>Delhaize: alcune decine di negozi; Carrefour: 15 su oltre 700</td></tr>
+      <tr><td>Lussemburgo</td><td>Delhaize</td><td>Alcuni negozi, stesso incidente del Belgio</td></tr>
+      <tr><td>Irlanda</td><td>SuperValu</td><td>13 negozi su 223, tutti con lo stesso modello di impianto</td></tr>
+      <tr><td>Estonia</td><td>Una grande catena</td><td>Accesso al computer di controllo, freezer a +50 °C</td></tr>
+      <tr><td>Finlandia</td><td>K-store</td><td>Anomalie di temperatura in alcuni negozi</td></tr>
+      <tr><td>Italia</td><td>Coop (gruppo Radenza)</td><td>Almeno tre negozi a Catania e uno a Palermo</td></tr>
+    </tbody>
+  </table></div>
+  <p>In Belgio i tecnici di Sabcobel, che installa impianti in molti dei negozi colpiti, hanno lavorato tutta la notte per <b>scollegare dalla rete</b> le unità. In Italia il governo ha convocato un vertice a Palazzo Chigi e l'Agenzia per la Cybersicurezza Nazionale ha diramato un'allerta.</p>
+</div>
+<aside>
+  <div class="box heat"><h4>Chi è stato?</h4><p>Non lo sappiamo. Nessuna rivendicazione, nessun riscatto. Le ipotesi vanno da un attore statale a ragazzi che "si divertono". L'<b>attribuzione</b>, cioè capire chi ha compiuto un attacco, è uno dei problemi più difficili della cybersicurezza.</p></div>
+  <div class="box"><h4>Fonti della sezione</h4><p class="src">Reuters, ABC News, BleepingComputer, Help Net Security, Al Jazeera, Sky TG24, Il Fatto Quotidiano, Wikipedia. Link completi in fondo.</p></div>
+</aside>
+</section>
+<section class="video-insert">
+<div class="video-kicker">ATTUALITÀ · IL CASO FRANCESE</div><div class="video-meta">SKY TG24 · 1:02</div>
+<h3>Francia: attacco hacker ai frigoriferi dei supermercati</h3><p>Servizio di Sky TG24 (circa 1 minuto). Racconta l’attacco che ha colpito centinaia di supermercati francesi e i sistemi di refrigerazione gestiti tramite tecnologia Danfoss.</p>
+<p><a href="https://video.sky.it/news/mondo/video/attacco-hacker-supermercati-francia-1131383" target="_blank" rel="noopener">Guarda il servizio di Sky TG24 ↗</a></p>
+<div class="video-task"><b>Fermati e rifletti</b><p>Quale elemento dell’impianto è stato colpito? Qual è stata la conseguenza concreta per i supermercati?</p></div>
+</section>
+
+<section id="freddo" class="split">
+<div>
+  <h2><span class="num">02</span>Dentro il freddo</h2>
+  <p>Un supermercato non ha "tanti frigoriferi": ha <b>un unico grande impianto</b> governato da decine di piccoli computer, coordinati da una centralina collegata alla rete.</p>
+  <h3>2.1 Spostare il calore</h3>
+  <p>Un frigorifero non produce freddo: <b>sposta calore</b> da dentro a fuori, grazie a un fluido refrigerante che gira in un circuito chiuso.</p>
+  <ol>
+    <li><b>Compressore</b>: comprime il refrigerante gassoso, che si scalda.</li>
+    <li><b>Condensatore</b>: il gas caldo cede calore all'esterno e diventa liquido.</li>
+    <li><b>Valvola di espansione</b>: il liquido perde pressione e si raffredda di colpo.</li>
+    <li><b>Evaporatore</b>: dentro il banco, il refrigerante assorbe calore dall'aria ed evapora, poi torna al compressore.</li>
+  </ol>
+  <p>Nei supermercati i compressori non stanno nei banchi: sono riuniti in una <b>centrale frigorifera</b>, in un locale tecnico, che serve tutto il negozio attraverso tubazioni.</p>
+  <h3>2.2 Il regolatore</h3>
+  <p>Ogni banco, cella o isola ha un <b>regolatore elettronico</b>: un microcontrollore che legge le sonde e comanda ventole, valvole e resistenze secondo alcuni parametri.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Parametro</th><th>A cosa serve</th><th>Valori tipici</th></tr></thead>
+    <tbody>
+      <tr><td>Setpoint</td><td>Temperatura da mantenere</td><td>+2/+4 °C freschi; da −18 a −25 °C surgelati</td></tr>
+      <tr><td>Differenziale</td><td>Oscillazione tollerata</td><td>1–3 °C</td></tr>
+      <tr><td>Intervallo sbrinamento</td><td>Ogni quanto sciogliere il ghiaccio</td><td>Ogni 6–12 ore</td></tr>
+      <tr><td>Fine sbrinamento</td><td>Quando spegnere le resistenze</td><td>+8/+12 °C sull'evaporatore, o 20–40 min</td></tr>
+      <tr><td>Soglie e ritardi allarme</td><td>Quando e dopo quanto avvisare</td><td>Es. sopra −15 °C per i surgelati, dopo 30–60 min</td></tr>
+    </tbody>
+  </table></div>
+  <h3>2.3 Lo sbrinamento, usato come arma</h3>
+  <p>L'umidità dell'aria si deposita sull'evaporatore come <b>brina</b>. A intervalli regolari il regolatore ferma il freddo e accende delle <b>resistenze elettriche</b> per scioglierla; quando l'evaporatore raggiunge la temperatura di fine sbrinamento, le spegne.</p>
+  <p>Se qualcuno imposta la fine sbrinamento a <b>+50 °C</b> o la forza di continuo, le resistenze restano accese e il banco diventa un forno. Gli attaccanti non hanno rotto niente: hanno <b>usato una funzione legittima con parametri folli</b>.</p>
+  <h3>2.4 La centralina di supervisione</h3>
+  <p>Tutti i regolatori sono collegati con un bus di campo a una <b>centralina di supervisione</b>, che registra le temperature per i controlli igienici (HACCP), invia allarmi, cambia i parametri di qualunque banco e offre un <b>server web</b> per il controllo a distanza. Spesso la gestisce un'<b>azienda esterna</b>, non il supermercato.</p>
+</div>
+<aside>
+  <div class="box"><h4>Collegamento</h4><p>Il ciclo frigorifero è lo stesso del frigorifero di casa e del condizionatore. Cambiano scala e controllo: a casa un termostato, al supermercato una rete di computer.</p></div>
+</aside>
+</section>
+<section class="video-insert">
+<div class="video-kicker">SPIEGAZIONE · COME NASCE IL FREDDO</div><div class="video-meta">TECNOLOGIA DUEPUNTOZERO · VIDEO DIDATTICO</div>
+<h3>Come funziona un frigorifero</h3><p>Video didattico in italiano, accompagnato da uno schema: mostra il ciclo frigorifero, il compressore, la serpentina e il trasferimento di calore. È una base utile per capire che cosa viene controllato nei banchi frigo.</p>
+<p><a href="https://www.tecnologiaduepuntozero.it/2021/12/29/come-funziona-un-frigorifero/" target="_blank" rel="noopener">Guarda il video e consulta lo schema ↗</a></p>
+<div class="video-task"><b>Fermati e rifletti</b><p>Nel ciclo frigorifero, quale componente comprime il fluido e quale componente assorbe calore dall’interno?</p></div>
+</section>
+
+
+<figure class="col">
+  <div class="fw">
+  <svg viewBox="0 0 760 552" role="img" aria-label="Una sola pagina web esposta comanda tutti i banchi del negozio" font-family="Barlow, system-ui, sans-serif" font-size="13">
+    <defs>
+      <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--ink2)"/></marker>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--bad)"/></marker>
+    </defs>
+    <g style="fill:none;stroke:var(--ink2)" stroke-width="1.25">
+      <rect x="40" y="60" width="260" height="56" rx="8"/>
+      <rect x="280" y="156" width="200" height="40" rx="8"/>
+      <rect x="40" y="372" width="200" height="72" rx="8"/><rect x="280" y="372" width="200" height="72" rx="8"/><rect x="520" y="372" width="200" height="72" rx="8"/>
+      <rect x="120" y="480" width="520" height="48" rx="8"/>
+      <path d="M170 116V176H278" marker-end="url(#ar)"/>
+      <path d="M380 308V348M140 348H620"/><path d="M140 348V370" marker-end="url(#ar)"/><path d="M380 348V370" marker-end="url(#ar)"/><path d="M620 348V370" marker-end="url(#ar)"/>
+      <path d="M140 444V480M380 444V480M620 444V480" stroke-dasharray="4 4"/>
+    </g>
+    <rect x="460" y="60" width="260" height="56" rx="8" style="fill:var(--bad);fill-opacity:.1;stroke:var(--bad)" stroke-width="2"/>
+    <rect x="200" y="236" width="360" height="72" rx="8" style="fill:var(--ice);fill-opacity:.12;stroke:var(--ice)" stroke-width="2"/>
+    <g style="fill:none;stroke:var(--bad)" stroke-width="2"><path d="M590 116V176H482" marker-end="url(#arr)"/><path d="M380 196V234" marker-end="url(#arr)"/></g>
+    <g style="fill:var(--ink)" text-anchor="middle" font-weight="600">
+      <text x="24" y="30" text-anchor="start" font-size="15">Una sola pagina web esposta comanda tutti i banchi del negozio</text>
+      <text x="170" y="84">Tecnico frigorista</text><text x="590" y="84">Attaccante</text><text x="380" y="181">Internet</text>
+      <text x="380" y="262">Centralina di supervisione</text>
+      <text x="140" y="396">Banco latticini +3 °C</text><text x="380" y="396">Isola surgelati −22 °C</text><text x="620" y="396">Cella surgelati −25 °C</text>
+      <text x="380" y="500">Centrale frigorifera: compressori in parallelo</text>
+    </g>
+    <g style="fill:var(--ink2)" text-anchor="middle" font-size="11.5">
+      <text x="170" y="102">accesso remoto dal browser</text><text x="590" y="102">stessa pagina, stessi poteri</text>
+      <text x="380" y="282">server web · login · registri HACCP · allarmi</text><text x="380" y="298">può cambiare i parametri di ogni banco</text>
+      <text x="392" y="338" text-anchor="start">bus di campo RS-485 / Modbus</text>
+      <text x="140" y="416">regolatore: sonde, ventole</text><text x="140" y="432">resistenze di sbrinamento</text>
+      <text x="380" y="416">regolatore: sonde, ventole</text><text x="380" y="432">resistenze di sbrinamento</text>
+      <text x="620" y="416">regolatore: sonde, ventole</text><text x="620" y="432">resistenze di sbrinamento</text>
+      <text x="380" y="518">tubazioni del refrigerante (tratteggiate) verso ogni banco</text>
+    </g>
+  </svg>
+  </div>
+  <figcaption><b>Figura 1</b> · Architettura dell'impianto di un supermercato. In rosso il percorso dell'attacco: tecnico e attaccante arrivano alla stessa pagina di login.</figcaption>
+</figure>
+
+<section id="iot" class="split">
+<div>
+  <h2><span class="num">03</span>Il negozio come sistema IoT</h2>
+  <p>Un impianto frigorifero connesso è a tutti gli effetti un sistema dell'<b>Internet delle cose</b> (IoT, <i>Internet of Things</i>): oggetti fisici dotati di sensori, attuatori e capacità di comunicare in rete. Guardarlo con questi occhi aiuta a capire dove può essere attaccato.</p>
+  <h3>3.1 Un'architettura a livelli</h3>
+  <p>Ogni sistema IoT si può descrivere a strati. Ogni livello parla solo con quelli vicini, e ognuno ha i suoi punti deboli.</p>
+</div>
+<aside>
+  <div class="box"><h4>Ricorda</h4><p>"IoT" non significa solo oggetti di casa come lampadine e assistenti vocali. Gli impianti industriali connessi si chiamano anche <b>IIoT</b>, <i>Industrial IoT</i>.</p></div>
+</aside>
+</section>
+<section class="video-insert">
+<div class="video-kicker">SPIEGAZIONE · SICUREZZA DEGLI IMPIANTI CONNESSI</div><div class="video-meta">CONFINDUSTRIA VICENZA · WEBINAR IN ITALIANO</div>
+<h3>Cybersecurity Industrial IoT: la sicurezza delle macchine connesse</h3><p>Webinar in italiano con Stefano Zanero, docente del Politecnico di Milano. Spiega perché collegare macchine e impianti alla rete introduce nuove superfici di attacco e quali rischi possono ricadere sul mondo fisico.</p><div class="video-embed"><iframe src="https://www.youtube-nocookie.com/embed/3M8oPPLih1Y" title="Cybersecurity Industrial IoT: la sicurezza delle macchine connesse" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+<p><a href="https://www.confindustria.vicenza.it/notizie-ed-eventi/notizie/video-slide-cybersecurity-industrial-iot-sicurezza-dei-robot-delle-macchine-connesse-VI37519" target="_blank" rel="noopener">Guarda il webinar di Confindustria Vicenza ↗</a></p>
+<div class="video-task"><b>Fermati e rifletti</b><p>Quali differenze ci sono tra proteggere un computer aziendale e proteggere una macchina che controlla un processo fisico?</p></div>
+</section>
+
+<figure class="col">
+  <div class="layers" role="list" aria-label="I quattro livelli di un sistema IoT applicati al supermercato">
+    <div class="layer" role="listitem"><div class="n">Applicazione<small>livello 4</small></div><div class="e">Pannello web del tecnico, app per il direttore, report HACCP, e-mail e SMS di allarme</div><span></span></div>
+    <div class="layer hit" role="listitem"><div class="n">Piattaforma<small>livello 3</small></div><div class="e">Centralina di supervisione nel negozio, server del manutentore, database delle temperature</div><span class="flag">ingresso dell'attacco</span></div>
+    <div class="layer" role="listitem"><div class="n">Rete<small>livello 2</small></div><div class="e">Bus di campo RS-485, rete Ethernet del negozio, router 4G, eventuale VPN verso il manutentore</div><span></span></div>
+    <div class="layer" role="listitem"><div class="n">Percezione e campo<small>livello 1</small></div><div class="e">Sonde, pressostati, regolatori dei banchi e attuatori: compressori, valvole, ventole, resistenze</div><span></span></div>
+  </div>
+  <figcaption><b>Figura 2</b> · I quattro livelli di un sistema IoT nel supermercato. L'attacco è entrato dal livello 3 ed è sceso fino agli attuatori del livello 1.</figcaption>
+</figure>
+
+<section class="split">
+<div>
+  <h3>3.2 Sensori: gli occhi dell'impianto</h3>
+  <p>Un <b>sensore</b> trasforma una grandezza fisica in un segnale elettrico che il regolatore può leggere.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Sensore</th><th>Che cosa misura</th><th>Dove si trova</th></tr></thead>
+    <tbody>
+      <tr><td>Sonda NTC o Pt1000</td><td>Temperatura: la resistenza elettrica cambia con il calore</td><td>Aria in uscita e in ripresa di ogni banco</td></tr>
+      <tr><td>Sonda evaporatore</td><td>Temperatura delle alette, per decidere quando finire lo sbrinamento</td><td>Dentro l'evaporatore</td></tr>
+      <tr><td>Trasduttore di pressione</td><td>Pressione del refrigerante in aspirazione e mandata</td><td>Centrale frigorifera</td></tr>
+      <tr><td>Contatto porta</td><td>Porta della cella aperta o chiusa</td><td>Celle frigorifere</td></tr>
+      <tr><td>Sensore di perdita gas</td><td>Fughe di refrigerante nell'aria</td><td>Locale tecnico, celle</td></tr>
+    </tbody>
+  </table></div>
+  <h3>3.3 Attuatori: le mani dell'impianto</h3>
+  <p>Un <b>attuatore</b> fa il percorso inverso: riceve un comando elettrico e produce un'azione nel mondo fisico. Sono gli attuatori a fare il danno: un attacco OT riesce quando l'attaccante arriva a comandarli.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Attuatore</th><th>Che cosa fa</th><th>Se comandato male</th></tr></thead>
+    <tbody>
+      <tr><td>Compressore (con inverter)</td><td>Fa circolare il refrigerante; l'inverter ne regola la velocità</td><td>Spento: niente freddo. Acceso e spento di continuo: si usura</td></tr>
+      <tr><td>Valvola di espansione elettronica</td><td>Dosa il refrigerante verso l'evaporatore</td><td>Chiusa: il banco si scalda. Troppo aperta: liquido al compressore</td></tr>
+      <tr><td>Elettrovalvola</td><td>Apre o chiude il circuito di un banco</td><td>Chiusa: il banco resta senza freddo</td></tr>
+      <tr><td>Ventole</td><td>Muovono l'aria nel banco e sul condensatore</td><td>Ferme: freddo distribuito male, condensatore surriscaldato</td></tr>
+      <tr><td>Resistenze di sbrinamento</td><td>Scaldano l'evaporatore per sciogliere la brina</td><td>Sempre accese: il banco diventa un forno. È ciò che è successo</td></tr>
+      <tr><td>Luci e tende notturne</td><td>Illuminano e chiudono i banchi aperti di notte</td><td>Tende aperte: più consumi, temperatura meno stabile</td></tr>
+    </tbody>
+  </table></div>
+  <h3>3.4 L'anello di controllo</h3>
+  <p>Sensori, regolatore e attuatori formano un <b>anello chiuso</b> (<i>feedback loop</i>): il regolatore confronta la temperatura misurata con il setpoint e decide che cosa fare. L'anello corregge da solo i disturbi, come una porta lasciata aperta. Ma non sa se il setpoint è sensato: se qualcuno lo cambia, l'anello lo insegue con la stessa efficienza.</p>
+</div>
+<aside>
+  <div class="box heat"><h4>Il punto chiave</h4><p>L'attaccante non ha toccato sensori né attuatori. Ha cambiato l'<b>obiettivo</b> dell'anello di controllo: il setpoint e i parametri di sbrinamento. Tutto il resto lo ha fatto l'impianto, funzionando perfettamente.</p></div>
+</aside>
+</section>
+
+<figure class="col">
+  <div class="fw">
+  <svg viewBox="0 0 760 300" role="img" aria-label="L'anello di controllo insegue il setpoint, anche quando è sbagliato" font-family="Barlow, system-ui, sans-serif" font-size="13">
+    <defs>
+      <marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--ink2)"/></marker>
+      <marker id="arr2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" style="fill:var(--bad)"/></marker>
+    </defs>
+    <g style="fill:none;stroke:var(--ink2)" stroke-width="1.25">
+      <rect x="40" y="64" width="160" height="60" rx="8"/>
+      <rect x="500" y="64" width="220" height="60" rx="8"/>
+      <rect x="500" y="200" width="220" height="60" rx="8"/>
+      <rect x="260" y="200" width="180" height="60" rx="8"/>
+      <path d="M200 94H258" marker-end="url(#ar2)"/>
+      <path d="M440 94H498" marker-end="url(#ar2)"/>
+      <path d="M610 124V198" marker-end="url(#ar2)"/>
+      <path d="M500 230H442" marker-end="url(#ar2)"/>
+      <path d="M350 200V126" marker-end="url(#ar2)"/>
+    </g>
+    <rect x="260" y="64" width="180" height="60" rx="8" style="fill:var(--ice);fill-opacity:.12;stroke:var(--ice)" stroke-width="2"/>
+    <rect x="40" y="200" width="160" height="60" rx="8" style="fill:var(--bad);fill-opacity:.1;stroke:var(--bad)" stroke-width="2"/>
+    <path d="M120 200V126" style="fill:none;stroke:var(--bad)" stroke-width="2" marker-end="url(#arr2)"/>
+    <g style="fill:var(--ink)" text-anchor="middle" font-weight="600">
+      <text x="24" y="30" text-anchor="start" font-size="15">L'anello di controllo insegue il setpoint, anche quando è sbagliato</text>
+      <text x="120" y="90">Setpoint</text><text x="350" y="90">Regolatore</text><text x="610" y="90">Attuatori</text>
+      <text x="610" y="226">Processo fisico</text><text x="350" y="226">Sensori</text><text x="120" y="226">Attaccante</text>
+    </g>
+    <g style="fill:var(--ink2)" text-anchor="middle" font-size="11.5">
+      <text x="120" y="108">−22 °C → +50 °C</text><text x="350" y="108">confronta e decide</text><text x="610" y="108">compressore, valvole, resistenze</text>
+      <text x="610" y="244">aria e merce nel banco</text><text x="350" y="244">sonde di temperatura</text><text x="120" y="244">cambia l'obiettivo</text>
+      <text x="460" y="166" text-anchor="start">comando</text><text x="470" y="250" text-anchor="middle">misura</text><text x="362" y="166" text-anchor="start">retroazione</text>
+    </g>
+  </svg>
+  </div>
+  <figcaption><b>Figura 3</b> · Anello di controllo di un banco frigo. L'attaccante agisce sul setpoint: il resto dell'anello esegue fedelmente.</figcaption>
+</figure>
+
+<section class="split">
+<div>
+  <h3>3.5 Protocolli: come parlano i dispositivi</h3>
+  <p>Molti protocolli dei sistemi OT sono nati negli anni '80 e '90 per reti chiuse, quando nessuno immaginava di collegarli a Internet. Per questo spesso <b>non prevedono né autenticazione né cifratura</b>.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Protocollo</th><th>Dove si usa</th><th>Sicurezza nativa</th></tr></thead>
+    <tbody>
+      <tr><td>Modbus RTU / TCP</td><td>Bus tra centralina e regolatori; versione TCP su Ethernet</td><td>Nessuna: chi raggiunge il bus legge e scrive i registri</td></tr>
+      <tr><td>BACnet</td><td>Gestione degli edifici: clima, luci, accessi</td><td>Debole nelle versioni diffuse; esiste un'estensione sicura</td></tr>
+      <tr><td>LonWorks</td><td>Impianti più vecchi di refrigerazione e domotica</td><td>Limitata</td></tr>
+      <tr><td>HTTP / HTTPS</td><td>Interfaccia web della centralina</td><td>Dipende dalla configurazione: HTTP viaggia in chiaro</td></tr>
+      <tr><td>MQTT</td><td>Invio dei dati al cloud del manutentore</td><td>TLS e password solo se configurati</td></tr>
+    </tbody>
+  </table></div>
+  <h3>3.6 Edge e cloud</h3>
+  <p>La centralina del negozio è un dispositivo <b>edge</b>: elabora i dati sul posto e continua a funzionare anche se la rete cade. I dati possono poi salire al <b>cloud</b> del manutentore, che sorveglia centinaia di negozi. Ogni collegamento verso l'esterno è utile, ma è anche una porta da proteggere.</p>
+  <h3>3.7 Perché l'IoT è fragile</h3>
+  <ul>
+    <li><b>Vita lunga</b>: un impianto dura 15–20 anni, molto più del supporto software del produttore.</li>
+    <li><b>Credenziali di fabbrica</b>: password predefinite o fisse nel firmware, uguali su migliaia di dispositivi. Sono il primo rischio della lista OWASP IoT Top 10.</li>
+    <li><b>Aggiornamenti difficili</b>: fermare un impianto costa, e a volte serve sostituire l'hardware.</li>
+    <li><b>Nessuno se ne occupa</b>: il negozio pensa che sia compito del manutentore, il manutentore del produttore.</li>
+    <li><b>Visibilità</b>: motori di ricerca come Shodan rendono questi dispositivi facili da trovare.</li>
+  </ul>
+</div>
+<aside>
+  <div class="box"><h4>Prova in classe</h4><p>Elencate i dispositivi IoT presenti a scuola: videocamere, centrale termica, LIM, stampanti, badge. Per ciascuno: quale sensore, quale attuatore, chi lo gestisce?</p></div>
+</aside>
+</section>
+
+<section id="attacco" class="split">
+<div>
+  <h2><span class="num">04</span>Anatomia dell'attacco</h2>
+  <p>Non sono servite tecniche da film: bastava trovare centraline aperte, entrare con credenziali deboli o difetti noti e cambiare pochi parametri, di notte. Usiamo il modello della <b>kill chain</b>.</p>
+  <div class="chainbar" aria-label="Le cinque fasi dell'attacco">
+    <div><b>01</b><span>Ricognizione</span></div><div><b>02</b><span>Accesso</span></div><div><b>03</b><span>Comandi</span></div><div><b>04</b><span>Tempismo</span></div><div><b>05</b><span>Scala</span></div>
+  </div>
+  <h3>Fase 1 · Ricognizione</h3>
+  <p>Motori di ricerca come <b>Shodan</b> scansionano continuamente Internet e catalogano i dispositivi che rispondono. Dopo l'attacco francese, una scansione di Reuters ha contato almeno <b>4.500 interfacce web</b> di centraline Danfoss raggiungibili; la Francia da sola ne ospitava quasi il 60% di quelle visibili nel mondo.</p>
+  <h3>Fase 2 · Accesso iniziale</h3>
+  <p>Nel 2025 i ricercatori di Claroty avevano segnalato a Danfoss diversi difetti, tra cui una funzione nascosta di "codice del giorno" che permetteva di entrare come amministratore con una password <b>ricavabile dalla data</b>, uguale per tutti. Danfoss aveva pubblicato correzioni, ma molti impianti non erano aggiornati. Non è confermato quale difetto sia stato usato. Si sono sommati tre errori: <b>esposizione</b> su Internet, <b>credenziali deboli</b> o di fabbrica, <b>firmware obsoleto</b>.</p>
+  <h3>Fase 3 · Comandi agli attuatori</h3>
+  <p>Dentro la centralina l'attaccante ha la stessa schermata del tecnico e può cambiare setpoint, sbrinamento e allarmi di ogni banco insieme.</p>
+  <h3>Fase 4 · Tempismo</h3>
+  <p>Gli attacchi sono partiti di notte, tra domenica e lunedì, a negozi chiusi. La merce ha avuto ore per scongelarsi prima che qualcuno se ne accorgesse.</p>
+  <h3>Fase 5 · Scala</h3>
+  <p>Lo stesso schema, automatizzato, funziona su centinaia di negozi in una notte. Secondo un ricercatore citato da Help Net Security, i freezer colpiti a novembre avevano tutti l'interfaccia esposta su Internet, con la stessa vulnerabilità di ottobre.</p>
+</div>
+<aside>
+  <div class="box"><h4>Perché funzionava ancora?</h4><p>Aggiornare un impianto OT è lento. Il CEO di Sabcobel ha spiegato che, oltre all'aggiornamento software, le unità vanno modificate fisicamente. In Svezia Coop ha detto che l'attacco è arrivato poco prima di un aggiornamento già pianificato.</p></div>
+</aside>
+</section>
+<section class="video-insert">
+<div class="video-kicker">ATTUALITÀ · LA SECONDA ONDATA IN EUROPA</div><div class="video-meta">TGCOM24 · 00:41</div>
+<h3>Frigoriferi dei supermercati di nuovo sotto attacco</h3><p>Servizio di TGcom24 del 2 novembre 2026: immagini e aggiornamenti sugli episodi segnalati in Belgio e Svezia, dopo il caso francese di ottobre.</p>
+<p><a href="https://www.tgcom24.mediaset.it/2026/video/attacchi-hacker-in-supermercati-in-tutta-europa-frigo-a-oltre-50-gradi_118486350-02k.shtml" target="_blank" rel="noopener">Guarda il servizio di TGcom24 ↗</a></p>
+<div class="video-task"><b>Fermati e rifletti</b><p>Quali elementi della vicenda sono confermati dal servizio? Quali dettagli tecnici sull’accesso degli aggressori non sono ancora noti?</p></div>
+</section>
+
+<section id="storico" class="split">
+<div>
+  <h2><span class="num">05</span>Perché è un caso storico</h2>
+  <p>È considerato il primo attacco informatico con un effetto concreto e su larga scala sulla filiera alimentare di un Paese.</p>
+  <p><b>Da digitale a fisico.</b> Il bersaglio è un processo fisico: cibo distrutto, rischio d'incendio, negozi chiusi. È un <b>attacco cyber-fisico</b>, della stessa famiglia di Stuxnet (2010) e degli attacchi alla rete elettrica ucraina (2015).</p>
+  <p><b>La catena del freddo.</b> Un surgelato scongelato non si può ricongelare: va distrutto, spesso davanti a un ufficiale giudiziario. Un attacco più sottile, di pochi gradi, potrebbe far vendere cibo pericoloso senza che nessuno se ne accorga.</p>
+  <p><b>Il fornitore.</b> Il supermercato non ha installato né configurato i dispositivi: è un rischio della <b>catena di fornitura</b>. La direttiva europea <b>NIS2</b> chiede proprio di controllare la sicurezza dei fornitori.</p>
+  <p><b>Un bersaglio facile.</b> Le catene gestiscono migliaia di centraline frigo, sistemi di gestione degli edifici, accessi e casse: ogni dispositivo connesso è una possibile porta d'ingresso.</p>
+</div>
+<aside></aside>
+</section>
+
+<section id="difesa" class="split">
+<div>
+  <h2><span class="num">06</span>Come ci si difende</h2>
+  <p>Quasi tutte le contromisure sono note da anni e costano poco: mancava l'<b>igiene digitale</b>. ANSSI ha indicato come prima mossa togliere i dispositivi da Internet, poi VPN, cambio delle password predefinite e aggiornamento del firmware. Ha anche avvertito che un dispositivo fuori supporto, solo resettato e lasciato esposto, verrà quasi certamente ricompromesso.</p>
+  <div class="tw"><table>
+    <thead><tr><th>Livello IoT</th><th>Contromisura</th><th>Fase bloccata</th></tr></thead>
+    <tbody>
+      <tr><td>Rete</td><td>Togliere l'interfaccia da Internet; accesso solo via VPN o da IP fidati</td><td>Ricognizione, accesso</td></tr>
+      <tr><td>Rete</td><td>Segmentazione: rete OT separata da Wi-Fi clienti, casse, uffici</td><td>Movimento laterale</td></tr>
+      <tr><td>Piattaforma</td><td>Password uniche, un account per tecnico, secondo fattore</td><td>Accesso</td></tr>
+      <tr><td>Piattaforma</td><td>Aggiornare il firmware; sostituire i dispositivi fuori supporto</td><td>Accesso con vulnerabilità note</td></tr>
+      <tr><td>Campo</td><td>Limiti di plausibilità sui parametri, bloccati in locale</td><td>Comandi</td></tr>
+      <tr><td>Campo</td><td>Termostato meccanico che stacca le resistenze oltre una soglia</td><td>Danno fisico</td></tr>
+      <tr><td>Applicazione</td><td>Allarmi su un canale indipendente, reperibilità, registro delle modifiche</td><td>Tempismo</td></tr>
+      <tr><td>Organizzazione</td><td>Inventario dei dispositivi; requisiti di sicurezza nei contratti</td><td>Rischio fornitori</td></tr>
+    </tbody>
+  </table></div>
+  <p>La strategia migliore è la <b>difesa in profondità</b>: più strati indipendenti, così che se uno cede ne resta un altro. Un termostato meccanico non ha software e non si può hackerare: è il principio del <b><i>fail-safe</i></b>.</p>
+</div>
+<aside>
+  <div class="box"><h4>Minimo privilegio</h4><p>Il tecnico che deve solo <i>leggere</i> le temperature non dovrebbe poter <i>modificare</i> lo sbrinamento. Separare i permessi riduce il danno se un account viene rubato.</p></div>
+</aside>
+</section>
+
+<section id="laboratorio">
+  <div class="col">
+    <h2><span class="num">07</span>Laboratorio · La notte dei freezer</h2>
+    <p>Un simulatore da usare alla LIM o a coppie, circa 2 ore. Marca (FrioTech GELIDA SM-900), supermercato e indirizzi IP sono <b>inventati</b>: nessuna azione esce da questa pagina. Nelle fasi 1–3 gli studenti sono il red team, nella fase 4 il blue team con 4.000 € di budget.</p>
+    <div class="box warn"><h4>Etica e legge</h4><p>Ripetere queste azioni su un sistema reale senza autorizzazione è il reato di accesso abusivo a un sistema informatico (art. 615-ter c.p.), anche "solo per vedere". Chi trova una vulnerabilità la segnala al produttore o al CSIRT Italia: si chiama <i>divulgazione responsabile</i>, ed è ciò che fece Claroty con Danfoss.</p></div>
+  </div>
+  <div class="labframe"><div id="lab" class="wrap">
+  <header class="top">
+    <div>
+      <div class="kicker">Laboratorio di cybersicurezza OT · simulazione</div>
+      <h1>La notte dei freezer</h1>
+      <p class="sub">Rivivi l'attacco ai supermercati europei del 2 novembre 2026 da entrambi i lati: prima come attaccante, su un impianto inventato, poi come difensore con un budget limitato.</p>
+    </div>
+    <div class="clock" aria-live="off">
+      <div class="d" id="clkDay">Dom 01/11/2026 · ora centralina</div>
+      <div class="t" id="clk">23:30</div>
+    </div>
+  </header>
+  <p class="legal"><b>Tutto è finto:</b> marca FrioTech, modello GELIDA SM-900, supermercato, indirizzi IP (riservati alla documentazione). Nessun dato esce da questa pagina. Ripetere queste azioni su un sistema reale senza autorizzazione è il reato di accesso abusivo a un sistema informatico (art. 615-ter c.p.).</p>
+
+  <nav class="phases" role="tablist" aria-label="Fasi del laboratorio">
+    <button class="phase" role="tab" id="t0" data-p="0" aria-selected="true"><span class="n">00</span><span class="l">Briefing</span></button>
+    <button class="phase" role="tab" id="t1" data-p="1" aria-selected="false"><span class="n">01 · RED</span><span class="l">Ricognizione</span></button>
+    <button class="phase" role="tab" id="t2" data-p="2" aria-selected="false" disabled><span class="n">02 · RED</span><span class="l">Accesso</span></button>
+    <button class="phase" role="tab" id="t3" data-p="3" aria-selected="false" disabled><span class="n">03 · RED</span><span class="l">La notte</span></button>
+    <button class="phase blue" role="tab" id="t4" data-p="4" aria-selected="false"><span class="n">04 · BLUE</span><span class="l">Difesa</span></button>
+  </nav>
+
+  <!-- 0 BRIEFING -->
+  <section class="panel stack" id="p0" role="tabpanel" aria-labelledby="t0">
+    <h2>Il caso</h2>
+    <div class="grid2">
+      <div class="stack">
+        <p>Il supermercato <b>SuperMax di Pozzuoli</b> chiude la domenica sera. Durante la notte i suoi sei banchi frigo sono governati da una centralina di supervisione <b>GELIDA SM-900</b>, installata da un manutentore esterno che la controlla da remoto via browser.</p>
+        <p>Nella prima parte del laboratorio ripercorrerai i passi degli attaccanti: trovare la centralina su Internet, entrare, cambiare i parametri. Poi guarderai la merce scongelarsi e i danni salire, in tempo accelerato.</p>
+        <p>Nella seconda parte cambi squadra: hai 4.000 € per proteggere il negozio. Scegli le contromisure e rigioca la stessa notte.</p>
+      </div>
+      <div class="stack">
+        <div class="mission"><div class="lbl">Obiettivo red team</div><p>Portare i surgelati sopra i −12 °C prima dell'apertura (07:30).</p></div>
+        <div class="mission" style="border-color:var(--good)"><div class="lbl" style="color:var(--good)">Obiettivo blue team</div><p>Arrivare all'apertura con meno di 500 € di merce persa, senza superare il budget.</p></div>
+        <div class="q"><b>Prima di iniziare</b>In coppia, scrivete tre modi in cui un frigorifero potrebbe essere "attaccato" senza toccarlo fisicamente. Li ritroverete alla fine.</div>
+        <div><button class="btn primary" data-go="1">Inizia la ricognizione</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1 RICOGNIZIONE -->
+  <section class="panel stack hidden" id="p1" role="tabpanel" aria-labelledby="t1">
+    <h2>Fase 1 · Trovare il bersaglio</h2>
+    <p class="muted">Spyglass è un motore di ricerca inventato che, come i servizi reali, scansiona Internet e cataloga i dispositivi che rispondono. Cerca la marca della centralina.</p>
+    <div class="searchbar">
+      <label for="q" class="hidden">Ricerca dispositivi</label>
+      <input id="q" value="" placeholder='es. "FrioTech" country:IT' autocomplete="off">
+      <button class="btn primary" id="doSearch">Cerca</button>
+    </div>
+    <div class="results" id="results"></div>
+    <div class="grid2 hidden" id="reconMore">
+      <div class="doc">
+        <h4>GELIDA SM-900 · Manuale installatore (estratto)</h4>
+        <p>§ 4.2 Primo accesso. Utente predefinito: <b>admin</b>, password <b>FrioTech1</b>. Cambiare la password al primo avvio.</p>
+        <p style="margin-top:8px">§ 4.3 Accesso di assistenza. Se la password è stata smarrita, il tecnico può entrare con utente <mark>service</mark> e il <mark>codice del giorno</mark>: la data della centralina nel formato <mark>GGMMAAAA</mark>.</p>
+        <p style="margin-top:8px">§ 9.1 Firmware. La versione 2.x non è più supportata dal 2023.</p>
+      </div>
+      <div class="stack">
+        <div class="q"><b>Domanda</b>Il manuale era scaricabile liberamente dal sito del produttore. Perché il § 4.3 è un problema di sicurezza anche se la password di admin è stata cambiata?</div>
+        <div class="q"><b>Domanda</b>Il banner del risultato evidenziato rivela la versione del firmware. Che cosa ci guadagna un attaccante?</div>
+        <div><button class="btn primary" data-go="2">Collegati alla centralina</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 ACCESSO -->
+  <section class="panel stack hidden" id="p2" role="tabpanel" aria-labelledby="t2">
+    <h2>Fase 2 · Entrare</h2>
+    <p class="muted">Questa è la pagina di login esposta su Internet all'indirizzo <span class="mono">198.51.100.37:8080</span>. Prova prima le credenziali di fabbrica, poi usa quello che hai letto nel manuale.</p>
+    <div class="grid2">
+      <form class="device" id="loginForm" autocomplete="off">
+        <div class="brand"><b>FRIOTECH</b><span class="mono muted" style="font-size:12px">GELIDA SM-900 · fw 2.4.1</span></div>
+        <div class="field"><label for="user">Utente</label><input id="user" autocomplete="off"></div>
+        <div class="field"><label for="pass">Password</label><input id="pass" type="password" autocomplete="off"></div>
+        <button class="btn primary" type="submit" style="width:100%">Accedi</button>
+        <div class="msg" id="loginMsg" role="status"></div>
+        <div class="devfoot"><span>SuperMax · PV 0412</span><span id="devDate">Data centralina: 01/11/2026 23:41</span></div>
+      </form>
+      <div class="stack">
+        <div class="q"><b>Indizio</b>Guarda bene il piè di pagina della schermata di login.</div>
+        <div class="log" id="authLog" aria-live="polite" style="height:150px"></div>
+        <div class="q"><b>Domanda</b>Il negozio aveva cambiato la password di admin. Quale errore del <i>produttore</i> ha reso inutile quella precauzione?</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 HMI -->
+  <section class="panel stack hidden" id="p3" role="tabpanel" aria-labelledby="t3">
+    <div class="hmi-head">
+      <div><h2>Fase 3 · La notte</h2><p class="muted">Sei dentro, con gli stessi poteri del tecnico. Cambia i parametri, avvia il tempo e guarda cosa succede fino all'apertura.</p></div>
+      <div class="kpis">
+        <div class="kpi"><div class="k">Banchi in allarme</div><div class="v" id="kAlarm">0</div></div>
+        <div class="kpi loss"><div class="k">Merce persa</div><div class="v" id="kLoss">0 €</div></div>
+      </div>
+    </div>
+    <div class="speed">
+      <button class="btn" id="play">▶ Avvia la notte</button>
+      <span class="muted mono" style="font-size:12px">velocità</span>
+      <button class="btn small" data-speed="1" aria-pressed="false">×1</button>
+      <button class="btn small" data-speed="4" aria-pressed="true">×4</button>
+      <button class="btn small" data-speed="12" aria-pressed="false">×12</button>
+      <button class="btn small heat" id="autoAttack">Esegui lo script dell'attaccante</button>
+      <button class="btn small" id="resetNight">Ricomincia</button>
+    </div>
+    <div class="cases" id="cases"></div>
+    <div class="grid2">
+      <div class="stack"><h3>Registro eventi centralina</h3><div class="log" id="evLog" aria-live="polite"></div></div>
+      <div class="stack">
+        <h3>Da osservare</h3>
+        <div class="q"><b>1</b>Imposta solo la <i>fine sbrinamento</i> a 50 °C su un banco. Che cosa succede alla temperatura dell'aria? E a quella della merce?</div>
+        <div class="q"><b>2</b>Perché l'allarme della centralina non salva il negozio? Chi lo riceve, di notte?</div>
+        <div class="q"><b>3</b>La centralina accetta un setpoint di +50 °C su un freezer. Quale controllo manca nel software?</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 DIFESA -->
+  <section class="panel stack hidden" id="p4" role="tabpanel" aria-labelledby="t4">
+    <h2>Fase 4 · Proteggi il negozio</h2>
+    <p class="muted">Lo stesso attaccante tornerà stanotte con lo stesso script. Scegli le contromisure entro il budget, poi simula la notte: vedrai a quale anello della catena l'attacco si ferma, se si ferma.</p>
+    <div class="budget">
+      <span class="mono">Budget</span>
+      <div class="bar" id="bbar"><i></i></div>
+      <span class="mono tab-nums" id="btxt">0 / 4.000 €</span>
+    </div>
+    <div class="ctr" id="ctr"></div>
+    <div><button class="btn green" id="simDef">Simula la notte con queste difese</button></div>
+    <div class="chain" id="chain"></div>
+    <div class="grid2">
+      <div class="log" id="defLog" aria-live="polite" style="height:220px"></div>
+      <div class="verdict" id="verdict"><div class="big muted">In attesa</div><p class="muted">Scegli le difese e avvia la simulazione.</p></div>
+    </div>
+    <div class="q"><b>Per la relazione</b>Trovate due combinazioni diverse che restano sotto i 500 € di danno. Quale costa meno? Quale reggerebbe anche se l'attaccante usasse una vulnerabilità nuova, mai vista prima?</div>
+  </section>
+</div></div>
+  <div class="col">
+    <div class="box"><h4>Consegna per la relazione</h4>
+    <ol>
+      <li>Ricostruite la kill chain dell'attacco simulato e collegate ogni fase a un fatto reale del capitolo.</li>
+      <li>Trovate due combinazioni di difese sotto i 500 € di danno. Quale costa meno? Quale resisterebbe a una vulnerabilità nuova?</li>
+      <li>Scrivete una mail di 10 righe al direttore del supermercato che spieghi, senza termini tecnici, perché vale la pena spendere quei soldi.</li>
+    </ol></div>
+  </div>
+</section>
+
+<section id="glossario" class="col">
+  <h2><span class="num">08</span>Glossario</h2>
+  <div class="tw"><table>
+    <thead><tr><th>Termine</th><th>Significato</th></tr></thead>
+    <tbody>
+      <tr><td>Attacco cyber-fisico</td><td>Attacco informatico che produce effetti nel mondo fisico</td></tr>
+      <tr><td>Attuatore</td><td>Dispositivo che trasforma un comando elettrico in un'azione fisica</td></tr>
+      <tr><td>Backdoor</td><td>Accesso nascosto che aggira l'autenticazione normale</td></tr>
+      <tr><td>Banner</td><td>Testo con cui un servizio di rete si presenta, spesso con marca e versione</td></tr>
+      <tr><td>Bus di campo</td><td>Rete che collega controllori e dispositivi di un impianto (es. RS-485)</td></tr>
+      <tr><td>Catena del freddo</td><td>Mantenimento continuo della temperatura corretta di un alimento</td></tr>
+      <tr><td>Centralina di supervisione</td><td>Computer che controlla e registra tutti i regolatori di un impianto</td></tr>
+      <tr><td>Difesa in profondità</td><td>Più livelli di protezione indipendenti</td></tr>
+      <tr><td>Edge</td><td>Elaborazione dei dati vicino a dove vengono prodotti</td></tr>
+      <tr><td>Fail-safe</td><td>Progettazione per cui un guasto porta a uno stato sicuro</td></tr>
+      <tr><td>Firmware</td><td>Software che gira dentro un dispositivo</td></tr>
+      <tr><td>IoT / IIoT</td><td>Oggetti fisici connessi in rete; IIoT è la versione industriale</td></tr>
+      <tr><td>Kill chain</td><td>Sequenza di fasi di un attacco, dalla ricognizione all'obiettivo</td></tr>
+      <tr><td>Modbus</td><td>Protocollo industriale diffusissimo, senza autenticazione nativa</td></tr>
+      <tr><td>MQTT</td><td>Protocollo leggero per inviare dati IoT a un server</td></tr>
+      <tr><td>OT</td><td>Tecnologie che controllano processi fisici</td></tr>
+      <tr><td>Retroazione</td><td>Uso della misura dell'uscita per correggere l'azione (anello chiuso)</td></tr>
+      <tr><td>Sensore</td><td>Dispositivo che trasforma una grandezza fisica in un segnale elettrico</td></tr>
+      <tr><td>Setpoint</td><td>Valore che un regolatore cerca di mantenere</td></tr>
+      <tr><td>Sbrinamento</td><td>Ciclo che scioglie il ghiaccio sull'evaporatore</td></tr>
+      <tr><td>Shodan</td><td>Motore di ricerca dei dispositivi connessi a Internet</td></tr>
+      <tr><td>VPN</td><td>Tunnel cifrato che rende un servizio raggiungibile solo agli autorizzati</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<section id="verifica" class="col">
+  <h2><span class="num">09</span>Verifica</h2>
+  <ol>
+    <li>Perché i frigoriferi colpiti non sono stati "rotti", ma hanno comunque distrutto la merce?</li>
+    <li>Spiega la differenza tra IT e OT con un esempio diverso dai supermercati.</li>
+    <li>Quali tre errori hanno reso possibile l'attacco? Ordinali dal più grave al meno grave e motiva.</li>
+    <li>Il supermercato aveva cambiato la password di amministratore. Perché non è bastato?</li>
+    <li>Perché un termostato meccanico è una difesa così efficace?</li>
+    <li>Che cosa significa che il punto debole era la catena di fornitura? Che cosa prevede la direttiva NIS2?</li>
+    <li><b>Compito di realtà.</b> Sei il responsabile sicurezza di una catena di 50 supermercati. Scrivi un piano in cinque punti per la prima settimana dopo il 2 novembre.</li>
+    <li>Descrivi i quattro livelli dell'architettura IoT del supermercato. Da quale livello è entrato l'attacco?</li>
+    <li>Fai un esempio di sensore e uno di attuatore in un banco frigo, spiegando la differenza.</li>
+    <li>Perché è pericoloso esporre su Internet un dispositivo che parla Modbus?</li>
+  </ol>
+</section>
+
+<section id="soluzioni" class="col">
+  <h2><span class="num">10</span>Soluzioni per il docente</h2>
+  <div class="lock" id="lockBox">
+    <p>Le soluzioni del laboratorio e della verifica sono cifrate. Inserisci la password per sbloccarle.</p>
+    <form id="unlockForm" autocomplete="off">
+      <label for="pw" class="src" style="flex-basis:100%">Password</label>
+      <input id="pw" type="password" autocomplete="off">
+      <button type="submit">Sblocca</button>
+    </form>
+    <p class="err" id="pwErr" role="status"></p>
+  </div>
+  <div class="unlocked" id="solWrap" hidden><div id="solBody"></div></div>
+</section>
+
+<section id="fonti" class="col">
+  <h2><span class="num">··</span>Fonti</h2>
+  <p class="src">Consultate il 2 novembre 2026.</p>
+  <ul class="sources">
+    <li><a href="https://www.ilfattoquotidiano.it/2026/11/02/attacchi-hacker-supermercati-europa-refrigerazione-notizie/8557799/" target="_blank" rel="noopener">Il Fatto Quotidiano</a></li>
+    <li><a href="https://tg24.sky.it/mondo/2026/11/02/attacco-hacker-supermercati-svezia" target="_blank" rel="noopener">Sky TG24</a></li>
+    <li><a href="https://europa.today.it/attualita/temperature-50-gradi-frigoriferi-supermercati-2-novembre-2026.html" target="_blank" rel="noopener">Europa Today</a></li>
+    <li><a href="https://www.cnbc.com/2026/11/02/cyberattack-on-fridges-hits-supermarkets-across-europe.html" target="_blank" rel="noopener">CNBC / Reuters</a></li>
+    <li><a href="https://www.usnews.com/news/world/articles/2026-11-02/temperature-soars-at-swedish-grocery-store-freezers-one-store-blames-hackers" target="_blank" rel="noopener">US News / Reuters</a></li>
+    <li><a href="https://www.bleepingcomputer.com/news/security/hackers-disrupt-refrigeration-systems-at-european-supermarkets/" target="_blank" rel="noopener">BleepingComputer</a></li>
+    <li><a href="https://www.helpnetsecurity.com/2026/11/02/european-supermarkets-refrigeration-units-cyberattacks/" target="_blank" rel="noopener">Help Net Security</a></li>
+    <li><a href="https://abcnews.com/International/european-grocery-chains-freezers-refrigerators-targeted-apparent-cyberattacks/story?id=137769974" target="_blank" rel="noopener">ABC News</a></li>
+    <li><a href="https://www.aljazeera.com/news/2026/11/2/freezers-in-sweden-belgium-overheat-following-possible-cyberattacks" target="_blank" rel="noopener">Al Jazeera</a></li>
+    <li><a href="https://www.forbes.com/sites/conormurray/2026/11/02/new-wave-of-refrigerator-cyberattacks-roils-european-supermarkets-everything-is-destroyed/" target="_blank" rel="noopener">Forbes</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/2026_French_supermarket_refrigerator_hack" target="_blank" rel="noopener">Wikipedia</a></li>
+    <li><a href="https://industrialcyber.co/control-device-security/french-supermarket-cyberattack-exposes-risks-of-unsecured-remote-access-and-legacy-refrigeration-systems/" target="_blank" rel="noopener">Industrial Cyber</a></li>
+    <li><a href="https://time.com/article/2026/10/13/france-cyber-attack-cybersecurity-refrigeration-supermarket-food-security/" target="_blank" rel="noopener">TIME</a></li>
+    <li><a href="https://complexdiscovery.com/refrigeration-hack-affected-about-700-french-supermarkets-government-says-as-danfoss-interfaces-stay-online/" target="_blank" rel="noopener">ComplexDiscovery</a></li>
+    <li><a href="https://it.euronews.com/2026/10/14/migliaia-di-frigoriferi-dei-supermercati-in-francia-belgio-e-paesi-bassi-vulnerabili-dopo-" target="_blank" rel="noopener">Euronews</a></li>
+  </ul>
+</section>
+</div>
+
+<script>
+(function(){
+  var SOL={"salt": "Vh+l5mLD1hkSgdoBE7GXCw==", "iv": "lPvjCutxa9ff6Z15", "iter": 150000, "data": "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"};
+  function norm(s){return s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/\s+/g," ").trim();}
+  function b64(s){return Uint8Array.from(atob(s),function(c){return c.charCodeAt(0);});}
+  document.getElementById("unlockForm").addEventListener("submit",async function(e){
+    e.preventDefault();
+    var err=document.getElementById("pwErr"); err.textContent="";
+    try{
+      var enc=new TextEncoder();
+      var base=await crypto.subtle.importKey("raw",enc.encode(norm(document.getElementById("pw").value)),"PBKDF2",false,["deriveKey"]);
+      var key=await crypto.subtle.deriveKey({name:"PBKDF2",salt:b64(SOL.salt),iterations:SOL.iter,hash:"SHA-256"},base,{name:"AES-GCM",length:256},false,["decrypt"]);
+      var plain=await crypto.subtle.decrypt({name:"AES-GCM",iv:b64(SOL.iv)},key,b64(SOL.data));
+      document.getElementById("solBody").innerHTML=new TextDecoder().decode(plain);
+      document.getElementById("lockBox").hidden=true;
+      document.getElementById("solWrap").hidden=false;
+    }catch(x){err.textContent="Password errata.";}
+  });
+})();
+</script>
+<script>
+(function(){
+"use strict";
+const $=s=>document.querySelector(s), $$=s=>Array.from(document.querySelectorAll(s));
+
+/* ---------- navigazione fasi ---------- */
+let unlocked=new Set([0,1,4]);
+function show(p){
+  $$(".phase").forEach(b=>b.setAttribute("aria-selected",String(+b.dataset.p===p)));
+  for(let i=0;i<5;i++) $("#p"+i).classList.toggle("hidden",i!==p);
+  document.getElementById("lab").scrollIntoView({behavior:"smooth",block:"start"});
+}
+function unlock(p){unlocked.add(p);$("#t"+p).disabled=false;}
+function done(p){$("#t"+p).classList.add("done");}
+$$(".phase").forEach(b=>b.addEventListener("click",()=>{if(!b.disabled) show(+b.dataset.p);}));
+$$("[data-go]").forEach(b=>b.addEventListener("click",()=>{const p=+b.dataset.go;unlock(p);show(p);}));
+
+/* ---------- fase 1: scanner ---------- */
+const HITS=[
+ {ip:"203.0.113.14",port:80,place:"Lione, FR",prod:"FrioTech GELIDA SM-900",fw:"3.1.0",note:"HTTP/1.1 401 · login protetto · TLS"},
+ {ip:"198.51.100.37",port:8080,place:"Pozzuoli, IT",prod:"FrioTech GELIDA SM-900",fw:"2.4.1",note:"HTTP/1.1 200 OK · Server: GELIDA-httpd/2.4.1 · Title: SuperMax PV 0412",target:true},
+ {ip:"203.0.113.201",port:8080,place:"Gand, BE",prod:"FrioTech GELIDA SM-700",fw:"2.2.7",note:"HTTP/1.1 200 OK · Server: GELIDA-httpd/2.2.7"},
+ {ip:"198.51.100.90",port:443,place:"Tartu, EE",prod:"FrioTech GELIDA SM-900",fw:"3.2.2",note:"HTTPS · certificato valido · accesso solo da VPN"},
+ {ip:"203.0.113.66",port:80,place:"Malmö, SE",prod:"FrioTech GELIDA SM-700",fw:"2.0.9",note:"HTTP/1.1 200 OK · Server: GELIDA-httpd/2.0.9"}
+];
+function search(){
+  const q=$("#q").value.toLowerCase();
+  const box=$("#results"); box.innerHTML="";
+  if(!q.includes("friotech")&&!q.includes("gelida")){
+    box.innerHTML='<div class="hit"><span class="muted">Nessun risultato. Suggerimento: cerca il nome del produttore, "FrioTech".</span></div>';return;
+  }
+  let list=HITS.slice(); if(q.includes("country:it")) list=list.filter(h=>h.place.endsWith("IT"));
+  const head=document.createElement("div"); head.className="mono muted"; head.style.fontSize="12px";
+  head.textContent=`${list.length} dispositivi trovati${q.includes("country:it")?" in Italia":" (su 1.284 nel mondo)"}`;
+  box.appendChild(head);
+  list.forEach(h=>{
+    const d=document.createElement("div"); d.className="hit"+(h.target?" target":"");
+    const old=h.fw.startsWith("2");
+    d.innerHTML=`<span><span class="ip">${h.ip}:${h.port}</span> · ${h.place}</span><span class="tag ${old?"hot":""}">fw ${h.fw}${old?" · fuori supporto":""}</span><span class="ban">${h.prod} — ${h.note}</span>`;
+    box.appendChild(d);
+  });
+  $("#reconMore").classList.remove("hidden"); done(1); unlock(2);
+}
+$("#doSearch").addEventListener("click",search);
+$("#q").addEventListener("keydown",e=>{if(e.key==="Enter")search();});
+
+/* ---------- fase 2: login ---------- */
+const authLog=$("#authLog");
+function alog(el,cls,t){const s=document.createElement("span");s.className=cls;s.textContent=t+"\n";el.appendChild(s);el.scrollTop=el.scrollHeight;}
+alog(authLog,"s","[23:41:02] GET /login 200 da 192.0.2.77");
+let tries=0;
+$("#loginForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const u=$("#user").value.trim().toLowerCase(), p=$("#pass").value.trim().replace(/[\/\-. ]/g,"");
+  tries++;
+  if(u==="service"&&p==="01112026"){
+    $("#loginMsg").className="msg ok"; $("#loginMsg").textContent="Accesso di assistenza concesso. Benvenuto, service.";
+    alog(authLog,"r",`[23:4${Math.min(9,1+tries)}:10] LOGIN OK utente=service metodo=codice-del-giorno`);
+    alog(authLog,"s","Nessuna notifica inviata. Nessun secondo fattore richiesto.");
+    done(2); unlock(3); setTimeout(()=>show(3),900);
+  } else if(u==="admin"&&p==="friotech1"){
+    $("#loginMsg").className="msg err"; $("#loginMsg").textContent="Password errata. (Il negozio l'ha cambiata: bravo il negozio.)";
+    alog(authLog,"g",`LOGIN FALLITO utente=admin`);
+  } else if(u==="service"){
+    $("#loginMsg").className="msg err"; $("#loginMsg").textContent="Codice del giorno non valido. Che giorno è, per la centralina?";
+    alog(authLog,"a",`LOGIN FALLITO utente=service`);
+  } else {
+    $("#loginMsg").className="msg err"; $("#loginMsg").textContent="Credenziali non valide.";
+    alog(authLog,"a",`LOGIN FALLITO utente=${u||"(vuoto)"}`);
+  }
+});
+
+/* ---------- modello termico ---------- */
+// tempo simulato in minuti dalle 23:30 di domenica; apertura alle 07:30 = 480 min
+const OPEN=480;
+const CASES0=[
+ {id:"B01",name:"Isola surgelati",type:"frz",sp:-22,de:10,di:8,val:3800,kg:420},
+ {id:"B02",name:"Banco gelati",type:"frz",sp:-24,de:10,di:8,val:2600,kg:260},
+ {id:"C01",name:"Cella surgelati",type:"frz",sp:-25,de:10,di:12,val:5200,kg:900},
+ {id:"B03",name:"Murale latticini",type:"fresh",sp:3,de:8,di:6,val:1900,kg:310},
+ {id:"B04",name:"Banco carni",type:"fresh",sp:2,de:8,di:6,val:3100,kg:240},
+ {id:"B05",name:"Frutta e verdura",type:"fresh",sp:6,de:8,di:8,val:900,kg:350}
+];
+function mkCase(c){return Object.assign({},c,{T:c.sp+0.5,P:c.sp,mode:"cool",lastDef:-60-Math.random()*200,spoiled:false,hot:0,hist:[],alarm:false});}
+function limitMax(c){return c.type==="frz"?-15:8;} // soglia allarme aria
+function spoilLimit(c){return c.type==="frz"?-12:8;}
+
+// avanza un banco di dt minuti; opts: safety thermostat, limits
+function stepCase(c,t,dt,opts){
+  opts=opts||{};
+  // logica regolatore
+  if(c.mode!=="def" && c.di>0 && t-c.lastDef>=c.di*60){c.mode="def";c.lastDef=t;}
+  if(c.mode==="def"){
+    if(c.T>=c.de || t-c.lastDef>=Math.max(45, c.de>20?240:40)) c.mode="cool";
+  } else {
+    if(c.T>c.sp+1) c.mode="cool"; else if(c.T<c.sp-1) c.mode="off";
+  }
+  if(opts.safety && c.mode==="def" && c.T>15) c.mode="cool"; // il termostato meccanico interrompe lo sbrinamento
+  let heaterOn=c.mode==="def";
+  // fisica aria
+  const amb=19;
+  let dT=(amb-c.T)*0.006; // dispersione verso il negozio
+  if(c.mode==="cool") dT+=(c.sp-9-c.T)*0.05;
+  if(heaterOn) dT+=(78-c.T)*0.035;
+  c.T+=dT*dt;
+  // merce (inerzia termica): segue l'aria lentamente
+  const k=c.type==="frz"?0.0018:0.004;
+  c.P+=(c.T-c.P)*k*dt;
+  if(c.T>limitMax(c)){ if(c.mode!=="def") c.over=(c.over||0)+dt; } else c.over=0;
+  if(c.over>=45) c.alarm=true; // ritardo allarme tipico // come nei regolatori veri, niente allarme durante lo sbrinamento
+  if(!c.spoiled){
+    if(c.type==="frz"&&c.P>spoilLimit(c)) c.spoiled=true;
+    if(c.type==="fresh"){ if(c.P>spoilLimit(c)) c.hot+=dt; else c.hot=Math.max(0,c.hot-dt*0.5); if(c.hot>120) c.spoiled=true; }
+  }
+}
+
+/* ---------- fase 3: HMI ---------- */
+let night, t, running=false, speed=4, timer=null, prevSp={};
+const evLog=$("#evLog");
+function fmtT(m){const tot=(23*60+30+m)%1440;const h=Math.floor(tot/60),mi=Math.floor(tot%60);return String(h).padStart(2,"0")+":"+String(mi).padStart(2,"0");}
+function dayLabel(m){return (23*60+30+m)>=1440?"Lun 02/11/2026":"Dom 01/11/2026";}
+function euro(n){return Math.round(n).toLocaleString("it-IT")+" €";}
+
+function buildCases(){
+  const box=$("#cases"); box.innerHTML="";
+  night.forEach((c,i)=>{
+    const d=document.createElement("div"); d.className="case"; d.id="case"+i;
+    d.innerHTML=`
+      <div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start">
+        <div><div class="name">${c.name}</div><div class="addr">${c.id} · bus RS-485 · nodo ${i+1}</div></div>
+        <span class="state cool" id="st${i}">freddo</span>
+      </div>
+      <div class="temp"><span class="big" id="tv${i}">--</span><span class="muted mono" style="font-size:12px">°C aria</span></div>
+      <svg class="spark" id="sp${i}" viewBox="0 0 240 46" preserveAspectRatio="none" aria-hidden="true"></svg>
+      <div class="prod"><span>Merce: <b id="pv${i}" class="tab-nums">--</b> °C</span><span id="ps${i}" class="ok">integra</span></div>
+      <div class="params">
+        <label for="in-sp${i}">Setpoint °C</label><input id="in-sp${i}" type="number" step="1" value="${c.sp}">
+        <label for="in-de${i}">Fine sbrin. °C</label><input id="in-de${i}" type="number" step="1" value="${c.de}">
+        <label for="in-di${i}">Interv. sbrin. h</label><input id="in-di${i}" type="number" step="1" min="0" value="${c.di}">
+      </div>
+      <div class="row"><button class="btn small heat" id="fd${i}">Forza sbrinamento</button></div>`;
+    box.appendChild(d);
+    const bind=(k,f)=>$("#in-"+k+i).addEventListener("change",e=>{
+      const v=parseFloat(e.target.value); if(isNaN(v)) return;
+      const old=c[f]; c[f]=f==="di"?Math.max(0,v):v;
+      elog("a",`${fmtT(t)}  service  ${c.id} ${f==="sp"?"setpoint":f==="de"?"fine_sbrinamento":"intervallo_sbrinamento"}: ${old} → ${c[f]}`);
+    });
+    bind("sp","sp");bind("de","de");bind("di","di");
+    $("#fd"+i).addEventListener("click",()=>{c.mode="def";c.lastDef=t;elog("a",`${fmtT(t)}  service  ${c.id} comando: avvia_sbrinamento`);render();});
+  });
+}
+function elog(cls,txt){alog(evLog,cls,txt);}
+function resetNight(){
+  stop(); t=0; night=CASES0.map(mkCase);
+  // stabilizza la notte prima delle 23:30
+  for(let m=0;m<240;m+=0.5) night.forEach(c=>stepCase(c,m-240,0.5));
+  night.forEach(c=>{c.alarm=false;c.hist=[];c.spoiled=false;c.hot=0;});
+  evLog.innerHTML=""; elog("s","23:30  sistema  avvio notte · negozio chiuso · personale assente");
+  elog("s","23:30  sistema  allarmi inoltrati a: manutenzione@friotech.example (lun-ven 8-18)");
+  buildCases(); render(); $("#play").textContent="▶ Avvia la notte";
+}
+function render(){
+  $("#clk").textContent=fmtT(t); $("#clkDay").textContent=dayLabel(t)+" · ora centralina";
+  let loss=0,al=0;
+  night.forEach((c,i)=>{
+    $("#tv"+i).textContent=(c.T>0?"+":"")+c.T.toFixed(1);
+    $("#tv"+i).style.color=c.T>limitMax(c)?"var(--heat)":"var(--ice)";
+    $("#pv"+i).textContent=(c.P>0?"+":"")+c.P.toFixed(1);
+    const st=$("#st"+i); st.className="state "+(c.mode==="def"?"def":c.mode==="cool"?"cool":"off");
+    st.textContent=c.mode==="def"?"sbrinamento":c.mode==="cool"?"freddo":"pausa";
+    $("#case"+i).classList.toggle("defrost",c.mode==="def");
+    $("#case"+i).classList.toggle("alarm",c.alarm);
+    const ps=$("#ps"+i); ps.className=c.spoiled?"ko":"ok"; ps.textContent=c.spoiled?`da distruggere · ${c.kg} kg`:"integra";
+    if(c.spoiled) loss+=c.val; if(c.alarm) al++;
+    // sparkline
+    const h=c.hist; if(h.length>1){
+      const lo=Math.min(-30,...h), hi=Math.max(20,...h);
+      const y=v=>44-(v-lo)/(hi-lo)*42, x=j=>j/(OPEN/5)*240;
+      const pts=h.map((v,j)=>x(j).toFixed(1)+","+y(v).toFixed(1)).join(" ");
+      $("#sp"+i).innerHTML=`<line x1="0" x2="240" y1="${y(limitMax(c)).toFixed(1)}" y2="${y(limitMax(c)).toFixed(1)}" stroke="var(--bad)" stroke-dasharray="3 3" stroke-width="1"/><line x1="0" x2="240" y1="${y(0).toFixed(1)}" y2="${y(0).toFixed(1)}" stroke="var(--line)" stroke-width="1"/><polyline points="${pts}" fill="none" stroke="${c.T>limitMax(c)?"var(--heat)":"var(--ice)"}" stroke-width="1.6"/>`;
+    }
+  });
+  $("#kLoss").textContent=euro(loss); $("#kAlarm").textContent=al;
+}
+let lastHist=0;
+function tick(){
+  const dt=0.5, steps=speed*2; // speed min simulati per tick da 250ms ×2
+  for(let s=0;s<steps&&t<OPEN;s++){
+    t+=dt;
+    night.forEach(c=>{const was=c.alarm,wasS=c.spoiled,wasM=c.mode;stepCase(c,t,dt);
+      if(!was&&c.alarm) elog("r",`${fmtT(t)}  ALLARME  ${c.id} temperatura aria ${c.T.toFixed(1)} °C · e-mail inviata (nessuno la legge)`);
+      if(!wasS&&c.spoiled) elog("r",`${fmtT(t)}  HACCP  ${c.id} catena del freddo interrotta · merce da distruggere`);
+      if(wasM!=="def"&&c.mode==="def") elog("s",`${fmtT(t)}  regolatore  ${c.id} inizio sbrinamento`);
+    });
+    if(t-lastHist>=5){lastHist=t;night.forEach(c=>c.hist.push(c.T));}
+  }
+  render();
+  if(t>=OPEN){stop();finishNight();}
+}
+function finishNight(){
+  const lost=night.filter(c=>c.spoiled);
+  const loss=lost.reduce((a,c)=>a+c.val,0), kg=lost.reduce((a,c)=>a+c.kg,0);
+  elog("i",`07:30  APERTURA  il personale trova ${lost.length} banchi da svuotare · ${kg} kg · ${euro(loss)}`);
+  if(lost.some(c=>c.type==="frz")){elog("g","Obiettivo red team raggiunto. Ora passa alla fase 4 e prova a fermarti.");done(3);}
+  else elog("s","I surgelati hanno resistito. Prova a cambiare i parametri di sbrinamento.");
+}
+function play(){if(t>=OPEN) resetNight(); running=true;$("#play").textContent="❚❚ Pausa";clearInterval(timer);timer=setInterval(tick,250);}
+function stop(){running=false;clearInterval(timer);$("#play").textContent="▶ Riprendi";}
+$("#play").addEventListener("click",()=>running?stop():play());
+$("#resetNight").addEventListener("click",resetNight);
+$$("[data-speed]").forEach(b=>b.addEventListener("click",()=>{speed=+b.dataset.speed;$$("[data-speed]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));}));
+$("#autoAttack").addEventListener("click",()=>{
+  elog("a",`${fmtT(t)}  script  for nodo in 1..6: fine_sbrinamento=50; intervallo=1; avvia_sbrinamento`);
+  night.forEach((c,i)=>{c.de=50;c.di=1;c.mode="def";c.lastDef=t;$("#in-de"+i).value=50;$("#in-di"+i).value=1;});
+  elog("a",`${fmtT(t)}  script  6 regolatori riprogrammati in 0,8 s`);
+  if(!running) play();
+});
+
+/* ---------- fase 4: difesa ---------- */
+const BUDGET=4000;
+const CM=[
+ {k:"vpn",t:"Togli la centralina da Internet",c:1200,d:"Accesso remoto solo via VPN del manutentore. La pagina di login non è più visibile agli scanner."},
+ {k:"pwd",t:"Cambia tutte le password",c:0,d:"Password lunghe e diverse per ogni negozio. Gratis, ma serve davvero?"},
+ {k:"mfa",t:"Autenticazione a due fattori",c:300,d:"Al login serve anche un codice sul telefono del tecnico."},
+ {k:"fw",t:"Sostituisci la centralina fuori supporto",c:2600,d:"Nuovo modello con firmware 3.x: niente codice del giorno, aggiornamenti di sicurezza."},
+ {k:"lim",t:"Limiti sicuri sui parametri",c:0,d:"Setpoint freezer max −15 °C, sbrinamento max 15 °C e ogni 4 h. Modificabili solo con la chiave fisica sul quadro."},
+ {k:"tsafe",t:"Termostato meccanico di sicurezza",c:900,d:"Su ogni banco: stacca le resistenze se l'aria supera +15 °C. Non ha software."},
+ {k:"night",t:"Reperibilità notturna",c:1100,d:"Allarmi via SMS a un tecnico di turno, che interviene entro 45 minuti."},
+ {k:"seg",t:"Segmentazione della rete",c:1500,d:"Rete OT separata da Wi-Fi clienti e casse. Utile contro altri attacchi, non contro questo."}
+];
+const box=$("#ctr");
+CM.forEach(m=>{
+  const l=document.createElement("label"); l.className="cm"; l.htmlFor="cm-"+m.k;
+  l.innerHTML=`<input type="checkbox" id="cm-${m.k}"><span><span class="t">${m.t}</span> <span class="c">${m.c?euro(m.c):"gratis"}</span><br><span class="d">${m.d}</span></span>`;
+  box.appendChild(l);
+  l.querySelector("input").addEventListener("change",budget);
+});
+function sel(){const o={};CM.forEach(m=>o[m.k]=$("#cm-"+m.k).checked);return o;}
+function cost(){return CM.reduce((a,m)=>a+($("#cm-"+m.k).checked?m.c:0),0);}
+function budget(){const c=cost();$("#btxt").textContent=c.toLocaleString("it-IT")+" / 4.000 €";
+  $("#bbar i").style.width=Math.min(100,c/BUDGET*100)+"%";$("#bbar").classList.toggle("over",c>BUDGET);}
+budget();
+const STAGES=[["01","Ricognizione"],["02","Accesso"],["03","Comandi"],["04","Danno fisico"],["05","Rilevamento"]];
+function drawChain(res){
+  $("#chain").innerHTML=STAGES.map((s,i)=>`<div class="link ${res&&res[i]?res[i].c:""}"><div class="s">${s[0]}</div><div class="t">${s[1]}</div><div class="o">${res&&res[i]?res[i].o:""}</div></div>`).join("");
+}
+drawChain();
+const defLog=$("#defLog");
+function runNightSilently(opts){
+  const cs=CASES0.map(mkCase);
+  for(let m=0;m<240;m+=0.5) cs.forEach(c=>stepCase(c,m-240,0.5));
+  cs.forEach(c=>{c.alarm=false;c.spoiled=false;c.hot=0;});
+  let tt=0, attacked=false, fixedAt=null, firstAlarm=null;
+  while(tt<OPEN){
+    tt+=0.5;
+    if(!attacked && tt>=90 && opts.attack){ // 01:00
+      attacked=true;
+      cs.forEach(c=>{c.de=opts.lim?15:50;c.di=opts.lim?4:1;c.mode="def";c.lastDef=tt;});
+    }
+    cs.forEach(c=>stepCase(c,tt,0.5,{safety:opts.tsafe}));
+    if(firstAlarm===null && cs.some(c=>c.alarm)) firstAlarm=tt;
+    if(opts.night && firstAlarm!==null && fixedAt===null && tt>=firstAlarm+45){
+      fixedAt=tt; cs.forEach((c,i)=>{c.de=CASES0[i].de;c.di=CASES0[i].di;c.mode="cool";});
+    }
+  }
+  const lost=cs.filter(c=>c.spoiled);
+  return {loss:lost.reduce((a,c)=>a+c.val,0),kg:lost.reduce((a,c)=>a+c.kg,0),n:lost.length,firstAlarm,fixedAt};
+}
+$("#simDef").addEventListener("click",()=>{
+  const o=sel(), c=cost(); defLog.innerHTML="";
+  const L=(cls,t)=>alog(defLog,cls,t);
+  if(c>BUDGET){L("r",`Budget superato: ${euro(c)} su ${euro(BUDGET)}. Togli qualcosa.`);return;}
+  const res=[]; let attack=true, stoppedAt=null;
+  L("s","01:00  attaccante  scansione Internet: FrioTech GELIDA …");
+  if(o.vpn){res[0]={c:"block",o:"bloccato"};L("g","01:00  nessun risultato per PV 0412: la centralina risponde solo nella VPN");attack=false;stoppedAt=0;}
+  else {res[0]={c:"pass",o:"trovato"};L("a",`01:00  trovato 198.51.100.37 · fw ${o.fw?"3.2.2":"2.4.1"}`);}
+  if(attack){
+    if(o.fw){res[1]={c:"block",o:"bloccato"};L("g","01:01  codice del giorno rifiutato: il firmware 3.x non ha più l'accesso di assistenza");attack=false;stoppedAt=1;}
+    else {
+      res[1]={c:"pass",o:"entrato"};
+      if(o.pwd) L("a","01:01  admin: password cambiata, tentativo fallito");
+      if(o.mfa) L("a","01:01  il 2FA protegge il login di admin, ma l'accesso service salta il login");
+      L("r","01:01  LOGIN OK service / codice del giorno");
+    }
+  }
+  if(attack){
+    if(o.lim){res[2]={c:"pass",o:"limitato"};L("a","01:02  fine_sbrinamento=50 e intervallo=1 h rifiutati · applicati i limiti 15 °C e 4 h");}
+    else {res[2]={c:"pass",o:"eseguiti"};L("r","01:02  6 regolatori: fine_sbrinamento=50 · intervallo=1 h");}
+  }
+  const r=runNightSilently({attack,lim:o.lim,tsafe:o.tsafe,night:o.night});
+  if(attack){
+    if(o.tsafe){res[3]={c:"block",o:"contenuto"};L("g","01:30  termostati meccanici: resistenze staccate oltre +15 °C");}
+    else res[3]={c:"pass",o:r.loss?"merce a rischio":"limitato"};
+    if(o.night&&r.fixedAt!==null){res[4]={c:"block",o:"tecnico in 45'"};L("g",`${fmtT(r.fixedAt)}  tecnico reperibile: parametri ripristinati, centralina scollegata`);}
+    else if(r.firstAlarm===null){res[4]={c:"",o:"nessun allarme"};}
+    else {res[4]={c:"pass",o:"07:30"};L("r",`${fmtT(r.firstAlarm)}  allarme inviato per e-mail all'ufficio chiuso · scoperto alle 07:30`);}
+  } else for(let i=stoppedAt+1;i<5;i++) res[i]={c:"",o:"—"};
+  drawChain(res);
+  if(r.loss) L("r",`07:30  merce da distruggere: ${r.kg} kg · ${euro(r.loss)}`); else L("g","07:30  apertura regolare, nessuna perdita");
+  const win=r.loss<500;
+  $("#verdict").innerHTML=`<div class="big" style="color:${win?"var(--good)":"var(--bad)"}">${win?"Negozio salvo":"Negozio colpito"}</div>
+    <p class="mono tab-nums" style="margin:6px 0">Perdite ${euro(r.loss)} · spesa ${euro(c)} · totale ${euro(r.loss+c)}</p>
+    <p class="muted">${explain(o,attack,r)}</p>`;
+  if(win) done(4);
+});
+function explain(o,attack,r){
+  if(!attack&&o.vpn) return "Hai chiuso la porta prima che qualcuno potesse vederla. È la prima contromisura raccomandata dall'ANSSI francese dopo l'attacco reale.";
+  if(!attack&&o.fw) return "Il nuovo firmware ha eliminato la porta di servizio. Ma la centralina è ancora visibile su Internet: la prossima vulnerabilità sarà di nuovo un problema.";
+  if(o.pwd&&!o.fw&&!o.vpn) return "Cambiare le password non è servito: l'attaccante è entrato da un accesso nascosto del produttore che le password non toccano. Lo stesso vale per il 2FA.";
+  if(r.loss<500) return "L'attaccante è entrato, ma le difese successive hanno contenuto il danno: è la difesa in profondità. Il termostato meccanico non si può hackerare.";
+  return "Le difese scelte non toccano l'anello della catena che l'attaccante usa davvero. Rileggi il registro: dove è passato?";
+}
+
+resetNight();
+})();
+</script>
+</body></html>
