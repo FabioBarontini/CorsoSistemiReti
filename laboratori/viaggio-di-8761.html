@@ -458,7 +458,7 @@ body:`<p>Dentro il telefono, la foto riposa per un istante su un banco di prepar
 <p>Adesso guarda la tua valigia: le informazioni non sono tutte uguali e non servono tutte allo stesso dispositivo.</p>`,
 w:()=>W.header({cap:"Le informazioni che viaggiano con te",l2:{t:"Busta del collegamento",f:[["MAC mittente","dispositivo vicino"],["MAC destinatario","prossimo punto della rete"],["Controllo","aiuta a rilevare errori"]]},ip:[["IP sorgente","indirizzo di partenza"],["IP destinazione","indirizzo del server"],["TTL","contatore del viaggio",1]],tcp:[["Porta sorgente","programma che spedisce"],["Porta destinazione","programma che riceve"],["Numero di sequenza","posizione di questa parte"]],data:"Il contenuto: una parte della fotografia"}),
 learn:["osi","tcpip","encap","hdr","port","mac","ttl"],
-ch:[["Scopri come i bit diventano segnali","phy0"]]},
+ch:[["Scopri come i bit diventano segnali: esplora il livello fisico","phy0"],["Hai capito l’idea: prosegui direttamente verso la rete locale","p4"]]},
 /* ---------- INTERMEZZO: LIVELLO FISICO ---------- */
 phy0:{part:"I-bis · Il linguaggio dei segnali",role:"pkt",title:"Prima del viaggio, una vibrazione",pos:"memoria del telefono di Giulia",
 body:`<p>Hai le tue buste, gli indirizzi e il numero che ti distingue dagli altri segmenti. Ma c'è una domanda che nessuna etichetta può risolvere: <strong>come fanno gli 0 e gli 1 a uscire davvero dal telefono?</strong></p>
@@ -537,7 +537,7 @@ body:`<p>Superato l’access point, entri in un corridoio pieno di porte: la ret
 <p>Davanti a te c’è uno <strong>switch</strong>, una scatola con tante porte. Immaginalo come un centralinista: deve capire da quale porta raggiungere il dispositivo che deve ricevere i tuoi dati. Per farlo usa gli indirizzi <strong>MAC</strong>, identificativi delle schede di rete, e una tabella che associa i dispositivi alle porte.</p>
 <p>Lo switch impara osservando da quale porta arrivano i dati. Se sa dov’è il destinatario, li manda solo verso quella porta. Se ancora non lo sa, può distribuirli sulle altre porte adatte. Non sceglie il viaggio attraverso Internet: si occupa della rete locale. Quale regola scegli?</p>`,
 learn:["lan","switch","mac"],
-ch:[["Invia ogni frame a tutte le porte, così arriverà sicuramente","sw0a"],["Leggi la tabella MAC e inoltra il frame sulla porta associata al destinatario","sw0c"],["Usa lo switch per scegliere il percorso fino a Lisbona o Milano","sw0b"]]},
+ch:[["Approfondisci come lo switch impara gli indirizzi MAC","sw0d"],["Leggi la tabella MAC e inoltra il frame sulla porta associata al destinatario","sw0c"],["Invia il frame a tutte le porte: scopri che cosa succede quando l’indirizzo è sconosciuto","sw0a"]]},
 sw0a:{part:"I · La rete locale",role:"pkt",title:"Troppe copie nella LAN",pos:"switch della rete dell'hotel",ttl:64,err:true,
 body:`<p>Per un attimo la tua busta viene recapitata a mezza hall: la stampante si sveglia, il PC della reception riceve un frame che non gli serve, il portatile del bar lo ignora. Hai raggiunto la rete, ma non hai ancora imparato a distinguere le porte.</p>
 <p>Il frame arriva a computer che non c'entrano nulla: il portatile della reception, la stampante, il PC del bar. Tutti devono ignorarlo, ma il traffico inutile aumenta.</p>
@@ -562,7 +562,7 @@ body:`<p>Oltre la porta 8, il corridoio finisce davanti a un incrocio di collega
 <p>Poi fa una cosa che non ti aspettavi: ti cambia l'indirizzo di partenza. 192.168.1.23 è un indirizzo <em>privato</em>: lo usano milioni di reti di casa e d'albergo e su Internet non significa niente. Il router lo sostituisce con il proprio indirizzo pubblico, 85.240.17.9, e annota su un registro che le risposte per la porta 51734 vanno girate al telefono di Giulia. Si chiama <strong>NAT</strong>.</p>`,
 w:()=>W.header({cap:"Che cosa è cambiato",ip:[["IP mittente","85.240.17.9",1],["IP destinatario","93.62.140.20"],["TTL","63",1]],tcp:[["porta mitt.","51734"],["porta dest.","443"],["seq","8761"]],data:"1460 byte di foto"}),
 learn:["nat"],
-ch:[["Entra nella rete dell'operatore","p7b"]]},
+ch:[["Apri il registro delle traduzioni NAT","p7nat"],["Entra nella rete dell'operatore","p7b"]]},
 p7b:{part:"I · Nato da una foto",role:"pkt",title:"Compagni di viaggio",pos:"rete dell'operatore",ttl:63,ms:2,
 body:`<p>Nella fibra che esce dall'hotel non sei solo. Davanti a te c'è Sei, il segmento 7301, che ha già controllato tre volte di avere l'intestazione in ordine.</p>
 ${D("Sei","«Hai il checksum giusto? Sicuro? Ricontrolla. Io l'ho ricontrollato.»")}
@@ -580,13 +580,13 @@ body:`<p>Il router dell'operatore a Lisbona è un armadio pieno di luci, install
 <p>Sei è già partito verso Madrid. Otto ti raggiunge e ti tira per l'intestazione: «Ehi, aspetta! Non possiamo andare tutti dalla stessa parte?»</p>`,
 w:()=>W.route(["Lisbona","Madrid / cavo","…","Milano","server"],0,{cap:"Dove sei"}),
 learn:["rt"],
-ch:[["Verso Madrid, via terra","p9"],["Verso il cavo sottomarino","p12"],["Seguite Sei: meglio restare uniti","p8x"]]},
-p8x:{part:"II · Il viaggio",role:"pkt",title:"I pacchetti non si tengono per mano",pos:"router dell'operatore, Lisbona",ttl:62,err:true,
+ch:[["Confronta le due rotte prima di scegliere","p8diag"],["Verso Madrid, via terra","p9"],["Verso il cavo sottomarino","p12"],["Seguite Sei: meglio restare uniti","p8x"]]},
+p8x:{part:"II · Il viaggio",role:"pkt",title:"I pacchetti non si tengono per mano",pos:"router dell'operatore, Lisbona",ttl:62,
 body:`<p>Il router non sa nemmeno che tu, Sei e Otto fate parte della stessa foto, e non gli interessa. Per lui ogni pacchetto è una storia a sé: guarda la destinazione, guarda lo stato della rete in quel preciso istante, decide.</p>
-${D("Router di Lisbona","«Prossimo. Destinazione? Bene. Uscita 4. Prossimo.»")}
-<p>È il cuore della commutazione di pacchetto: nessun cammino viene riservato in anticipo, e due pacchetti dello stesso messaggio possono prendere strade diverse. Sarà il destinatario a rimettere tutto a posto.</p>`,
-learn:["indep"],prob:["Pacchetti dello stesso messaggio prendono strade diverse","Ogni router instrada ogni pacchetto in modo indipendente"],
-ch:[["Torna al bivio","p8"]]},
+${D("Router di Lisbona","«Non siete un gruppo. Siete tre destinazioni da raggiungere, una per volta.»")}
+<p>È il cuore della commutazione di pacchetto: nessun cammino viene riservato in anticipo, e due pacchetti dello stesso messaggio possono prendere strade diverse. Sarà il destinatario a rimettere tutto a posto. Questa tappa non è un errore: è un approfondimento facoltativo sul modo in cui i router prendono decisioni.</p>`,
+learn:["indep"],
+ch:[["Ora scegli la rete terrestre, passando da Madrid","p9"],["Preferisci il collegamento sottomarino verso Marsiglia","p12"],["Torna al bivio iniziale","p8"]]},
 p9:{part:"II · Il viaggio",role:"pkt",title:"Lo sportello di Madrid",pos:"router di Madrid",ttl:61,ms:31,
 body:`<p>A Madrid c'è traffico: è l'ora in cui mezza Spagna esce dal lavoro e accende lo streaming. Il collegamento verso Barcellona è saturo e il router mette in fila i pacchetti in attesa di uscire. Ha i modi di un impiegato allo sportello il venerdì alle cinque meno un quarto.</p>
 ${D("Router di Madrid","«Numero? Mettetevi in coda. No, non mi interessa che siete una foto. Sono tutti qualcosa.»")}
@@ -637,7 +637,7 @@ body:`<p>Questa volta il router non aspetta che la coda sia sul punto di esplode
 <p>È la <strong>gestione attiva della coda</strong>, di cui la versione più famosa si chiama RED. La coda resta corta, il ritardo basso, e i mittenti si accorgono per tempo che devono andare più piano.</p>
 ${D("Router di Madrid","«Visto? Non sono cattivo. Sono previdente.»")}`,
 learn:["red"],prob:["Il router congestionato deve decidere chi scartare","Gestione attiva della coda (RED, ECN) prima che sia piena"],
-ch:[["Torna a essere il pacchetto 8761","p11"]]},
+ch:[["Scopri come distribuire la banda tra più flussi","m0d"],["Torna a essere il pacchetto 8761","p11"]]},
 
 p11:{part:"II · Il viaggio",role:"pkt",title:"Una scorciatoia sospetta",pos:"router di Barcellona",ttl:60,ms:6,
 body:`<p>A Barcellona l'aria è più fresca e il traffico scorre senza intoppi. Il router consulta la tabella e si ferma su due righe diverse. La prima è lì da tempo: per raggiungere la rete della scuola, inoltrare verso Milano. La seconda è arrivata da poco da Valencia, dopo un aggiornamento. Promette una strada più corta e passa proprio dal router che l'ha appena annunciata.</p>
@@ -733,7 +733,7 @@ body:`<p>Il segmento 8761 aspetta nel buffer, come un passeggero arrivato alla s
 <p>Ora devi rispondere al mittente con un <strong>ACK</strong>. Sullo schermo puoi scegliere un numero. Non è un semplice resoconto di ciò che hai visto arrivare: è un messaggio che il telefono di Giulia userà per decidere come proseguire. Se lo scrivi male, il mittente potrebbe farsi un'idea sbagliata di quello che hai ricevuto.</p>`,
 puzzle:{type:"number",id:"tack",q:"Hai tutto fino al byte 7300 e l'8761 nel buffer. Che numero scrivi nell'ACK?",a:[7301],hint:"l'ACK indica il primo byte che ti manca, non l'ultimo che hai ricevuto.",ok:"Giusto: ACK 7301. «Mi manca ancora il 7301», cioè il segmento 6."},
 learn:["rbuf","ack"],prob:["I segmenti arrivano in disordine","Buffer di ricezione e ACK cumulativo"],
-ch:[["Continua","r2"]]},
+ch:[["Approfondisci gli ACK selettivi (SACK)","r1sack"],["Continua","r2"]]},
 r2:{part:"III · Dall'altra parte",role:"dest",title:"Lo stesso ACK, tre volte",pos:"server della scuola",
 body:`<p>Poco dopo arriva il 9. Lo metti nel buffer e rispondi di nuovo «ACK 7301». Arriva il 10: ancora «ACK 7301». Il mittente vede arrivare lo stesso ACK più volte: sono <strong>ACK duplicati</strong>, e per lui sono un segnale d'allarme. Vuol dire che i segmenti successivi arrivano, ma qualcosa si è inceppato al 7301.</p>
 <p>Dell'8, invece, nessuna traccia. Tu non lo sai, ma Otto è stato scartato a Madrid.</p>`,
@@ -937,7 +937,7 @@ body:`<p>Il suono non torna perfetto, ma la voce continua. La mamma sente una pi
 <p>L'app va avanti. Al posto dei venti millisecondi mancanti inventa qualcosa di simile all'audio appena sentito, e la mamma sente «ciao mmamma» con un'imperfezione che non nota nemmeno.</p>
 <p>I pacchetti successivi arrivano a intervalli irregolari: uno dopo 18 ms, uno dopo 31, uno dopo 22. Questa variazione del ritardo si chiama <strong>jitter</strong>. Per non far sentire la voce a scatti, l'app tiene sempre qualche pacchetto da parte in un piccolo buffer e lo riproduce a ritmo costante.</p>
 <p>Per questo videochiamate, giochi online e dirette usano spesso UDP: preferiscono la tempestività alla completezza. La foto della gita aveva bisogno di TCP; il «ciao mamma», no.</p>`,
-learn:["jit"],ch:[["Torna al finale","f1"],["Epilogo: il giorno dopo","e0"]]},
+learn:["jit"],ch:[["Scopri come il buffer combatte il jitter","u2"],["Torna al finale","f1"],["Epilogo: il giorno dopo","e0"]]},
 
 /* ---------- EPILOGO ---------- */
 e0:{part:"Epilogo",role:"marco",title:"Il giorno dopo, in laboratorio",pos:"laboratorio 2",
@@ -957,7 +957,70 @@ learn:["trc","ttl","icmp"],
 body2:`${D("Prof di informatica","«Negli anni Settanta Vint Cerf e Bob Kahn hanno affrontato, uno dopo l'altro, quasi tutti i problemi che avete incontrato in questa storia, e nel 1974 hanno pubblicato il progetto da cui sono nati TCP e IP. Ci hanno messo anni. Voi ci avete messo un'ora.»")}
 ${D("Marco","«Prof, ma Otto alla fine…»")}
 ${D("Prof di informatica","«Otto sta bene, Marco. È in home page. Ha la faccia di Edo.»")}`,
-ch:[["Ricomincia, e cerca i finali che ti mancano","p0"]]}
+ch:[["Ricomincia, e cerca i finali che ti mancano","p0"]]},
+sw0d:{part:"I · La rete locale",role:"pkt",title:"La memoria dello switch",pos:"switch della rete dell'hotel",ttl:64,ms:1,
+body:`<p>Lo switch è più silenzioso di quanto immaginassi. Non consulta mappe di città e non conosce il server di Milano: davanti a sé ha soltanto le porte della rete dell'hotel. Su un piccolo display compare una tabella. Due colonne: indirizzo MAC e porta.</p>
+<p>«È la mia memoria», dice lo switch. «Non devo ricordare dove si trova ogni computer del mondo. Mi basta imparare da dove arrivano i dispositivi che parlano con me.»</p>
+<p>Quando riceve un frame, legge l'indirizzo MAC sorgente e associa quell'indirizzo alla porta da cui il frame è entrato. Se in seguito deve raggiungere quel dispositivo, consulta la tabella e inoltra il frame soltanto sulla porta corretta. La tabella si costruisce così, un frame dopo l'altro; se un dispositivo cambia porta o resta inattivo a lungo, le vecchie associazioni possono essere aggiornate o eliminate.</p>
+<p>«E se non conosco il destinatario?» chiedi.</p>
+<p>«Se è un unknown unicast, non posso indovinare. Diffondo il frame sulle altre porte, tranne quella da cui è arrivato. È il <strong>flooding</strong>. Se invece conosco già la porta, non disturbo tutti: inoltro soltanto dove serve.»</p>
+<p>Ora la differenza ti è più chiara: lo switch inoltra <strong>frame</strong> nella rete locale usando gli indirizzi MAC; il router collega reti diverse e decide il prossimo salto usando gli indirizzi IP. Due lavori distinti, due livelli diversi del viaggio.</p>
+${D("Giulia","«Quindi lo switch impara ascoltando?»")}
+<p>«Esatto», risponde lo switch. «Non gli serve una cartina disegnata in anticipo. Gli serve osservare il traffico.»`,
+learn:["mac"],
+ch:[["Hai capito: torna alla scelta dello switch","sw0"]]},
+p7nat:{part:"I · Nato da una foto",role:"pkt",title:"Il registro delle porte",pos:"router dell'hotel",ttl:63,
+body:`<p>Il viaggio sta per lasciare la rete dell'hotel, ma il router ti ferma un istante. Sul suo schermo c'è un registro, simile al quaderno di una portineria: da una parte gli indirizzi privati dei dispositivi dell'albergo, dall'altra l'indirizzo pubblico con cui l'albergo si presenta a Internet.</p>
+<p>«Dentro questa rete», spiega, «il telefono di Giulia è <strong>192.168.1.23</strong>. È un indirizzo privato: serve a identificarlo nella rete locale, ma non viene usato direttamente per raggiungerlo da Internet.»</p>
+<p>Il router crea allora una traduzione. La comunicazione che parte da <strong>192.168.1.23:51734</strong> viene presentata all'esterno come <strong>85.240.17.9:51734</strong>. Il numero dopo i due punti è la porta: aiuta il router a distinguere questa conversazione dalle altre che condividono lo stesso indirizzo pubblico.</p>
+<p>Questa forma di traduzione è spesso chiamata <strong>PAT</strong> (Port Address Translation), oppure NAT overload. Più dispositivi possono condividere un solo indirizzo IPv4 pubblico perché il router tiene traccia delle associazioni tra indirizzi e porte. Quando la risposta torna a 85.240.17.9, il registro gli permette di capire che deve riconsegnarla al telefono di Giulia.</p>
+<p>«Non è il DNS», precisa il router. «Il DNS ha trovato l'indirizzo del server. Io sto traducendo l'indirizzo con cui il tuo telefono si presenta all'esterno.»</p>
+<p>Il registro non è eterno: le associazioni hanno una durata e possono essere eliminate quando la comunicazione termina o scade. Se una risposta arrivasse quando la traduzione non esiste più, il router potrebbe non sapere a quale dispositivo interno consegnarla.</p>
+${D("8761","«Quindi per uscire devo cambiare nome?»")}
+${D("Router dell'hotel","«Non proprio. Il tuo indirizzo privato resta quello. È il modo in cui la comunicazione viene rappresentata verso l'esterno che cambia.»")}`,
+learn:["nat","port"],
+ch:[["Ora prosegui nella rete dell'operatore","p7b"],["Rileggi il passaggio sul router","p7"]]},
+p8diag:{part:"II · Il viaggio",role:"pkt",title:"Due strade, due promesse",pos:"router dell'operatore, Lisbona",ttl:62,
+body:`<p>Il router dell'operatore ti lascia osservare la sua tabella. Ti aspettavi una cartina con tutte le strade e il traffico disegnato sopra; trovi invece righe ordinate, prefissi di rete, prossimi router e metriche. Non è una fotografia istantanea di Internet: è l'insieme delle informazioni che il router usa per decidere dove inoltrare il pacchetto.</p>
+<p>«Guarda queste due possibilità», dice. «La prima porta verso Madrid e poi verso Milano. La seconda attraversa un collegamento sottomarino verso Marsiglia. Entrambe possono raggiungere la rete della scuola, ma seguono accordi e percorsi differenti.»</p>
+<p>Il router non sceglie perché una strada sembra più bella, né perché in quel preciso secondo è sicuramente più libera. La scelta dipende dalle rotte disponibili, dai prefissi, dalle metriche e dalle politiche di instradamento. Una volta scelto il prossimo salto, il pacchetto verrà affidato al router successivo.</p>
+<p>Qui c'è una distinzione da non perdere: <strong>routing</strong> e <strong>congestione</strong> non sono la stessa cosa. Il routing stabilisce verso quale prossimo router inoltrare il pacchetto; la congestione nasce quando su un collegamento si accumula più traffico di quanto possa trasportare in quel momento. Una rotta corretta può quindi attraversare una coda lenta, mentre una rotta alternativa può essere più lunga ma meno congestionata.</p>
+<p>«Non posso prometterti quale sarà il viaggio più rapido», conclude il router. «Posso mostrarti le strade che conosco. Sarai tu a esplorarle.»</p>
+<p>Non è un quiz con una risposta giusta. Scegli un percorso e osserva che cosa cambia: il numero di salti, il tempo di attesa, gli incontri e gli imprevisti.</p>`,
+w:()=>W.route(["Lisbona","Madrid","Barcellona","Milano","server"],0,{cap:"Una delle rotte possibili"}),
+learn:["rt"],
+ch:[["Accetta la rotta terrestre verso Madrid","p9"],["Scegli il collegamento sottomarino verso Marsiglia","p12"],["Torna al bivio senza decidere ancora","p8"]]},
+m0d:{part:"II-bis · Sei il router di Madrid",role:"router",title:"Non tutti i flussi sono uguali",pos:"router di Madrid",
+body:`<p>Arrivi a Madrid e, per un momento, ti sembra di essere entrato in una stazione all'ora di punta. Una fila di pacchetti aspetta di essere trasmessa. C'è chi porta un file enorme, chi trasporta la voce di una telefonata e chi aggiorna una pagina web. Tutti chiedono lo stesso collegamento, ma non hanno le stesse esigenze.</p>
+<p>«Se lascio che il flusso più insistente occupi ogni spazio», dice il router, «gli altri resteranno in coda. E una telefonata non può aspettare quanto un archivio da scaricare.»</p>
+<p>Alcuni router possono usare tecniche di <strong>fair queuing</strong>: invece di trattare tutto il traffico come un'unica fila, organizzano code separate e distribuiscono le occasioni di trasmissione tra i diversi flussi. In questo modo una singola connessione molto intensa ha meno possibilità di monopolizzare il collegamento.</p>
+<p>Esistono anche politiche di <strong>QoS</strong> (Quality of Service). Se la rete è configurata per farlo, alcuni tipi di traffico possono ricevere un trattamento prioritario o garanzie di servizio differenti. Ma non significa che ogni telefonata abbia sempre la precedenza: dipende dalle regole impostate e da come i dispositivi classificano i pacchetti.</p>
+<p>«E soprattutto», aggiunge, «la QoS non crea banda dal nulla. Se il collegamento può trasportare cento unità di dati al secondo, non posso trasformarlo in duecento. Posso però decidere come distribuire quelle cento unità quando tutti le chiedono insieme.»</p>
+${D("Router di Madrid","«Non posso allargare la strada. Posso cercare di evitare che un solo camion la occupi tutta.»")}
+<p>Adesso puoi tornare al viaggio sapendo che la coda non è soltanto un ostacolo: è anche il luogo in cui il router applica le proprie regole.</p>`,
+learn:["qos"],
+ch:[["Torna al pacchetto e riprendi il viaggio","p11"],["Rivedi la scelta del router","m0"]]},
+r1sack:{part:"III · Dall'altra parte",role:"dest",title:"Non solo un ACK alla volta",pos:"server della scuola",
+body:`<p>Il server della scuola ha ricevuto diversi segmenti, ma non tutti sono arrivati nell'ordine previsto. L'ACK cumulativo continua a fare il suo lavoro: indica il prossimo byte che il server si aspetta, cioè il punto in cui la sequenza continua si interrompe.</p>
+<p>Ma osservi il buffer: oltre quel punto ci sono già altri pezzi della foto. Il server li ha ricevuti e li conserva, anche se non può ancora consegnare all'applicazione una fotografia con un buco nel mezzo.</p>
+<p>«Posso raccontare al mittente qualcosa in più», dice il server. «Non soltanto qual è il primo byte che aspetto, ma anche quali blocchi successivi sono già arrivati.»</p>
+<p>È ciò che permette l'opzione <strong>SACK</strong> (Selective Acknowledgment), quando è stata negoziata e supportata da entrambe le estremità della connessione. Il destinatario può indicare intervalli di byte ricevuti fuori ordine: per esempio, «mi manca ancora il segmento 6, ma ho già i dati dei segmenti 7, 9 e 10».</p>
+<p>L'ACK cumulativo non scompare: continua a indicare il punto continuo più avanzato. Le informazioni SACK aggiungono una mappa dei blocchi già arrivati, così il mittente può ritrasmettere con maggiore precisione ciò che manca, evitando di inviare di nuovo dati che il destinatario possiede già.</p>
+<p>Il server mette in fila i segmenti nel buffer e aspetta che il vuoto venga colmato. SACK non autorizza a saltare il pezzo mancante: aiuta a recuperarlo. La foto potrà essere ricomposta e consegnata all'applicazione soltanto quando la sequenza sarà completa.</p>
+${D("8761","«Quindi il server sa che alcuni pezzi sono arrivati, anche se non può ancora mostrare la foto?»")}
+${D("Server","«Esattamente. Ricevere non significa ancora poter consegnare.»")}`,
+learn:["ack","order"],
+ch:[["Torna al buffer e continua la ricezione","r2"],["Rileggi la scelta del server","r1"]]},
+u2:{part:"Intermezzo · La videochiamata",role:"udp",title:"La piccola sala d'attesa",pos:"telefono della mamma",
+body:`<p>Il telefono della mamma non vuole aspettare che ogni pacchetto arrivi con puntualità perfetta. La voce è già partita e non può tornare indietro. Nell'applicazione c'è però una piccola sala d'attesa: il <strong>jitter buffer</strong>.</p>
+<p>I pacchetti audio non arrivano sempre a intervalli regolari. Uno impiega poco, il successivo trova una coda e tarda, un altro ancora arriva quasi subito. Questa variazione del ritardo si chiama <strong>jitter</strong>. Se l'app riproducesse ogni pacchetto appena arriva, la voce avrebbe scatti e pause.</p>
+<p>Il buffer raccoglie per un breve intervallo i pacchetti e li riproduce con un ritmo più regolare. Ma deve scegliere quanto aspettare. Se è troppo piccolo, un pacchetto in ritardo può arrivare quando il suo momento di riproduzione è già passato: si sente un'interruzione. Se è troppo grande, la voce arriva all'orecchio con un ritardo eccessivo e la conversazione diventa innaturale.</p>
+<p>Per questo alcune applicazioni adattano dinamicamente il buffer alle condizioni della rete. Possono anche ridurre il bitrate o la risoluzione del video per diminuire la quantità di dati da trasmettere. Sono scelte dell'applicazione: UDP non le compie da solo e non garantisce che i pacchetti arrivino in tempo.</p>
+<p>La differenza con la foto di Marco è sottile ma decisiva. Per la foto, TCP può conservare i dati, ritrasmettere quelli mancanti e ricomporli nell'ordine corretto: la precisione conta più di qualche secondo di attesa. Per la voce, una ritrasmissione arrivata troppo tardi può essere inutile: conta soprattutto che il suono sia comprensibile adesso.</p>
+${D("Mamma","«Giulia, ti sento un po' metallica. Ma almeno ti sento.»")}
+<p>Non esiste una soluzione perfetta per ogni situazione. A volte la rete deve scegliere tra immediatezza e completezza; spesso è l'applicazione a decidere quale compromesso accettare.</p>`,
+learn:["jit","udp"],
+ch:[["Torna alla videochiamata","u1"],["Raggiungi il finale","f1"]]},
 };
 
 /* ===================== MOTORE ===================== */
